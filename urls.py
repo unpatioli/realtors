@@ -9,7 +9,9 @@ from django.conf import settings
 urlpatterns = patterns('',
     # Example:
     # (r'^realtors/', include('realtors.foo.urls')),
-    (r'^$', 'welcome.views.index'),
+    (r'^$', include('welcome.urls')),
+    
+    # Django comments system
     (r'^comments/', include('django.contrib.comments.urls')),
     
     # Uncomment the admin/doc line below to enable admin documentation:
