@@ -2,7 +2,7 @@ from django.db import models
 
 class Rieltor(models.Model):
     # user relation
-    experience = models.IntegerField(null=True, blank=True)
+    experience = models.PositiveIntegerField(null=True, blank=True)
     is_private = models.BooleanField(default=False)
     agency_title = models.CharField(max_length = 150, null=True, blank=True)
     
@@ -23,8 +23,8 @@ class Rieltor(models.Model):
     
     description = models.TextField(null=True, blank=True)
     
-    rating = models.IntegerField(default=0)
-    views_count = models.IntegerField(default=0)
+    rating = models.PositiveIntegerField(default=0)
+    views_count = models.PositiveIntegerField(default=0)
     is_closed = models.BooleanField(default=0)
     
     avatar_file_name = models.CharField(null=True, blank=True)
@@ -41,9 +41,9 @@ class Building(models.Model):
     
     price = models.DecimalField(max_digits=12, decimal_places=2)
     
-    metro_remoteness_by_legs = models.IntegerField(null=True, blank=True)
-    metro_remoteness_by_bus = models.IntegerField(null=True, blank=True)
-    mkad_remoteness = models.IntegerField(null=True, blank=True)
+    metro_remoteness_by_legs = models.PositiveIntegerField(null=True, blank=True)
+    metro_remoteness_by_bus = models.PositiveIntegerField(null=True, blank=True)
+    mkad_remoteness = models.PositiveIntegerField(null=True, blank=True)
     nearest_metro_stations = models.CharField(max_length = 150, null=True, blank=True)
     
     description = models.TextField(null=True, blank=True)
@@ -72,12 +72,12 @@ class Flat(Building):
     separated_bathroom = models.BooleanField(default=False)
     parking = models.BooleanField(default=False)
     
-    floor = models.IntegerField()
-    floors_count = models.IntegerField()
-    rooms_count = models.IntegerField()
+    floor = models.PositiveIntegerField()
+    floors_count = models.PositiveIntegerField()
+    rooms_count = models.PositiveIntegerField()
     
-    balcony_count = models.IntegerField(default=0)
-    bathrooms_count = models.IntegerField(default=1)
+    balcony_count = models.PositiveIntegerField(default=0)
+    bathrooms_count = models.PositiveIntegerField(default=1)
     
     kitchen_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
     
