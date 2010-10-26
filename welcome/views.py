@@ -1,6 +1,5 @@
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+from django.views.generic.simple import direct_to_template
 
 def index(request):
-    return render_to_response('welcome/index.html', context_instance=RequestContext(request))
+    return direct_to_template(request, template='welcome/index.html')
 
