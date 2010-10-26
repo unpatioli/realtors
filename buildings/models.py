@@ -27,7 +27,7 @@ class Rieltor(models.Model):
     views_count = models.PositiveIntegerField(default=0)
     is_closed = models.BooleanField(default=0)
     
-    avatar_file_name = models.CharField(null=True, blank=True)
+    avatar = models.ImageField(upload_to='avatars', null=True, blank=True)
 
 
 class Building(models.Model):
