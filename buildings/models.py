@@ -2,6 +2,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Currency(models.Model):
+    title = models.CharField(max_length = 50, verbose_name="Название")
+    char_id = models.CharField(max_length = 3, verbose_name="Буквенное обозначение")
+    symbol = models.CharField(max_length = 1, verbose_name="Символ")
+
 class Building(models.Model):
     owner = models.ForeignKey(User, verbose_name="Владелец")
     town = models.CharField(max_length = 100, db_index=True, verbose_name="Город")
@@ -12,6 +17,7 @@ class Building(models.Model):
     total_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True, verbose_name="Общая площадь")
     
     price = models.DecimalField(max_digits=12, decimal_places=2, db_index=True, verbose_name="Цена")
+    currency = models.ForeignKey(Currency, verbose_name="Валюта")
     
     metro_remoteness_by_legs = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="до метро пешком")
     metro_remoteness_by_bus = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="до метро транспортом")
