@@ -35,7 +35,7 @@ class Rieltor(models.Model):
 
 
 class Building(models.Model):
-    # rieltor relation
+    rieltor = models.ForeignKey(Rieltor)
     town = models.CharField(max_length = 100)
     street = models.CharField(max_length = 100)
     house_id = models.CharField(max_length = 10)
