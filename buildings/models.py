@@ -6,6 +6,9 @@ class Currency(models.Model):
     title = models.CharField(max_length = 50, verbose_name="Название")
     char_id = models.CharField(max_length = 3, verbose_name="Буквенное обозначение")
     symbol = models.CharField(max_length = 1, verbose_name="Символ")
+    
+    def __str__(self):
+        return self.char_id
 
 class Building(models.Model):
     owner = models.ForeignKey(User, verbose_name="Владелец")
@@ -39,9 +42,15 @@ class Building(models.Model):
 # =========
 class HouseType(models.Model):
     title = models.CharField(max_length = 50, verbose_name="Тип дома")
+    
+    def __str__(self):
+        return self.title
 
 class RenovationType(models.Model):
     title = models.CharField(max_length = 50, verbose_name="Тип ремонта")
+    
+    def __str__(self):
+        return self.title
 
 class Flat(Building):
     house_type = models.ForeignKey(HouseType, verbose_name="Тип дома")
