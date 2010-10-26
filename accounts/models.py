@@ -3,14 +3,15 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     GENDER_CHOICES = (
-        ('М', 'Муж'),
-        ('Ж', 'Жен'),
+        (None, 'Выберите пол'),
+        (True, 'Муж'),
+        (False, 'Жен'),
     )
     
     user = models.ForeignKey(User, unique=True)
     
     birthday = models.DateField(null=True, blank=True)
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    gender = models.NullBooleanField(choices=GENDER_CHOICES)
     
     is_closed = models.BooleanField(default=False)
     
