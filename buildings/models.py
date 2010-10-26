@@ -1,7 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Rieltor(models.Model):
-    # user relation
+    user = models.ForeignKey(User, unique=True)
     experience = models.PositiveSmallIntegerField(null=True, blank=True)
     is_private = models.BooleanField(default=False)
     agency_title = models.CharField(max_length = 150, null=True, blank=True)
