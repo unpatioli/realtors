@@ -18,6 +18,9 @@ class Building(models.Model):
     house_id = models.CharField(max_length = 10, verbose_name="Номер дома")
     building_id = models.CharField(max_length = 10, null=True, blank=True, verbose_name="Строение")
     
+    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name="Широта")
+    lng = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name="Долгота")
+    
     total_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True, verbose_name="Общая площадь")
     
     price = models.DecimalField(max_digits=12, decimal_places=2, db_index=True, verbose_name="Цена")
