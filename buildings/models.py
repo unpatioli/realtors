@@ -61,7 +61,11 @@ class Flat(Building):
     
 
 class RentFlat(Flat):
-    is_daily_price = models.BooleanField(default=False, verbose_name="Цена за день")
+    PAYMENT_PERIOD_CHOICES = (
+        ('month', 'месяц'),
+        ('day', 'день'),
+    )
+    payment_period = models.CharField(max_length=10, choices=PAYMENT_PERIOD_CHOICES, verbose_name="Период оплаты")
     agent_commission = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name="Комиссия агента")
     
     pets = models.BooleanField(default=False, verbose_name="Можно с животными")
