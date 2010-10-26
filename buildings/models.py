@@ -3,14 +3,14 @@ from django.contrib.auth.models import User
 
 class Building(models.Model):
     owner = models.ForeignKey(User)
-    town = models.CharField(max_length = 100)
+    town = models.CharField(max_length = 100, db_index=True)
     street = models.CharField(max_length = 100)
     house_id = models.CharField(max_length = 10)
     building_id = models.CharField(max_length = 10, null=True, blank=True)
     
     total_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
     
-    price = models.DecimalField(max_digits=12, decimal_places=2)
+    price = models.DecimalField(max_digits=12, decimal_places=2, db_index=True)
     
     metro_remoteness_by_legs = models.PositiveSmallIntegerField(null=True, blank=True)
     metro_remoteness_by_bus = models.PositiveSmallIntegerField(null=True, blank=True)
@@ -49,7 +49,7 @@ class Flat(Building):
     
     floor = models.PositiveSmallIntegerField()
     floors_count = models.PositiveSmallIntegerField()
-    rooms_count = models.PositiveSmallIntegerField()
+    rooms_count = models.PositiveSmallIntegerField(db_index=True)
     
     balcony_count = models.PositiveSmallIntegerField(default=0)
     bathrooms_count = models.PositiveSmallIntegerField(default=1)
