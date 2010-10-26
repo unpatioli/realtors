@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.generic import GenericRelation
 
 class Currency(models.Model):
     title = models.CharField(max_length = 50, verbose_name="Название")
@@ -28,6 +29,8 @@ class Building(models.Model):
     nearest_metro_stations = models.CharField(max_length = 150, null=True, blank=True, verbose_name="ближайшие станции метро")
     
     description = models.TextField(null=True, blank=True, verbose_name="Дополнительно")
+    
+    images = GenericRelation('images.ImagedItem')
     
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
