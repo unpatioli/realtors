@@ -28,6 +28,10 @@ class Rieltor(models.Model):
     is_closed = models.BooleanField(default=0)
     
     avatar = models.ImageField(upload_to='avatars', null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
 
 
 class Building(models.Model):
@@ -47,6 +51,10 @@ class Building(models.Model):
     nearest_metro_stations = models.CharField(max_length = 150, null=True, blank=True)
     
     description = models.TextField(null=True, blank=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
     
     class Meta:
         abstract = True
