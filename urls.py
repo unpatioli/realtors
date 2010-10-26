@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     # Example:
     # (r'^realtors/', include('realtors.foo.urls')),
     (r'^$', 'welcome.views.index'),
+    (r'^comments/', include('django.contrib.comments.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
