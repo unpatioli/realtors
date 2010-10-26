@@ -2,51 +2,51 @@ from django.db import models
 
 class Rieltor(models.Model):
     # user relation
-    experience = models.IntField()
-    is_private = models.BooleanField()
-    agency_title = models.CharField()
+    experience = models.IntegerField(null=True, blank=True)
+    is_private = models.BooleanField(default=False)
+    agency_title = models.CharField(max_length = 150, null=True, blank=True)
     
-    in_sales = models.BooleanField()
-    in_rents = models.BooleanField()
-    in_camps = models.BooleanField()
-    in_commercials = models.BooleanField()
+    in_sales = models.BooleanField(default=False)
+    in_rents = models.BooleanField(default=False)
+    in_camps = models.BooleanField(default=False)
+    in_commercials = models.BooleanField(default=False)
     
-    in_msk = models.BooleanField()
-    in_country = models.BooleanField()
+    in_msk = models.BooleanField(default=True)
+    in_country = models.BooleanField(default=False)
     
-    commission_from = models.DecimalField()
-    commission_to = models.DecimalField()
+    commission_from = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    commission_to = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     
-    deal_commission = models.BooleanField()
+    deal_commission = models.BooleanField(default=False)
     
-    phone = models.CharField()
+    phone = models.CharField(max_length = 50, null=True, blank=True)
     
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     
-    rating = models.IntField()
-    views_count = models.IntField()
-    is_closed = models.BooleanField()
+    rating = models.IntegerField(default=0)
+    views_count = models.IntegerField(default=0)
+    is_closed = models.BooleanField(default=0)
     
-    avatar_file_name = models.CharField()
+    avatar_file_name = models.CharField(null=True, blank=True)
 
 
 class Building(models.Model):
     # rieltor relation
-    town = models.CharField()
-    street = models.CharField()
-    house_id = models.CharField()
-    building_id = models.CharField()
+    town = models.CharField(max_length = 100)
+    street = models.CharField(max_length = 100)
+    house_id = models.CharField(max_length = 10)
+    building_id = models.CharField(max_length = 10, null=True, blank=True)
     
-    total_area = models.DecimalField()
+    total_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
     
-    price = models.DecimalField()
+    price = models.DecimalField(max_digits=12, decimal_places=2)
     
-    metro_remoteness_by_legs = models.IntField()
-    metro_remoteness_by_bus = models.IntField()
-    mkad_remoteness = models.IntField()
-    nearest_metro_stations = models.CharField()
+    metro_remoteness_by_legs = models.IntegerField(null=True, blank=True)
+    metro_remoteness_by_bus = models.IntegerField(null=True, blank=True)
+    mkad_remoteness = models.IntegerField(null=True, blank=True)
+    nearest_metro_stations = models.CharField(max_length = 150, null=True, blank=True)
     
-    description = models.TextField()
+    description = models.TextField(null=True, blank=True)
     
     class Meta:
         abstract = True
@@ -55,40 +55,45 @@ class Building(models.Model):
 # =========
 # = Flats =
 # =========
+class HouseType(models.Model):
+    title = models.CharField(max_length = 50)
+
+class RenovationType(models.Model):
+    title = models.CharField(max_length = 50)
+
 class Flat(Building):
-    building_type = models.CharField()
-    house_type = models.CharField()
-    renovation_type = models.CharField()
-    is_new = models.BooleanField()
+    house_type = models.ForeignKey(HouseType)
+    renovation_type = models.ForeignKey(RenovationType)
+    is_new = models.BooleanField(default=False)
     
-    furniture = models.BooleanField()
-    balcony = models.BooleanField()
-    fridge = models.BooleanField()
-    wash_machine = models.BooleanField()
-    separated_bathroom = models.BooleanField()
-    parking = models.BooleanField()
+    furniture = models.BooleanField(default=False)
+    fridge = models.BooleanField(default=False)
+    wash_machine = models.BooleanField(default=False)
+    separated_bathroom = models.BooleanField(default=False)
+    parking = models.BooleanField(default=False)
     
-    floor = models.IntField()
-    floors_count = models.IntField()
+    floor = models.IntegerField()
+    floors_count = models.IntegerField()
+    rooms_count = models.IntegerField()
     
-    rooms_count = models.IntField()
-    balcony_count = models.IntField()
-    bathrooms_count = models.IntField()
+    balcony_count = models.IntegerField(default=0)
+    bathrooms_count = models.IntegerField(default=1)
     
-    kitchen_area = models.DecimalField()
+    kitchen_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True)
     
     class Meta:
         abstract = True
     
 
 class RentFlat(Flat):
-    is_daily_price = models.BooleanField()
-    agent_commission = models.DecimalField()
+    is_daily_price = models.BooleanField(default=False)
+    agent_commission = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     
-    pets = models.BooleanField()
-    children = models.BooleanField()
+    pets = models.BooleanField(default=False)
+    children = models.BooleanField(default=False)
 
 class SellFlat(Flat):
-    mortgage = models.BooleanField()
+    mortgage = models.BooleanField(default=False)
     
-    part_in_flat = models.BooleanField()
+    part_in_flat = models.BooleanField(default=False)
+
