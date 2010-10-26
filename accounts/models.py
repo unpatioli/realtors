@@ -14,9 +14,8 @@ class UserProfile(models.Model):
     
     is_closed = models.BooleanField(default=False)
     
+    avatar = models.ImageField(upload_to='avatars', null=True, blank=True)
     description = models.TextField(null=True, blank=True)
-    
-    avatar = models.ImageField(upload_to='users/avatars', null=True, blank=True)
     
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -24,6 +23,7 @@ class UserProfile(models.Model):
 
 class Realtor(models.Model):
     user = models.ForeignKey(User, unique=True)
+    
     experience = models.PositiveSmallIntegerField(null=True, blank=True)
     is_private = models.BooleanField(default=False)
     agency_title = models.CharField(max_length = 150, null=True, blank=True)
@@ -43,15 +43,8 @@ class Realtor(models.Model):
     
     phone = models.CharField(max_length = 50, null=True, blank=True)
     
-    description = models.TextField(null=True, blank=True)
-    
     rating = models.PositiveSmallIntegerField(default=0)
     views_count = models.PositiveIntegerField(default=0)
-    is_closed = models.BooleanField(default=0)
     
-    avatar = models.ImageField(upload_to='avatars', null=True, blank=True)
-    
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(auto_now=True, editable=False)
-    deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
+    description = models.TextField(null=True, blank=True)
 
