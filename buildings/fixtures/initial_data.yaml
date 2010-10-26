@@ -1,0 +1,46 @@
+# =======================
+# = buildings.HouseType =
+# =======================
+-   model: buildings.HouseType
+    pk: 1
+    fields:
+        title: кирпичный
+
+-   model: buildings.HouseType
+    pk: 2
+    fields:
+        title: панельный
+
+-   model: buildings.HouseType
+    pk: 3
+    fields:
+        title: монолит
+
+# ============================
+# = buildings.RenovationType =
+# ============================
+-   model: buildings.RenovationType
+    pk: 1
+    fields:
+        title: новостройка
+
+-   model: buildings.RenovationType
+    pk: 2
+    fields:
+        title: был давно
+
+-   model: buildings.RenovationType
+    pk: 3
+    fields:
+        title: косметический
+
+-   model: buildings.RenovationType
+    pk: 4
+    fields:
+        title: под евро
+
+-   model: buildings.RenovationType
+    pk: 5
+    fields:
+        title: евро
+
