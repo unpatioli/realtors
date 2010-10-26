@@ -13,7 +13,7 @@ class UserProfile(models.Model):
     birthday = models.DateField(null=True, blank=True)
     gender = models.NullBooleanField(choices=GENDER_CHOICES)
     
-    is_closed = models.BooleanField(default=False)
+    is_closed = models.BooleanField(default=False, db_index=True)
     
     avatar = models.ImageField(upload_to='avatars', null=True, blank=True)
     description = models.TextField(null=True, blank=True)
@@ -34,8 +34,8 @@ class Realtor(models.Model):
     in_camps = models.BooleanField(default=False)
     in_commercials = models.BooleanField(default=False)
     
-    in_msk = models.BooleanField(default=True)
-    in_country = models.BooleanField(default=False)
+    in_msk = models.BooleanField(default=True, db_index=True)
+    in_country = models.BooleanField(default=False, db_index=True)
     
     commission_from = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     commission_to = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
