@@ -36,5 +36,9 @@ dist
 # Index files
 data
 
+# Database files
+db
+*.sqlite3
+
 # Log files
 *.log
