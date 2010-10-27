@@ -2,7 +2,9 @@
 
 {% block content %}
 	<form action="" method="post">
-		<p>{{ form.town.label_tag }} {{ form.town }}</p>
-		<p>{{ form.street.label_tag }} {{ form.street }}</p>
+		{# <p>{{ form.town.label_tag }} {{ form.town }}</p> #}
+		{# <p>{{ form.street.label_tag }} {{ form.street }}</p> #}
+		{{ form.as_p }}
+		<input type="submit" value="Сохранить" />
 	</form>
 {% endblock %}
