@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 class ImagedItem(models.Model):
-    title = models.CharField(max_length=100, default="Без названия")
+    title = models.CharField(max_length=100, default=u"Без названия")
     image = models.ImageField(upload_to='item_images')
     
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
