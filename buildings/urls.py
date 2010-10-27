@@ -18,7 +18,6 @@ sell_flats_patterns = patterns('buildings.views',
     (r'^sell/flats/delete/(?P<id>\d+)', 'sell_flats_delete')
 )
 
-urlpatterns = 
-    patterns('buildings.views', (r'^$', 'index')) +
-    rent_flats_patterns +
+urlpatterns = patterns('buildings.views', (r'^$', 'index')) + \
+    rent_flats_patterns + \
     sell_flats_patterns
