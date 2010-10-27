@@ -28,9 +28,9 @@
 					
 					<div id="auth_panel">
 						{% if user.is_authenticated %}
-							Hello, {{ user.username }}. <a href="/accounts/logout">выйти</a>
+							Hello, {{ user.username }}. <a href="{% url django.contrib.auth.views.logout %}">выйти</a>
 						{% else %}
-							<form action="/accounts/login" method="post">
+							<form action="{% url django.contrib.auth.views.login %}" method="post">
 								{% csrf_token %}
 								<input type="text" name="username" />
 								<input type="password" name="password" />
