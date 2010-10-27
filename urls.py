@@ -11,6 +11,7 @@ urlpatterns = patterns('',
     # (r'^realtors/', include('realtors.foo.urls')),
     (r'^$', include('welcome.urls')),
     
+    (r'^accounts/', include('accounts.urls')),
     (r'^buildings/', include('buildings.urls')),
     
     # Django comments system
