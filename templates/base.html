@@ -25,6 +25,19 @@
 					{% block header %}
 						HEADER
 					{% endblock %}
+					
+					<div id="auth_panel">
+						{% if user.is_authenticated %}
+							Hello, {{ user.username }}. <a href="/accounts/logout">выйти</a>
+						{% else %}
+							<form action="/accounts/login" method="post">
+								{% csrf_token %}
+								<input type="text" name="username" />
+								<input type="password" name="password" />
+								<input type="submit" value="Вход" />
+							</form>
+						{% endif %}
+					</div>
 				</div>
 			</div>
 			
