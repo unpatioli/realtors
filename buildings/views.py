@@ -18,3 +18,10 @@ def rentflat_detail(request, id):
         object_id = id,
         template_object_name = 'flat'
     )
+
+def rentflat_new(request):
+    return create_object(
+        request,
+        model = RentFlat
+    )
+

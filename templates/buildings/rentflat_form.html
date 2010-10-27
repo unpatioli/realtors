@@ -1,0 +1,8 @@
+{% extends "buildings/base.html" %}
+
+{% block content %}
+	<form action="" method="post">
+		<p>{{ form.town.label_tag }} {{ form.town }}</p>
+		<p>{{ form.street.label_tag }} {{ form.street }}</p>
+	</form>
+{% endblock %}
