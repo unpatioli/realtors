@@ -1,0 +1,13 @@
+{% extends "buildings/base.html" %}
+
+{% block content %}
+	{% if rent_flats %}
+		<ul>
+			{% for flat in rent_flats %}
+				<li>{{ flat.town }}</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No flats for rent found</p>
+	{% endif %}
+{% endblock %}
