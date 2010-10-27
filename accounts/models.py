@@ -4,20 +4,20 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
     GENDER_CHOICES = (
-        (None, 'Выберите пол'),
-        (True, 'Муж'),
-        (False, 'Жен'),
+        (None, u'Выберите пол'),
+        (True, u'Муж'),
+        (False, u'Жен'),
     )
     
     user = models.ForeignKey(User, unique=True)
     
-    birthday = models.DateField(null=True, blank=True, verbose_name="День рождения")
-    gender = models.NullBooleanField(choices=GENDER_CHOICES, verbose_name="Пол")
+    birthday = models.DateField(null=True, blank=True, verbose_name=u"День рождения")
+    gender = models.NullBooleanField(choices=GENDER_CHOICES, verbose_name=u"Пол")
     
-    is_closed = models.BooleanField(default=False, db_index=True, verbose_name="Закрыть профиль")
+    is_closed = models.BooleanField(default=False, db_index=True, verbose_name=u"Закрыть профиль")
     
-    avatar = models.ImageField(upload_to='avatars', null=True, blank=True, verbose_name="Аватар")
-    description = models.TextField(null=True, blank=True, verbose_name="Дополнительно")
+    avatar = models.ImageField(upload_to='avatars', null=True, blank=True, verbose_name=u"Аватар")
+    description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
     
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -26,27 +26,27 @@ class UserProfile(models.Model):
 class Realtor(models.Model):
     user = models.ForeignKey(User, unique=True)
     
-    experience = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name="Опыт работы")
-    is_private = models.BooleanField(default=False, verbose_name="Частный риэлтор")
-    agency_title = models.CharField(max_length = 150, null=True, blank=True, verbose_name="Агентство")
+    experience = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"Опыт работы")
+    is_private = models.BooleanField(default=False, verbose_name=u"Частный риэлтор")
+    agency_title = models.CharField(max_length = 150, null=True, blank=True, verbose_name=u"Агентство")
     
-    in_sales = models.BooleanField(default=False, verbose_name="Продажа")
-    in_rents = models.BooleanField(default=False, verbose_name="Аренда")
-    in_camps = models.BooleanField(default=False, verbose_name="Загородная недвижимость")
-    in_commercials = models.BooleanField(default=False, verbose_name="Коммерческая недвижимость")
+    in_sales = models.BooleanField(default=False, verbose_name=u"Продажа")
+    in_rents = models.BooleanField(default=False, verbose_name=u"Аренда")
+    in_camps = models.BooleanField(default=False, verbose_name=u"Загородная недвижимость")
+    in_commercials = models.BooleanField(default=False, verbose_name=u"Коммерческая недвижимость")
     
-    in_msk = models.BooleanField(default=True, db_index=True, verbose_name="Москва")
-    in_country = models.BooleanField(default=False, db_index=True, verbose_name="Область")
+    in_msk = models.BooleanField(default=True, db_index=True, verbose_name=u"Москва")
+    in_country = models.BooleanField(default=False, db_index=True, verbose_name=u"Область")
     
-    commission_from = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name="Комиссия от")
-    commission_to = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name="Комиссия до")
+    commission_from = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия от")
+    commission_to = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия до")
     
-    deal_commission = models.BooleanField(default=False, verbose_name="Договорная комиссия")
+    deal_commission = models.BooleanField(default=False, verbose_name=u"Договорная комиссия")
     
-    phone = models.CharField(max_length = 50, null=True, blank=True, verbose_name="Телефон")
+    phone = models.CharField(max_length = 50, null=True, blank=True, verbose_name=u"Телефон")
     
-    rating = models.PositiveSmallIntegerField(default=0, verbose_name="Рейтинг")
-    views_count = models.PositiveIntegerField(default=0, verbose_name="Кол-во просмотров")
+    rating = models.PositiveSmallIntegerField(default=0, verbose_name=u"Рейтинг")
+    views_count = models.PositiveIntegerField(default=0, verbose_name=u"Кол-во просмотров")
     
-    description = models.TextField(null=True, blank=True, verbose_name="Дополнительно")
+    description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
 
