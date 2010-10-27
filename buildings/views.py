@@ -1,6 +1,5 @@
 from buildings.model_forms import MoscowRentFlatForm, CountryRentFlatForm, SellFlatForm
 
-from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_list, object_detail
 from django.views.generic.create_update import create_object, update_object
 
