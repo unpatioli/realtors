@@ -1,4 +1,4 @@
-from buildings.models import RentFlat, SellFlat
+from buildings.model_forms import RentFlatForm, SellFlatForm
 
 from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_list, object_detail
@@ -22,13 +22,13 @@ def rentflat_detail(request, id):
 def rentflat_new(request):
     return create_object(
         request,
-        model = RentFlat
+        form_class = RentFlatForm
     )
 
 def rentflat_edit(request, id):
     return update_object(
         request,
-        model = RentFlat,
+        form_class = RentFlatForm,
         object_id = id
     )
 
