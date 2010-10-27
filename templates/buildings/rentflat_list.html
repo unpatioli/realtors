@@ -1,9 +1,9 @@
 {% extends "buildings/base.html" %}
 
 {% block content %}
-	{% if rent_flats %}
+	{% if object_list %}
 		<ul>
-			{% for flat in rent_flats %}
+			{% for flat in object_list %}
 				<li>{{ flat.town }}</li>
 			{% endfor %}
 		</ul>
