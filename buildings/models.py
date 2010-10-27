@@ -18,18 +18,18 @@ class Building(models.Model):
     house_id = models.CharField(max_length = 10, verbose_name=u"Номер дома")
     building_id = models.CharField(max_length = 10, null=True, blank=True, verbose_name=u"Строение")
     
-    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=u"Широта")
-    lng = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name=u"Долгота")
+    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, editable=False)
+    lng = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, editable=False)
     
-    total_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True, verbose_name=u"Общая площадь")
+    total_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True, verbose_name=u"Общая площадь", help_text=u"площадь в м\u00B2")
     
     price = models.DecimalField(max_digits=12, decimal_places=2, db_index=True, verbose_name=u"Цена")
     currency = models.ForeignKey(Currency, verbose_name=u"Валюта")
     
-    metro_remoteness_by_legs = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро пешком")
-    metro_remoteness_by_bus = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро транспортом")
-    mkad_remoteness = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"от МКАД")
-    nearest_metro_stations = models.CharField(max_length = 150, null=True, blank=True, verbose_name=u"ближайшие станции метро")
+    metro_remoteness_by_legs = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро пешком", help_text=u"время в минутах")
+    metro_remoteness_by_bus = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро транспортом", help_text=u"время в минутах")
+    mkad_remoteness = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"от МКАД", help_text=u"расстояние в километрах")
+    nearest_metro_stations = models.CharField(max_length = 150, null=True, blank=True, verbose_name=u"ближайшие станции метро", help_text=u"перечислите через запятую")
     
     description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
     
@@ -59,6 +59,10 @@ class RenovationType(models.Model):
         return self.title
 
 class Flat(Building):
+    ROOMS_COUNT_CHOICES = zip(xrange(1,11), map(str, xrange(1,11)))
+    BALCONY_COUNT_CHOICES = zip(xrange(6), map(str, xrange(6)))
+    BATHROOM_COUNT_CHOICES = zip(xrange(4), map(str, xrange(4)))
+    
     house_type = models.ForeignKey(HouseType, verbose_name=u"Тип дома")
     renovation_type = models.ForeignKey(RenovationType, verbose_name=u"Тип ремонта")
     is_new = models.BooleanField(default=False, verbose_name=u"Новостройка")
@@ -71,12 +75,12 @@ class Flat(Building):
     
     floor = models.PositiveSmallIntegerField(verbose_name=u"Этаж")
     floors_count = models.PositiveSmallIntegerField(verbose_name=u"Всего этажей")
-    rooms_count = models.PositiveSmallIntegerField(db_index=True, verbose_name=u"Кол-во комнат")
+    rooms_count = models.PositiveSmallIntegerField(db_index=True, choices=ROOMS_COUNT_CHOICES, verbose_name=u"Кол-во комнат")
     
-    balcony_count = models.PositiveSmallIntegerField(default=0, verbose_name=u"Кол-во балконов")
-    bathrooms_count = models.PositiveSmallIntegerField(default=1, verbose_name=u"Кол-во ванных")
+    balcony_count = models.PositiveSmallIntegerField(default=0, choices=BALCONY_COUNT_CHOICES, verbose_name=u"Кол-во балконов")
+    bathrooms_count = models.PositiveSmallIntegerField(default=1, choices=BATHROOM_COUNT_CHOICES, verbose_name=u"Кол-во ванных")
     
-    kitchen_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True, verbose_name=u"Площадь кухни")
+    kitchen_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True, verbose_name=u"Площадь кухни", help_text=u"площадь в м\u00B2")
     
     class Meta:
         abstract = True
@@ -88,7 +92,7 @@ class RentFlat(Flat):
         ('day', u'день'),
     )
     payment_period = models.CharField(max_length=10, choices=PAYMENT_PERIOD_CHOICES, verbose_name=u"Период оплаты")
-    agent_commission = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия агента")
+    agent_commission = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия агента", help_text=u"размер в %")
     
     pets = models.BooleanField(default=False, verbose_name=u"Можно с животными")
     children = models.BooleanField(default=False, verbose_name=u"Можно с детьми")
