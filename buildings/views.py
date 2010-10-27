@@ -25,3 +25,10 @@ def rentflat_new(request):
         model = RentFlat
     )
 
+def rentflat_edit(request, id):
+    return update_object(
+        request,
+        model = RentFlat,
+        object_id = id
+    )
+
