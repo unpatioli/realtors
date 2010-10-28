@@ -23,6 +23,10 @@ class UserProfile(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
+    
+    def get_absolute_url(self):
+        return "/accounts/profile/%i/" % self.user.id
+    
 
 class Realtor(models.Model):
     user = models.ForeignKey(User, unique=True)

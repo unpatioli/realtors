@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import forms
+from accounts.models import UserProfile
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=30, label=u"Имя пользователя")
@@ -20,5 +21,11 @@ class RegistrationForm(forms.Form):
         if password_retype != password:
             raise forms.ValidationError(u"Пароли не совпадают")
         return password_retype
+    
+
+class UserprofileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('birthday', 'gender', 'is_closed', 'avatar', 'description')
     
 
