@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+
+from image_utils.modelfields import ResizedImageField
 
 class UserProfile(models.Model):
     GENDER_CHOICES = (
@@ -17,7 +20,8 @@ class UserProfile(models.Model):
     
     is_closed = models.BooleanField(default=False, db_index=True, verbose_name=u"Закрыть профиль")
     
-    avatar = models.ImageField(upload_to='avatars', null=True, blank=True, verbose_name=u"Аватар")
+    avatar = ResizedImageField(upload_to='avatars', dimensions=settings.AVATAR_SIZE, null=True, blank=True, verbose_name=u"Аватар")
+    
     description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
     
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
