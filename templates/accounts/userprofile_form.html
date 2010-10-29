@@ -1,6 +1,11 @@
 {% extends "accounts/base.html" %}
 
 {% block content %}
+	
+	{% if user.get_profile and user.get_profile.avatar %}
+		<img src="{{ user.get_profile.avatar.url }}" />
+	{% endif %}
+	
 	{% if form.is_multipart %}
 		<form enctype="multipart/form-data" action="" method="post">
 	{% else %}
