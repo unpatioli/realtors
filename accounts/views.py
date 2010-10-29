@@ -55,7 +55,7 @@ def my_profile(request):
     return direct_to_template(
         request,
         template = "accounts/userprofile.html",
-        extra_context = {'userprofile': userprofile, 'is_my_profile': True}
+        extra_context = {'userprofile': userprofile}
     )
 
 @login_required
