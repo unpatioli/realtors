@@ -54,7 +54,7 @@ def my_profile(request):
     
     return direct_to_template(
         request,
-        template = "accounts/userprofile.html",
+        template = "accounts/userprofile_authenticated.html",
         extra_context = {'userprofile': userprofile}
     )
 

@@ -1,0 +1,13 @@
+{% extends "accounts/userprofile.html" %}
+
+{% block userprofile_controls %}
+	
+	{% if user.pk == userprofile.user.pk %}
+		<a href="/accounts/profile/edit">Редактировать</a>
+	{% endif %}
+	
+	{% if not user.realtor_set.exists %}
+		<a href="/accounts/profile/realtor/new">Обновиться до риэлтора</a>
+	{% endif %}
+	
+{% endblock %}

@@ -14,7 +14,6 @@
 		{% render_field "Дополнительно" userprofile.description %}
 	</ul>
 	
-	{% if user.is_authenticated and user.pk == userprofile.user.pk %}
-		<a href="/accounts/profile/edit">Редактировать</a>
-	{% endif %}
+	{% block userprofile_controls %}{% endblock %}
+	
 {% endblock %}
