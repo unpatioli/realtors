@@ -3,9 +3,6 @@ from accounts.models import UserProfile
 
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template, redirect_to
-from django.views.generic.create_update import create_object, update_object
-
-from django.views.decorators.cache import never_cache
 
 def register(request):
     from django.contrib.auth.models import User
@@ -32,7 +29,6 @@ def register(request):
         extra_context = {'form': form}
     )
 
-# @never_cache
 def profile(request, user_id):
     if request.user.is_authenticated() and request.user.id == int(user_id):
         return redirect_to(request, url='/accounts/profile/', permanent=False)
@@ -64,9 +60,8 @@ def my_profile(request):
 
 @login_required
 def my_profile_new(request):
-    
     if request.method == 'POST':
-        form = UserprofileForm(request.POST)
+        form = UserprofileForm(request.POST, request.FILES)
         if form.is_valid():
             up = form.save(commit=False)
             up.user = request.user
@@ -81,16 +76,28 @@ def my_profile_new(request):
         template = "accounts/userprofile_form.html",
         extra_context = {'form': form}
     )
-    
-    # return create_object(
-    #     request,
-    #     form_class = UserprofileForm
-    # )
 
 @login_required
 def my_profile_edit(request):
-    return update_object(
+    try:
+        userprofile = request.user.get_profile()
+    except UserProfile.DoesNotExist:
+        return redirect_to(request, url="/accounts/profile/new/", permanent=False)
+    
+    if request.method == 'POST':
+        form = UserprofileForm(request.POST, request.FILES, instance=userprofile)
+        if form.is_valid():
+            form.save()
+            return redirect_to(
+                request,
+                url=userprofile.get_absolute_url(),
+                permanent=False
+            )
+    else:
+        form = UserprofileForm(instance=userprofile)
+    
+    return direct_to_template(
         request,
-        form_class = UserprofileForm,
-        object_id = request.user.id
+        template = "accounts/userprofile_form.html",
+        extra_context = {'form': form}
     )
