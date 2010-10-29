@@ -31,4 +31,13 @@ if settings.DEBUG:
             'django.views.static.serve',
             {'document_root': settings.STATICFILES_DOC_ROOT}),
     )
+    
+    media_url = settings.MEDIA_URL
+    if media_url[0] == '/':
+        media_url = media_url[1:]
+    urlpatterns += patterns('',
+        (r'^{media_url}(?P<path>.*)$'.format(media_url=media_url),
+            'django.views.static.serve',
+            {'document_root': settings.MEDIA_ROOT}),
+    )
 
