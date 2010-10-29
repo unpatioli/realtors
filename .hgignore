@@ -42,3 +42,6 @@ db
 
 # Log files
 *.log
+
+# Media files
+media
