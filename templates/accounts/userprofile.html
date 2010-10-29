@@ -1,8 +1,20 @@
 {% extends "accounts/base.html" %}
+{% load account_fields_render %}
 
 {% block content %}
-	<h1>Hello!</h1>
+	
+	<h3>Профиль {{ userprofile.user.username }}</h3>
+	
+	<ul>
+		{% render_field "День рождения" userprofile.birthday %}
+		{% render_field "Пол" userprofile.get_gender_display %}
+		{% if userprofile.avatar %}
+			<img src="{{ userprofile.avatar.url }}" />
+		{% endif %}
+		{% render_field "Дополнительно" userprofile.description %}
+	</ul>
+	
 	{% if is_my_profile %}
-		<h2>My!!!</h2>
+		<a href="/accounts/profile/edit">Редактировать</a>
 	{% endif %}
 {% endblock %}
