@@ -8,9 +8,8 @@ from image_utils.modelfields import ResizedImageField
 
 class UserProfile(models.Model):
     GENDER_CHOICES = (
-        (None, u'Выберите пол'),
-        (True, u'Муж'),
-        (False, u'Жен'),
+        (True, u'Мужской'),
+        (False, u'Женский'),
     )
     
     user = models.ForeignKey(User, unique=True)
