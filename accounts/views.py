@@ -1,5 +1,5 @@
-from accounts.forms import RegistrationForm, UserprofileForm
-from accounts.models import UserProfile
+from accounts.forms import RegistrationForm, UserprofileForm, RealtorForm
+from accounts.models import UserProfile, Realtor
 
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template, redirect_to
@@ -60,6 +60,8 @@ def my_profile(request):
 
 @login_required
 def my_profile_new(request):
+    if request.user.userprofile_set.exists():
+        return redirect_to(request, url="/accounts/profile/edit/", permanent=False)
     if request.method == 'POST':
         form = UserprofileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -101,3 +103,50 @@ def my_profile_edit(request):
         template = "accounts/userprofile_form.html",
         extra_context = {'form': form}
     )
+
+@login_required
+def realtor_new(request):
+    if request.user.realtor_set.exists():
+        return redirect_to(request, url="/accounts/profile/realtor/edit", permanent=False)
+    if request.method == 'POST':
+        form = RealtorForm(request.POST)
+        if form.is_valid():
+            r = form.save(commit=False)
+            r.user = request.user
+            r.save()
+            
+            return redirect_to(request, url=r.get_absolute_url(), permanent=False)
+    else:
+        form = RealtorForm()
+    
+    return direct_to_template(
+        request,
+        template = "accounts/realtor_form.html",
+        extra_context = {'form': form}
+    )
+
+@login_required
+def realtor_edit(request):
+    try:
+        realtor = request.user.realtor_set.get()
+    except Realtor.DoesNotExist:
+        return redirect_to(request, url="/accounts/profile/realtor/new", permanent=False)
+    
+    if request.method == 'POST':
+        form = RealtorForm(request.POST, instance=realtor)
+        if form.is_valid():
+            form.save()
+            return redirect_to(
+                request,
+                url=realtor.get_absolute_url(),
+                permanent=False
+            )
+    else:
+        form = RealtorForm(instance=realtor)
+    
+    return direct_to_template(
+        request,
+        template = "accounts/realtor_form.html",
+        extra_context = {'form': form}
+    )
+

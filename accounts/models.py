@@ -28,13 +28,20 @@ class UserProfile(models.Model):
     deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
     
     def get_absolute_url(self):
-        return "/accounts/profile/%i/" % self.user.id
+        return "/accounts/profile/%i/" % self.user.pk
     
 
 class Realtor(models.Model):
+    EXPERIENCE_CHOICES = (
+        (0, u'Нет опыта'),
+        (1, u'1 год'),
+        (3, u'3 года'),
+        (4, u'более 4 лет'),
+    )
+    
     user = models.ForeignKey(User, unique=True)
     
-    experience = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"Опыт работы")
+    experience = models.PositiveSmallIntegerField(choices=EXPERIENCE_CHOICES, null=True, blank=True, verbose_name=u"Опыт работы")
     is_private = models.BooleanField(default=False, verbose_name=u"Частный риэлтор")
     agency_title = models.CharField(max_length = 150, null=True, blank=True, verbose_name=u"Агентство")
     
@@ -53,10 +60,13 @@ class Realtor(models.Model):
     
     phone = models.CharField(max_length = 50, null=True, blank=True, verbose_name=u"Телефон")
     
-    rating = models.PositiveSmallIntegerField(default=0, verbose_name=u"Рейтинг")
-    views_count = models.PositiveIntegerField(default=0, verbose_name=u"Кол-во просмотров")
+    rating = models.PositiveSmallIntegerField(default=0, editable=False, verbose_name=u"Рейтинг")
+    views_count = models.PositiveIntegerField(default=0, editable=False, verbose_name=u"Кол-во просмотров")
     
     description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
+    
+    def get_absolute_url(self):
+        return "/accounts/profile/%i/" % self.user.pk
 
 # ===========
 # = Signals =
