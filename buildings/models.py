@@ -96,9 +96,15 @@ class RentFlat(Flat):
     
     pets = models.BooleanField(default=False, verbose_name=u"Можно с животными")
     children = models.BooleanField(default=False, verbose_name=u"Можно с детьми")
+    
+    def get_absolute_url(self):
+        return "/buildings/rent/flats/%i/" % self.pk
 
 class SellFlat(Flat):
     mortgage = models.BooleanField(default=False, verbose_name=u"Ипотека")
     
     part_in_flat = models.BooleanField(default=False, verbose_name=u"Доля в квартире")
+    
+    def get_absolute_url(self):
+        return "/buildings/sell/flats/%i/" % self.pk
 
