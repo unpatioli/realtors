@@ -39,6 +39,12 @@
 							<a href="{% url accounts.views.register %}">Регистрация</a>
 						{% endif %}
 					</div>
+					
+					{% if user.is_authenticated and user.realtor_set.exists %}
+						<div id="manage_buildings">
+							<a href="/buildings/user/{{ user.pk }}/rent/flats">Мои объекты</a>
+						</div>
+					{% endif %}
 				</div>
 			</div>
 			
