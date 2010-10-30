@@ -8,7 +8,25 @@ from django.forms import ModelForm
 class RentFlatForm(ModelForm):
     class Meta:
         model = RentFlat
-        fields = ('town', 'street', 'house_id', 'building_id', 'total_area', 'price', 'currency', 'metro_remoteness_by_legs', 'metro_remoteness_by_bus', 'mkad_remoteness', 'nearest_metro_stations', 'description', 'house_type', 'renovation_type', 'is_new', 'furniture', 'fridge', 'wash_machine', 'separated_bathroom', 'parking', 'floor', 'floors_count', 'rooms_count', 'balcony_count', 'bathrooms_count', 'kitchen_area', 'payment_period', 'agent_commission', 'pets', 'children',)
+        fields = (
+            'town', 'street', 'house_id', 'building_id',
+            'metro_remoteness_by_legs', 'metro_remoteness_by_bus', 'mkad_remoteness', 'nearest_metro_stations',
+            
+            'house_type', 'renovation_type', 'is_new',
+            
+            'rooms_count', 'balcony_count',
+            
+            'total_area', 'kitchen_area',
+            
+            'floor', 'floors_count',
+            
+            'bathrooms_count',
+            'furniture', 'fridge', 'wash_machine', 'separated_bathroom', 'parking', 'pets', 'children',
+            
+            'price', 'currency', 'payment_period', 'agent_commission',
+            
+            'description',
+            )
     
 class MoscowRentFlatForm(RentFlatForm):
     class Meta(RentFlatForm.Meta):
