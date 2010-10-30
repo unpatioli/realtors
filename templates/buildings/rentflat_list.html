@@ -1,6 +1,9 @@
 {% extends "buildings/base.html" %}
 
 {% block content %}
+	{% if show_management_panel %}
+		<a href="/buildings/rent/flats/new">Добавить квартиру</a>
+	{% endif %}
 	{% if flat_list %}
 		<ul>
 			{% for flat in flat_list %}
@@ -8,6 +11,6 @@
 			{% endfor %}
 		</ul>
 	{% else %}
-		<p>No flats for rent found</p>
+		<h3>Ничего не найдено</h3>
 	{% endif %}
 {% endblock %}
