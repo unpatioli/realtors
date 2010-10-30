@@ -1,23 +1,24 @@
 from django.conf.urls.defaults import *
 
+common_patterns = patterns('buildings.views',
+    # (r'/$', 'index'),
+    # (r'user/(?P<user_id>\d+)/$', 'user_index'),
+)
+
 rentflat_patterns = patterns('buildings.views',
-    (r'^rent/flats$', 'rentflat_list'),
-    (r'^rent/flats/(?P<id>\d+)$', 'rentflat_detail'),
-    (r'^rent/flats/new$', 'rentflat_new'),
-    (r'^rent/flats/edit/(?P<id>\d+)', 'rentflat_edit'),
-    # (r'^rent/flats/delete/(?P<id>\d+)', 'rentflat_delete')
+    (r'user/(?P<user_id>\d+)/rent/flats/$', 'user_rentflat_list'),
+    (r'rent/flats/(?P<id>\d+)/$', 'rentflat_detail'),
+    (r'rent/flats/new/(?P<location>\w+)/$', 'rentflat_new'),
+    (r'rent/flats/(?P<id>\d+)/edit/$', 'rentflat_edit'),
+    # (r'rent/flats/(?P<id>\d+)/delete/$', 'rentflat_delete')
 )
 
 sellflat_patterns = patterns('buildings.views',
-    # (r'^sell/flats$', 'sellflat_list'),
-    # (r'^sell/flats/(?P<id>\d+)$', 'sellflat_detail'),
-    # (r'^sell/flats/new$', 'sellflat_new'),
-    # (r'^sell/flats/edit/(?P<id>\d+)', 'sellflat_edit'),
-    # (r'^sell/flats/delete/(?P<id>\d+)', 'sellflat_delete')
+    # (r'(?P<user_id>\d+)/sell/flats/user/$', 'user_sellflat_list'),
+    # (r'sell/flats/(?P<id>\d+)/$', 'sellflat_detail'),
+    # (r'sell/flats/new/$', 'sellflat_new'),
+    # (r'sell/flats/(?P<id>\d+)/edit/$', 'sellflat_edit'),
+    # (r'sell/flats/(?P<id>\d+)/delete/$', 'sellflat_delete')
 )
 
-urlpatterns = patterns('buildings.views',
-    # (r'^$', 'index'),
-) + \
-    rentflat_patterns + \
-    sellflat_patterns
+urlpatterns = common_patterns + rentflat_patterns + sellflat_patterns
