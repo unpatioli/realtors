@@ -12,8 +12,14 @@ class Currency(models.Model):
         return self.char_id
 
 class Building(models.Model):
+    LOCATION_CHOICES = (
+        ('moscow', u'Москва'),
+        ('country', u'Провинция'),
+    )
+    
     owner = models.ForeignKey(User, verbose_name=u"Владелец")
     town = models.CharField(max_length = 100, db_index=True, verbose_name=u"Город")
+    location = models.CharField(max_length = 50, choices=LOCATION_CHOICES, null=False, blank=False, db_index=True, verbose_name=u"Местоположение", help_text=u"используется для url и для выбора html-формы")
     street = models.CharField(max_length = 100, verbose_name=u"Улица")
     house_id = models.CharField(max_length = 10, verbose_name=u"Номер дома")
     building_id = models.CharField(max_length = 10, null=True, blank=True, verbose_name=u"Строение")
@@ -99,6 +105,7 @@ class RentFlat(Flat):
     
     def get_absolute_url(self):
         return "/buildings/rent/flats/%i/" % self.pk
+    
 
 class SellFlat(Flat):
     mortgage = models.BooleanField(default=False, verbose_name=u"Ипотека")
@@ -107,4 +114,5 @@ class SellFlat(Flat):
     
     def get_absolute_url(self):
         return "/buildings/sell/flats/%i/" % self.pk
+    
 
