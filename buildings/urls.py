@@ -5,6 +5,7 @@ common_patterns = patterns('buildings.views',
     # (r'user/(?P<user_id>\d+)/$', 'user_index'),
 )
 
+# TODO make <location> as array chose
 rentflat_patterns = patterns('buildings.views',
     (r'user/(?P<user_id>\d+)/rent/flats/$', 'user_rentflat_list'),
     (r'rent/flats/(?P<id>\d+)/$', 'rentflat_detail'),
