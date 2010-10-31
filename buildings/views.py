@@ -13,7 +13,7 @@ def user_rentflat_list(request, user_id):
         request,
         queryset = RentFlat.objects.filter(owner__pk__exact=user_id),
         template_object_name = 'flat',
-        extra_context={'show_management_panel': request.user.id == user_id}
+        extra_context = {'show_management_panel': request.user.id == int(user_id)},
     )
 
 def rentflat_detail(request, id):
