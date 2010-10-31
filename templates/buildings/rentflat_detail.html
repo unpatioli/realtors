@@ -1,10 +1,11 @@
 {% extends "buildings/base.html" %}
+{% load building_fields_render %}
 
 {% block content %}
 	<ul>
 		<li>
-			<p>Town:</p>
-			<p>{{ flat.town }}</p>
+			{% render_field "Город" flat.town %}
+			{% render_field "Улица" flat.street %}
 		</li>
 	</ul>
 {% endblock %}
