@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from buildings.models import RentFlat, SellFlat
-from buildings.form_dispatcher import FormDispatcher
+from buildings.location_dispatcher import LocationDispatcher
 
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
@@ -17,17 +17,26 @@ def user_rentflat_list(request, user_id):
     )
 
 def rentflat_detail(request, id):
-    return object_detail(
+    flat = get_object_or_404(RentFlat, pk=id)
+    dispatcher = LocationDispatcher(deal_type='rent', location=flat.location)
+    # TODO check if dispatcher has wrong location
+    
+    return direct_to_template(
         request,
-        queryset = RentFlat.objects.all(),
-        object_id = id,
-        template_object_name = 'flat'
+        template = dispatcher.detail_template,
+        extra_context = {'flat': flat}
     )
+    # return object_detail(
+    #     request,
+    #     queryset = RentFlat.objects.all(),
+    #     object_id = id,
+    #     template_object_name = 'flat'
+    # )
 
 
 @login_required
 def rentflat_new(request, location):
-    form_dispatcher = FormDispatcher(deal_type='rent', location=location)
+    form_dispatcher = LocationDispatcher(deal_type='rent', location=location)
     if not form_dispatcher.location_valid():
         return redirect(rentflat_new, location='moscow')
     
@@ -52,7 +61,8 @@ def rentflat_edit(request, id):
     flat = get_object_or_404(RentFlat, pk=id)
     
     # get form
-    form_dispatcher = FormDispatcher(deal_type='rent', location=flat.location)
+    form_dispatcher = LocationDispatcher(deal_type='rent', location=flat.location)
+    # TODO check is form_dispatcher has wrong location
     # if not form_dispatcher.location_valid():
     #     raise
     
