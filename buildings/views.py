@@ -5,7 +5,7 @@ from buildings.location_dispatcher import LocationDispatcher
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template, redirect_to
-from django.views.generic.list_detail import object_list, object_detail
+from django.views.generic.list_detail import object_list
 
 
 def user_rentflat_list(request, user_id):
@@ -26,12 +26,6 @@ def rentflat_detail(request, id):
         template = dispatcher.detail_template,
         extra_context = {'flat': flat}
     )
-    # return object_detail(
-    #     request,
-    #     queryset = RentFlat.objects.all(),
-    #     object_id = id,
-    #     template_object_name = 'flat'
-    # )
 
 
 @login_required
