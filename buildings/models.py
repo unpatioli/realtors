@@ -9,7 +9,7 @@ class Currency(models.Model):
     symbol = models.CharField(max_length = 1, verbose_name=u"Символ")
     
     def __unicode__(self):
-        return self.char_id
+        return self.symbol
 
 class Building(models.Model):
     LOCATION_CHOICES = (
