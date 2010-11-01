@@ -51,7 +51,7 @@ class Realtor(models.Model):
     in_commercials = models.BooleanField(default=False, verbose_name=u"Коммерческая недвижимость")
     
     in_msk = models.BooleanField(default=True, db_index=True, verbose_name=u"Москва")
-    in_country = models.BooleanField(default=False, db_index=True, verbose_name=u"Область")
+    in_msk_region = models.BooleanField(default=False, db_index=True, verbose_name=u"Область")
     
     commission_from = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия от")
     commission_to = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия до")

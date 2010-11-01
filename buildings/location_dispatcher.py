@@ -19,18 +19,18 @@ LOCATION_FORMS = {
         },
     },
     
-    'country': {
+    'moscow_region': {
         'rent': {
-            'form': model_forms.CountryRentFlatForm,
-            'detail_template': 'buildings/country_rentflat_detail.html',
+            'form': model_forms.MoscowRegionRentFlatForm,
+            'detail_template': 'buildings/moscow_region_rentflat_detail.html',
         },
         # 'sell': {
-        #     'form': model_forms.CountrySellFlatForm,
-        #     'detail_template': 'buildings/country_sellflat_detail.html',
+        #     'form': model_forms.MoscowRegionSellFlatForm,
+        #     'detail_template': 'buildings/moscow_region_sellflat_detail.html',
         # },
         
         'instance_params': {
-            'location': 'country',
+            'location': 'moscow_region',
         }
     },
 }

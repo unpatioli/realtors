@@ -14,7 +14,7 @@ class Currency(models.Model):
 class Building(models.Model):
     LOCATION_CHOICES = (
         ('moscow', u'Москва'),
-        ('country', u'Провинция'),
+        ('moscow_region', u'Область'),
     )
     
     owner = models.ForeignKey(User, verbose_name=u"Владелец")
