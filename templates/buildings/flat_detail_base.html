@@ -1,0 +1,27 @@
+{% extends "buildings/building_detail_base.html" %}
+{% load building_fields_render %}
+
+{% block parameters %}
+	{% render_field "Площадь кухни" flat.kitchen_area "м<sup>2</sup>" %}
+	{% render_field "Кол-во комнат" flat.rooms_count %}
+	{% render_field "Этаж" flat.floor %}
+	{% render_field "Всего этажей" flat.floors_count %}
+{% endblock %}
+
+{% block building_type %}
+	{% render_field "Тип дома" flat.house_type %}
+	{% render_field "Тип ремонта" flat.renovation_type %}
+	{% render_field "Новостройка" flat.is_new %}
+{% endblock %}
+
+{% block additional_parameters %}
+	{% render_field "Кол-во балконов" flat.balcony_count %}
+	{% render_field "Кол-во ванных" flat.bathrooms_count %}
+	{% render_field "Мебель" flat.furniture %}
+	{% render_field "Холодильник" flat.fridge %}
+	{% render_field "Стиральная машина" flat.wash_machine %}
+	{% render_field "Раздельный санузел" flat.separated_bathroom %}
+	{% render_field "Парковка" flat.parking %}
+	
+	{% block flat_additional_parameters %}{% endblock %}
+{% endblock %}

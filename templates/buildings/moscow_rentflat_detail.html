@@ -1,0 +1,8 @@
+{% extends "buildings/rentflat_detail_base.html" %}
+{% load building_fields_render %}
+
+{% block remoteness %}
+	{% render_field "До метро пешком" flat.metro_remoteness_by_legs "мин." %}
+	{% render_field "До метро транспортом" flat.metro_remoteness_by_bus "мин." %}
+	{% render_field "Ближайшие станции метро" flat.nearest_metro_stations %}
+{% endblock %}

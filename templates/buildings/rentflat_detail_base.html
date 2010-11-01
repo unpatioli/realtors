@@ -1,0 +1,12 @@
+{% extends "buildings/flat_detail_base.html" %}
+{% load building_fields_render %}
+
+{% block price %}
+	{% render_field "Период оплаты" flat.get_payment_period_display %}
+	{% render_field "Комиссия агента" flat.agent_commission %}
+{% endblock %}
+
+{% block flat_additional_parameters %}
+	{% render_field "Можно с животными" flat.pets %}
+	{% render_field "Можно с детьми" flat.children %}
+{% endblock %}
