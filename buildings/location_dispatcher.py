@@ -6,11 +6,11 @@ LOCATION_FORMS = {
     'moscow': {
         'rent': {
             'form': model_forms.MoscowRentFlatForm,
-            'detail_template': 'buildings/moscow_rentflat_detail.html',
+            'detail_template': 'buildings/detail/moscow_rentflat_detail.html',
         },
         # 'sell': {
         #     'form': model_forms.MoscowSellFlatForm,
-        #     'detail_template': 'buildings/moscow_sellflat_detail.html',
+        #     'detail_template': 'buildings/detail/moscow_sellflat_detail.html',
         # },
         
         'instance_params': {
@@ -22,11 +22,11 @@ LOCATION_FORMS = {
     'moscow_region': {
         'rent': {
             'form': model_forms.MoscowRegionRentFlatForm,
-            'detail_template': 'buildings/moscow_region_rentflat_detail.html',
+            'detail_template': 'buildings/detail/moscow_region_rentflat_detail.html',
         },
         # 'sell': {
         #     'form': model_forms.MoscowRegionSellFlatForm,
-        #     'detail_template': 'buildings/moscow_region_sellflat_detail.html',
+        #     'detail_template': 'buildings/detail/moscow_region_sellflat_detail.html',
         # },
         
         'instance_params': {
@@ -37,11 +37,11 @@ LOCATION_FORMS = {
     'common': {
         'rent': {
             'form': model_forms.CommonRentFlatForm,
-            'detail_template': 'buildings/common_rentflat_detail.html',
+            'detail_template': 'buildings/detail/common_rentflat_detail.html',
         },
         # 'sell': {
         #     'form': model_forms.CommonSellFlatForm,
-        #     'detail_template': 'buildings/common_sellflat_detail.html',
+        #     'detail_template': 'buildings/detail/common_sellflat_detail.html',
         # },
         
         'instance_params': {
