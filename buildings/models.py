@@ -48,6 +48,10 @@ class Building(models.Model):
     class Meta:
         abstract = True
     
+    @property
+    def get_address(self):
+        return ", ".join([self.street, self.house_id, self.building_id])
+    
 
 # =========
 # = Flats =
