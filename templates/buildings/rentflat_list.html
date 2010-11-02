@@ -5,11 +5,37 @@
 		<a href="/buildings/rent/flats/new/moscow">Добавить квартиру</a>
 	{% endif %}
 	{% if flat_list %}
-		<ul>
-			{% for flat in flat_list %}
-				<li>{{ flat.town }}</li>
-			{% endfor %}
-		</ul>
+		<table>
+			<thead>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				
+				<tr>
+					<th>№</th>
+					<th>Город</th>
+					<th>Адрес</th>
+					<th>Общая площадь</th>
+					<th>Цена</th>
+					<th>Дополнительно</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for flat in flat_list %}
+					<tr>
+						<td><a href="/buildings/rent/flats/{{ flat.pk }}">{{ forloop.counter }}</a></td>
+						<td>{{ flat.town }}</td>
+						<td>{{ flat.get_address }}</td>
+						<td>{{ flat.total_area }} м<sup>2</sup></td>
+						<td>{{ flat.price }} {{ flat.currency }}</td>
+						<td>{{ flat.description }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	{% else %}
 		<h3>Ничего не найдено</h3>
 	{% endif %}
