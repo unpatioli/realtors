@@ -36,6 +36,12 @@ class MoscowRentFlatForm(RentFlatForm):
 class MoscowRegionRentFlatForm(RentFlatForm):
     class Meta(RentFlatForm.Meta):
         exclude = ('metro_remoteness_by_legs', 'metro_remoteness_by_bus', 'nearest_metro_stations', )
+    
+
+class CommonRentFlatForm(RentFlatForm):
+    class Meta(RentFlatForm.Meta):
+        exclude = ('mkad_remoteness', 'metro_remoteness_by_legs', 'metro_remoteness_by_bus', 'nearest_metro_stations', )
+    
 
 
 # ==================

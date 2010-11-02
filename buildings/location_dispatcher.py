@@ -33,6 +33,21 @@ LOCATION_FORMS = {
             'location': 'moscow_region',
         }
     },
+    
+    'common': {
+        'rent': {
+            'form': model_forms.CommonRentFlatForm,
+            'detail_template': 'buildings/common_rentflat_detail.html',
+        },
+        # 'sell': {
+        #     'form': model_forms.CommonSellFlatForm,
+        #     'detail_template': 'buildings/common_sellflat_detail.html',
+        # },
+        
+        'instance_params': {
+            'location': 'common',
+        }
+    },
 }
 
 # TODO Inherit LocationDispatcher from dict
