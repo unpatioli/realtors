@@ -1,4 +1,39 @@
-{% extends "buildings/base.html" %}
+{% extends "buildings/building_list_base.html" %}
+
+{% block top_panel %}
+	{% if not show_object_types_list %}
+		<ul class="objects_type_list">
+			<li>
+				{% if objects_type == 'rent_flats' %}
+					Аренда
+				{% else %}
+					<a href="/buildings/user/{{ user_id }}/rent/flats">Аренда</a>
+				{% endif %}
+			</li>
+			<li>
+				{% if objects_type == 'sell_flats' %}
+					Продажа
+				{% else %}
+					<a href="/buildings/user/{{ user_id }}/sell/flats">Продажа</a>
+				{% endif %}
+			</li>
+			<li>
+				{% if objects_type == 'country_property' %}
+					Загородная недвижимость
+				{% else %}
+					<a href="/buildings/user/{{ user_id }}/country_property">Загородная недвижимость</a>
+				{% endif %}
+			</li>
+			<li>
+				{% if objects_type == 'commercial_property' %}
+					Коммерческая недвижимость
+				{% else %}
+					<a href="/buildings/user/{{ user_id }}/commercial_property">Коммерческая недвижимость</a>
+				{% endif %}
+			</li>
+		</ul>
+	{% endif %}
+{% endblock %}
 
 {% block content %}
 	{% if show_management_panel %}
