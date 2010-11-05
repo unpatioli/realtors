@@ -1,0 +1,6 @@
+{% extends "buildings/detail/sellflat_detail_base.html" %}
+{% load building_fields_render %}
+
+{% block remoteness %}
+	{% render_field object.mkad_remoteness "от МКАД" "км" %}
+{% endblock %}
