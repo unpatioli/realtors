@@ -26,8 +26,9 @@ class RentFlatForm(ModelForm):
             'price', 'currency', 'payment_period', 'agent_commission',
             
             'description',
-            )
+        )
     
+
 class MoscowRentFlatForm(RentFlatForm):
     class Meta(RentFlatForm.Meta):
         exclude = ('town', 'mkad_remoteness',)
@@ -50,6 +51,41 @@ class CommonRentFlatForm(RentFlatForm):
 class SellFlatForm(ModelForm):
     class Meta:
         model = SellFlat
+        fields = (
+            'town', 'street', 'house_id', 'building_id',
+            'metro_remoteness_by_legs', 'metro_remoteness_by_bus', 'mkad_remoteness', 'nearest_metro_stations',
+        
+            'house_type', 'renovation_type', 'is_new',
+        
+            'rooms_count', 'balcony_count',
+        
+            'total_area', 'kitchen_area',
+        
+            'floor', 'floors_count',
+        
+            'bathrooms_count',
+            'furniture', 'fridge', 'wash_machine', 'separated_bathroom', 'parking',
+        
+            'price', 'currency',
+        
+            'mortgage', 'part_in_flat',
+        
+            'description',
+        )
     
 
-        
+class MoscowSellFlatForm(SellFlatForm):
+    class Meta(SellFlatForm.Meta):
+        exclude = ('town', 'mkad_remoteness',)
+    
+
+class MoscowRegionSellFlatForm(SellFlatForm):
+    class Meta(SellFlatForm.Meta):
+        exclude = ('metro_remoteness_by_legs', 'metro_remoteness_by_bus', 'nearest_metro_stations', )
+    
+
+class CommonSellFlatForm(SellFlatForm):
+    class Meta(SellFlatForm.Meta):
+        exclude = ('mkad_remoteness', 'metro_remoteness_by_legs', 'metro_remoteness_by_bus', 'nearest_metro_stations', )
+    
+
