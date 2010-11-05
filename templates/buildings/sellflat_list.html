@@ -1,0 +1,41 @@
+{% extends "buildings/building_list_base.html" %}
+
+{% block management_panel %}
+	{% if show_management_panel %}
+		<a href="/buildings/sell/flats/new/moscow">Добавить квартиру</a>
+	{% endif %}
+{% endblock %}
+
+{% block objects_table %}
+	<table>
+		<thead>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			
+			<tr>
+				<th>№</th>
+				<th>Город</th>
+				<th>Адрес</th>
+				<th>Общая площадь</th>
+				<th>Цена</th>
+				<th>Дополнительно</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for flat in object_list %}
+				<tr>
+					<td><a href="/buildings/sell/flats/{{ flat.pk }}">{{ forloop.counter }}</a></td>
+					<td>{{ flat.town }}</td>
+					<td>{{ flat.get_address }}</td>
+					<td>{{ flat.total_area }} м<sup>2</sup></td>
+					<td>{{ flat.price }} {{ flat.currency }}</td>
+					<td>{{ flat.description }}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
