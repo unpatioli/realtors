@@ -17,10 +17,10 @@ rentflat_patterns = patterns('buildings.views',
 )
 
 sellflat_patterns = patterns('buildings.views',
-    # (r'(?P<user_id>\d+)/sell/flats/user/$', 'user_sellflat_list'),
-    # (r'sell/flats/(?P<id>\d+)/$', 'sellflat_detail'),
-    # (r'sell/flats/new/$', 'sellflat_new'),
-    # (r'sell/flats/(?P<id>\d+)/edit/$', 'sellflat_edit'),
+    (r'user/(?P<user_id>\d+)/sell/flats/$', 'user_sellflat_list'),
+    (r'sell/flats/(?P<id>\d+)/$', 'sellflat_detail'),
+    (r'sell/flats/new/(?P<location>%s)/$' % location_regexp, 'sellflat_new'),
+    (r'sell/flats/(?P<id>\d+)/edit/$', 'sellflat_edit'),
     # (r'sell/flats/(?P<id>\d+)/delete/$', 'sellflat_delete')
 )
 
