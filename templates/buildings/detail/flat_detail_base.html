@@ -2,26 +2,26 @@
 {% load building_fields_render %}
 
 {% block parameters %}
-	{% render_field "Площадь кухни" flat.kitchen_area "м<sup>2</sup>" %}
-	{% render_field "Кол-во комнат" flat.rooms_count %}
-	{% render_field "Этаж" flat.floor %}
-	{% render_field "Всего этажей" flat.floors_count %}
+	{% render_field object.kitchen_area "Площадь кухни" "м<sup>2</sup>" %}
+	{% render_field object.rooms_count "Кол-во комнат" %}
+	{% render_field object.floor "Этаж" %}
+	{% render_field object.floors_count "Всего этажей" %}
 {% endblock %}
 
 {% block building_type %}
-	{% render_field "Тип дома" flat.house_type %}
-	{% render_field "Тип ремонта" flat.renovation_type %}
-	{% render_field "Новостройка" flat.is_new %}
+	{% render_field object.house_type "Тип дома" %}
+	{% render_field object.renovation_type "Тип ремонта" %}
+	{% flag_field object.is_new "Новостройка" %}
 {% endblock %}
 
 {% block additional_parameters %}
-	{% render_field "Кол-во балконов" flat.balcony_count %}
-	{% render_field "Кол-во ванных" flat.bathrooms_count %}
-	{% render_field "Мебель" flat.furniture %}
-	{% render_field "Холодильник" flat.fridge %}
-	{% render_field "Стиральная машина" flat.wash_machine %}
-	{% render_field "Раздельный санузел" flat.separated_bathroom %}
-	{% render_field "Парковка" flat.parking %}
+	{% render_field object.balcony_count "Кол-во балконов" %}
+	{% render_field object.bathrooms_count "Кол-во ванных" %}
+	{% flag_field object.furniture "Мебель" %}
+	{% flag_field object.fridge "Холодильник" %}
+	{% flag_field object.wash_machine "Стиральная машина" %}
+	{% flag_field object.separated_bathroom "Раздельный санузел" %}
+	{% flag_field object.parking "Парковка" %}
 	
 	{% block flat_additional_parameters %}{% endblock %}
 {% endblock %}

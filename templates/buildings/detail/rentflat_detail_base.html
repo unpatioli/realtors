@@ -2,11 +2,11 @@
 {% load building_fields_render %}
 
 {% block price %}
-	{% render_field "Период оплаты" flat.get_payment_period_display %}
-	{% render_field "Комиссия агента" flat.agent_commission %}
+	{% render_field object.get_payment_period_display "Период оплаты" %}
+	{% render_field object.agent_commission "Комиссия агента" %}
 {% endblock %}
 
 {% block flat_additional_parameters %}
-	{% render_field "Можно с животными" flat.pets %}
-	{% render_field "Можно с детьми" flat.children %}
+	{% flag_field object.pets "Можно с животными" %}
+	{% flag_field object.children "Можно с детьми" %}
 {% endblock %}

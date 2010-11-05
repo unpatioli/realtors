@@ -1,18 +1,24 @@
 {% extends "buildings/base.html" %}
 {% load building_fields_render %}
 
+{% block top_panel %}
+	{% if show_object_controls %}
+		<a href="{{ object.get_absolute_url }}edit">Редактировать</a>
+	{% endif %}
+{% endblock %}
+
 {% block content %}
 	<ul class="address">
-		{% render_field "Город" flat.town %}
-		{% render_field "Улица" flat.street %}
-		{% render_field "Дом" flat.house_id %}
-		{% render_field "Строение" flat.building_id %}
+		{% render_field object.town "Город" %}
+		{% render_field object.street "Улица" %}
+		{% render_field object.house_id "Дом" %}
+		{% render_field object.building_id "Строение" %}
 		
 		{% block address %}{% endblock %}
 	</ul>
 	
 	<ul class="parameters">
-		{% render_field "Общая площадь" flat.total_area "м<sup>2</sup>" %}
+		{% render_field object.total_area "Общая площадь" "м<sup>2</sup>" %}
 		
 		{% block parameters %}{% endblock %}
 	</ul>
@@ -30,13 +36,13 @@
 	</ul>
 	
 	<ul class="price">
-		{% render_field "Цена" flat.price flat.currency %}
+		{% render_field object.price "Цена" object.currency %}
 		
 		{% block price %}{% endblock %}
 	</ul>
 	
 	<ul class="description">
-		{% render_field "Дополнительно" flat.description %}
+		{% render_field object.description "Дополнительно" %}
 		
 		{% block description %}{% endblock %}
 	</ul>

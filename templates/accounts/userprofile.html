@@ -6,12 +6,12 @@
 	<h3>Профиль {{ userprofile.user.username }}</h3>
 	
 	<ul>
-		{% render_field "День рождения" userprofile.birthday %}
-		{% render_field "Пол" userprofile.get_gender_display %}
+		{% render_field userprofile.birthday "День рождения" %}
+		{% render_field userprofile.get_gender_display "Пол" %}
 		{% if userprofile.avatar %}
 			<img src="{{ userprofile.avatar.url }}" />
 		{% endif %}
-		{% render_field "Дополнительно" userprofile.description %}
+		{% render_field userprofile.description "Дополнительно" %}
 	</ul>
 	
 	{% block userprofile_controls %}{% endblock %}
