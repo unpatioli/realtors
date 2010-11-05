@@ -1,0 +1,19 @@
+{% extends "buildings/base.html" %}
+
+{% block content %}
+	{% if locations %}
+		{% for k, v in locations %}
+			{% if k == location %}
+				{{ v }}
+			{% else %}
+				<a href='/buildings/{{ deal_type }}/flats/new/{{ k }}'>{{ v }}</a>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+	
+	<form action="" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Сохранить" />
+	</form>
+{% endblock %}
