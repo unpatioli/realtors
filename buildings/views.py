@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from buildings.models import RentFlat, SellFlat
 from buildings.location_dispatcher import LocationDispatcher
+from buildings.forms import RentFlatSearchForm
 
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
@@ -179,6 +180,30 @@ def sellflat_edit(request, id):
     return direct_to_template(
         request,
         template = "buildings/flat_form.html",
+        extra_context = {'form': form}
+    )
+
+
+# ==========
+# = Search =
+# ==========
+def search(request):
+    if request.method != 'GET':
+        raise Http404
+    
+    if request.GET:
+        form = RentFlatSearchForm(request.GET)
+        if form.is_valid():
+            # Perform search actions
+            return direct_to_template(
+                request,
+                template = "buildings/search/results.html",
+            )
+    else:
+        form = RentFlatSearchForm()
+    return direct_to_template(
+        request,
+        template = "buildings/search/search_form.html",
         extra_context = {'form': form}
     )
 

@@ -24,4 +24,9 @@ sellflat_patterns = patterns('buildings.views',
     # (r'sell/flats/(?P<id>\d+)/delete/$', 'sellflat_delete')
 )
 
-urlpatterns = common_patterns + rentflat_patterns + sellflat_patterns
+search_patterns = patterns('buildings.views',
+    (r'search/$', 'search'),
+    # (r'find/$', 'find'),
+)
+
+urlpatterns = common_patterns + rentflat_patterns + sellflat_patterns + search_patterns
