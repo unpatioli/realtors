@@ -8,15 +8,17 @@ LOCATION_FORMS = {
             'form': model_forms.MoscowRentFlatForm,
             'detail_template': 'buildings/detail/moscow_rentflat_detail.html',
         },
-        # 'sell': {
-        #     'form': model_forms.MoscowSellFlatForm,
-        #     'detail_template': 'buildings/detail/moscow_sellflat_detail.html',
-        # },
+        'sell': {
+            'form': model_forms.MoscowSellFlatForm,
+            'detail_template': 'buildings/detail/moscow_sellflat_detail.html',
+        },
         
         'instance_params': {
             'location': 'moscow',
             'town': u'Москва',
         },
+        
+        'ru': 'Москва',
     },
     
     'moscow_region': {
@@ -24,14 +26,16 @@ LOCATION_FORMS = {
             'form': model_forms.MoscowRegionRentFlatForm,
             'detail_template': 'buildings/detail/moscow_region_rentflat_detail.html',
         },
-        # 'sell': {
-        #     'form': model_forms.MoscowRegionSellFlatForm,
-        #     'detail_template': 'buildings/detail/moscow_region_sellflat_detail.html',
-        # },
+        'sell': {
+            'form': model_forms.MoscowRegionSellFlatForm,
+            'detail_template': 'buildings/detail/moscow_region_sellflat_detail.html',
+        },
         
         'instance_params': {
             'location': 'moscow_region',
-        }
+        },
+        
+        'ru': 'Московская область',
     },
     
     'common': {
@@ -39,14 +43,16 @@ LOCATION_FORMS = {
             'form': model_forms.CommonRentFlatForm,
             'detail_template': 'buildings/detail/common_rentflat_detail.html',
         },
-        # 'sell': {
-        #     'form': model_forms.CommonSellFlatForm,
-        #     'detail_template': 'buildings/detail/common_sellflat_detail.html',
-        # },
+        'sell': {
+            'form': model_forms.CommonSellFlatForm,
+            'detail_template': 'buildings/detail/common_sellflat_detail.html',
+        },
         
         'instance_params': {
             'location': 'common',
-        }
+        },
+        
+        'ru': 'Страна',
     },
 }
 
@@ -69,5 +75,10 @@ class LocationDispatcher(object):
     @property
     def detail_template(self):
         return LOCATION_FORMS[self.location][self.deal_type]['detail_template']
+    
+    def localized_titles(self, lang='ru'):
+        ordnung = ('moscow', 'moscow_region', 'common')
+        return [(location, LOCATION_FORMS[location][lang]) for location in ordnung]
+        # return [(location, LOCATION_FORMS[location][lang]) for location in LOCATION_FORMS]
     
 
