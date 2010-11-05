@@ -1,77 +1,44 @@
 {% extends "buildings/building_list_base.html" %}
 
-{% block top_panel %}
-	{% if not show_object_types_list %}
-		<ul class="objects_type_list">
-			<li>
-				{% if objects_type == 'rent_flats' %}
-					Аренда
-				{% else %}
-					<a href="/buildings/user/{{ user_id }}/rent/flats">Аренда</a>
-				{% endif %}
-			</li>
-			<li>
-				{% if objects_type == 'sell_flats' %}
-					Продажа
-				{% else %}
-					<a href="/buildings/user/{{ user_id }}/sell/flats">Продажа</a>
-				{% endif %}
-			</li>
-			<li>
-				{% if objects_type == 'country_property' %}
-					Загородная недвижимость
-				{% else %}
-					<a href="/buildings/user/{{ user_id }}/country_property">Загородная недвижимость</a>
-				{% endif %}
-			</li>
-			<li>
-				{% if objects_type == 'commercial_property' %}
-					Коммерческая недвижимость
-				{% else %}
-					<a href="/buildings/user/{{ user_id }}/commercial_property">Коммерческая недвижимость</a>
-				{% endif %}
-			</li>
-		</ul>
-	{% endif %}
-{% endblock %}
-
-{% block content %}
+{% block management_panel %}
 	{% if show_management_panel %}
 		<a href="/buildings/rent/flats/new/moscow">Добавить квартиру</a>
 	{% endif %}
-	{% if flat_list %}
-		<table>
-			<thead>
-				<col/>
-				<col/>
-				<col/>
-				<col/>
-				<col/>
-				<col/>
-				
+{% endblock %}
+
+{% block objects_table %}
+	<table>
+		<thead>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			
+			<tr>
+				<th>№</th>
+				<th>Город</th>
+				<th>Адрес</th>
+				<th>Общая площадь</th>
+				<th>Цена</th>
+				<th>Период оплаты</th>
+				<th>Дополнительно</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for flat in object_list %}
 				<tr>
-					<th>№</th>
-					<th>Город</th>
-					<th>Адрес</th>
-					<th>Общая площадь</th>
-					<th>Цена</th>
-					<th>Дополнительно</th>
+					<td><a href="/buildings/rent/flats/{{ flat.pk }}">{{ forloop.counter }}</a></td>
+					<td>{{ flat.town }}</td>
+					<td>{{ flat.get_address }}</td>
+					<td>{{ flat.total_area }} м<sup>2</sup></td>
+					<td>{{ flat.price }} {{ flat.currency }}</td>
+					<td>{{ flat.get_payment_period_display }}</td>
+					<td>{{ flat.description }}</td>
 				</tr>
-			</thead>
-			<tbody>
-				{% for flat in flat_list %}
-					<tr>
-						<td><a href="/buildings/rent/flats/{{ flat.pk }}">{{ forloop.counter }}</a></td>
-						<td>{{ flat.town }}</td>
-						<td>{{ flat.get_address }}</td>
-						<td>{{ flat.total_area }} м<sup>2</sup></td>
-						<td>{{ flat.price }} {{ flat.currency }}</td>
-						<td>{{ flat.description }}</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	{% else %}
-		<h3>Ничего не найдено</h3>
-	{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}
