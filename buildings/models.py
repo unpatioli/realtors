@@ -52,6 +52,9 @@ class Building(models.Model):
     def get_address(self):
         return ", ".join([self.street, self.house_id, self.building_id])
     
+    def can_edit(self, user):
+        return self.owner == user
+    
 
 # =========
 # = Flats =
