@@ -6,7 +6,7 @@ class SearchForm(forms.Form):
     # Price
     price_gt = forms.DecimalField(required=False)
     price_lt = forms.DecimalField(required=False)
-    currency = forms.ModelChoiceField(queryset=Currency.objects.all(), required=False)
+    currency = forms.ModelChoiceField(queryset=Currency.objects.all(), required=False, empty_label=None)
     
     # Publication
     with_photo = forms.BooleanField(required=False)
@@ -35,6 +35,33 @@ class FlatSearchForm(SearchForm):
     fridge = forms.BooleanField(required=False)
     wash_machine = forms.BooleanField(required=False)
 
+# ===============
+# = Form mixins =
+# ===============
+class MoscowFlatSearchForm(forms.Form):
+    # Location
+    metro_remoteness_by_legs_gt = forms.IntegerField(required=False)
+    metro_remoteness_by_legs_lt = forms.IntegerField(required=False)
+    
+    metro_remoteness_by_bus_gt = forms.IntegerField(required=False)
+    metro_remoteness_by_bus_lt = forms.IntegerField(required=False)
+    
+    nearest_metro_stations = forms.CharField(required=False)
+
+class MoscowRegionFlatSearchForm(forms.Form):
+    # Location
+    town = forms.CharField(required=False)
+    
+    mkad_remoteness_gt = forms.IntegerField(required=False)
+    mkad_remoteness_lt = forms.IntegerField(required=False)
+
+class CommonFlatSearchForm(forms.Form):
+    # Location
+    town = forms.CharField(required=False)
+
+# =============
+# = RentFlats =
+# =============
 class RentFlatSearchForm(FlatSearchForm):
     # Price
     payment_period = forms.ChoiceField(choices=RentFlat.PAYMENT_PERIOD_CHOICES, required=False)
@@ -48,8 +75,29 @@ class RentFlatSearchForm(FlatSearchForm):
     private = forms.BooleanField(required=False)
     zero_commission = forms.BooleanField(required=False)
 
+class MoscowRentFlatSearchForm(RentFlatSearchForm, MoscowFlatSearchForm):
+    pass
+
+class MoscowRegionRentFlatSearchForm(RentFlatSearchForm, MoscowRegionFlatSearchForm):
+    pass
+
+class CommonRentFlatSearchForm(RentFlatSearchForm, CommonFlatSearchForm):
+    pass
+
+# =============
+# = SellFlats =
+# =============
 class SellFlatSearchForm(FlatSearchForm):
     # Price
     mortgage = forms.BooleanField(required=False)
     part_in_flat = forms.BooleanField(required=False)
+
+class MoscowSellFlatSearchForm(SellFlatSearchForm, MoscowFlatSearchForm):
+    pass
+
+class MoscowRegionSellFlatSearchForm(SellFlatSearchForm, MoscowRegionFlatSearchForm):
+    pass
+
+class CommonSellFlatSearchForm(SellFlatSearchForm, CommonFlatSearchForm):
+    pass
 

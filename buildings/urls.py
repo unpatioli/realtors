@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
-from buildings.location_dispatcher import LOCATION_FORMS
+from buildings.location_dispatcher import LOCATION_FORMS, LocationDispatcher
 
 common_patterns = patterns('buildings.views',
     # (r'/$', 'index'),
@@ -8,6 +8,8 @@ common_patterns = patterns('buildings.views',
 )
 
 location_regexp = r"\b%s\b" % r"\b|\b".join([location for location in LOCATION_FORMS])
+deal_type_regexp = r"\b%s\b" % r"\b|\b".join([deal_type[0] for deal_type in LocationDispatcher.deal_types()])
+
 rentflat_patterns = patterns('buildings.views',
     (r'user/(?P<user_id>\d+)/rent/flats/$', 'user_rentflat_list'),
     (r'rent/flats/(?P<id>\d+)/$', 'rentflat_detail'),
@@ -25,7 +27,10 @@ sellflat_patterns = patterns('buildings.views',
 )
 
 search_patterns = patterns('buildings.views',
-    (r'search/$', 'search'),
+    (r'search/(?P<deal_type>%(deal_type)s)/(?P<location>%(location)s)/$' % {
+        'deal_type': deal_type_regexp,
+        'location': location_regexp,
+        }, 'search'),
     # (r'find/$', 'find'),
 )
 

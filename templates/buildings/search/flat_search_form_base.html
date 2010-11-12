@@ -1,0 +1,83 @@
+{% extends "buildings/search/base.html" %}
+{% load building_form %}
+
+{% block content %}
+	<div id="location_menu">
+		<ul>
+			{% for k, v in locations %}
+				<li>
+					{% if k == location %}
+						{{ v }}
+					{% else %}
+						<a href="{% url buildings.views.search deal_type k %}">{{ v }}</a>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div id="deal_type_menu">
+		<ul>
+			{% for k, v in deal_types %}
+				<li>
+					{% if k == deal_type %}
+						{{ v }}
+					{% else %}
+						<a href="{% url buildings.views.search k location %}">{{ v }}</a>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+	
+	<form action="" method="get">
+		{{ form.non_field_errors }}
+		<ul>
+			<fieldset>
+				<legend>Расположение</legend>
+				{% block location %}{% endblock %}
+			</fieldset>
+			<fieldset>
+				<legend>Тип объекта и метражи</legend>
+				
+				{% formfield form.rooms_count "Кол-во комнат" %}
+				
+				{% gtlt_field form.total_area_gt form.total_area_lt "Общая площадь" %}
+				{% gtlt_field form.kitchen_area_gt form.kitchen_area_lt "Площадь кухни" %}
+			</fieldset>
+			<fieldset>
+				<legend>Дом</legend>
+				
+				{% gtlt_field form.floor_gt form.floor_lt "Этаж" %}
+				{% formfield form.floor_no_first "Кроме первого" %}
+				{% formfield form.floor_no_last "Кроме последнего" %}
+				{% formfield form.house_type "Тип дома" %}
+				{% formfield form.renovation_type "Тип ремонта" %}
+			</fieldset>
+			<fieldset>
+				<legend>Цена</legend>
+				
+				{% gtlt_field form.price_gt form.price_lt "Цена" %}
+				{% formfield form.currency "Валюта" %}
+				{% block price %}{% endblock %}
+			</fieldset>
+			{% block after_price %}{% endblock %}
+
+			<fieldset>
+				<legend>Прочие параметры</legend>
+				{% formfield form.furniture "Мебель" %}
+				{% formfield form.balcony "Балкон" %}
+				{% formfield form.fridge "Холодильник" %}
+				{% formfield form.wash_machine "Стиральная машина" %}
+				{% block other_params %}{% endblock %}
+			</fieldset>
+			<fieldset>
+				<legend>Публикация</legend>
+				
+				{% formfield form.with_photo "Только с фото" %}
+				{% formfield form.period "Выводить за период" %}
+			</fieldset>
+		</ul>
+		
+		<input type="submit" value="Искать" />
+	</form>
+{% endblock %}

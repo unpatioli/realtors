@@ -187,12 +187,13 @@ def sellflat_edit(request, id):
 # ==========
 # = Search =
 # ==========
-def search(request):
+def search(request, deal_type, location):
     if request.method != 'GET':
         raise Http404
+    form_dispatcher = LocationDispatcher(deal_type=deal_type, location=location)
     
     if request.GET:
-        form = RentFlatSearchForm(request.GET)
+        form = form_dispatcher.search_form_class(request.GET)
         if form.is_valid():
             # Perform search actions
             return direct_to_template(
@@ -200,10 +201,16 @@ def search(request):
                 template = "buildings/search/results.html",
             )
     else:
-        form = RentFlatSearchForm()
+        form = form_dispatcher.search_form_class()
     return direct_to_template(
         request,
-        template = "buildings/search/search_form.html",
-        extra_context = {'form': form}
+        template = form_dispatcher.search_form_template,
+        extra_context = {
+            'form': form,
+            'locations': LocationDispatcher.localized_titles('ru'),
+            'location': location,
+            'deal_types': LocationDispatcher.deal_types(),
+            'deal_type': deal_type,
+        }
     )
 

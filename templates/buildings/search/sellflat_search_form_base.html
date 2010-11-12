@@ -1,0 +1,7 @@
+{% extends "buildings/search/flat_search_form_base.html" %}
+{% load building_form %}
+
+{% block price %}
+	{% formfield form.mortgage "Ипотека" %}
+	{% formfield form.part_in_flat "Доля в квартире" %}
+{% endblock %}

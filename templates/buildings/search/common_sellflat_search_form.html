@@ -1,0 +1,6 @@
+{% extends "buildings/search/sellflat_search_form_base.html" %}
+{% load building_form %}
+
+{% block location %}
+	{% formfield form.town "Город" %}
+{% endblock %}

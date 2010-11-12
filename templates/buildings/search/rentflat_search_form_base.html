@@ -1,0 +1,21 @@
+{% extends "buildings/search/flat_search_form_base.html" %}
+{% load building_form %}
+
+{% block price %}
+	{% formfield form.payment_period "Период оплаты" %}
+{% endblock %}
+
+{% block after_price %}
+	<fieldset>
+		<legend>Риэлторы</legend>
+		
+		{% formfield form.agency "Агентство" %}
+		{% formfield form.private "Частный риэлтор" %}
+		{% formfield form.zero_commission "Без комиссии" %}
+	</fieldset>
+{% endblock %}
+
+{% block other_params %}
+	{% formfield form.children "Возьмут с детьми" %}
+	{% formfield form.pets "Возьмут с животными" %}
+{% endblock %}

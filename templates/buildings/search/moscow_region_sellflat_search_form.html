@@ -1,0 +1,8 @@
+{% extends "buildings/search/sellflat_search_form_base.html" %}
+{% load building_form %}
+
+{% block location %}
+	{% formfield form.town "Город" %}
+	
+	{% gtlt_field form.mkad_remoteness_gt form.mkad_remoteness_lt "До МКАД" %}
+{% endblock %}

@@ -30,3 +30,7 @@ def pic_flag_field(value, src, title="", alt=""):
         res = '<img src="%s" title="%s" alt="%s" />' % (src, title, alt)
     return res
 
+@register.simple_tag
+def formfield(field, id, label):
+    return '<li>%s<label for="%s">%s</label>%s</li>' % (field.errors, id, label, field)
+
