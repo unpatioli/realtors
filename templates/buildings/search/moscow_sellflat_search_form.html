@@ -2,7 +2,10 @@
 {% load building_form %}
 
 {% block location %}
-	{% gtlt_field form.metro_remoteness_by_legs_gt form.metro_remoteness_by_legs_lt "До метро пешком" %}
-	{% gtlt_field form.metro_remoteness_by_bus_gt form.metro_remoteness_by_bus_lt "До метро на транспорте" %}
+	{# {% gtlt_field form.metro_remoteness_by_legs_gt form.metro_remoteness_by_legs_lt "До метро пешком" %} #}
+	{# {% gtlt_field form.metro_remoteness_by_bus_gt form.metro_remoteness_by_bus_lt "До метро на транспорте" %} #}
+	{% formfield form.metro_remoteness_by_legs "До метро пешком" %}
+	{% formfield form.metro_remoteness_by_bus "До метро на транспорте" %}
+	
 	{% formfield form.nearest_metro_stations "Ближайшие станции метро" %}
 {% endblock %}

@@ -2,6 +2,40 @@
 from django import forms
 from buildings.models import Currency, HouseType, RenovationType, Flat, RentFlat
 
+class SliderWidget(forms.TextInput):
+    class Media:
+        css = {
+            'all': ("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.0/themes/base/jquery-ui.css",),
+        }
+        js = (
+            "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js",
+        )
+    
+    def render(self, name, value, attrs=None):
+        from django.utils.safestring import mark_safe
+        res = super(SliderWidget, self).render(name, value, attrs=attrs)
+        if attrs and 'id' in attrs:
+            res += mark_safe(u"""
+                <div id="%(id)s_slider"></div>
+                <script type="text/javascript">
+                    $(function() {
+                        $("#%(id)s_slider").slider({
+                            value: 1,
+                            min: 0,
+                            max: 180,
+                            slide: function(event, ui){
+                                $("#%(id)s").val(ui.value);
+                            }
+                        });
+                        $("#%(id)s").val($("#%(id)s_slider").slider("value"));
+                    });
+                </script>
+            """ % {'id': attrs['id']} )
+        return res
+    
+
+
+
 class SearchForm(forms.Form):
     # Price
     price_gt = forms.DecimalField(required=False)
@@ -40,11 +74,23 @@ class FlatSearchForm(SearchForm):
 # ===============
 class MoscowFlatSearchForm(forms.Form):
     # Location
-    metro_remoteness_by_legs_gt = forms.IntegerField(required=False)
-    metro_remoteness_by_legs_lt = forms.IntegerField(required=False)
+    # metro_remoteness_by_legs_gt = forms.IntegerField(required=False)
+    # metro_remoteness_by_legs_lt = forms.IntegerField(required=False)
+    metro_remoteness_by_legs = forms.IntegerField(required=False,
+                                                widget=SliderWidget(attrs={
+                                                    'class': 'slider',
+                                                    'readonly': 1,
+                                                })
+                                            )
     
-    metro_remoteness_by_bus_gt = forms.IntegerField(required=False)
-    metro_remoteness_by_bus_lt = forms.IntegerField(required=False)
+    # metro_remoteness_by_bus_gt = forms.IntegerField(required=False)
+    # metro_remoteness_by_bus_lt = forms.IntegerField(required=False)
+    metro_remoteness_by_bus = forms.IntegerField(required=False,
+                                                widget=SliderWidget(attrs={
+                                                    'class': 'slider',
+                                                    'readonly': 1,
+                                                })
+                                            )
     
     nearest_metro_stations = forms.CharField(required=False)
 
@@ -52,8 +98,14 @@ class MoscowRegionFlatSearchForm(forms.Form):
     # Location
     town = forms.CharField(required=False)
     
-    mkad_remoteness_gt = forms.IntegerField(required=False)
-    mkad_remoteness_lt = forms.IntegerField(required=False)
+    # mkad_remoteness_gt = forms.IntegerField(required=False)
+    # mkad_remoteness_lt = forms.IntegerField(required=False)
+    mkad_remoteness = forms.IntegerField(required=False,
+                                        widget=SliderWidget(attrs={
+                                            'class': 'slider',
+                                            'readonly': 1,
+                                        })
+                                    )
 
 class CommonFlatSearchForm(forms.Form):
     # Location

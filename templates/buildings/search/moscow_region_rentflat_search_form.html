@@ -4,5 +4,6 @@
 {% block location %}
 	{% formfield form.town "Город" %}
 	
-	{% gtlt_field form.mkad_remoteness_gt form.mkad_remoteness_lt "До МКАД" %}
+	{# {% gtlt_field form.mkad_remoteness_gt form.mkad_remoteness_lt "До МКАД" %} #}
+	{% formfield form.mkad_remoteness "До МКАД" %}
 {% endblock %}
