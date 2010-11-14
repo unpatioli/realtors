@@ -37,6 +37,14 @@ class SliderWidget(forms.TextInput):
 
 
 class SearchForm(forms.Form):
+    PERIOD_CHOICES = (
+        (4*7,u'месяц'),
+        (3*7,u'3 недели'),
+        (2*7,u'2 недели'),
+        (7,u'неделя'),
+        (3,u'3 суток'),
+        (1,u'сутки'),
+    )
     # Price
     price_gt = forms.DecimalField(required=False)
     price_lt = forms.DecimalField(required=False)
@@ -44,7 +52,7 @@ class SearchForm(forms.Form):
     
     # Publication
     with_photo = forms.BooleanField(required=False)
-    period = forms.ChoiceField(choices=[(0,u'месяц'), (1,u'3 недели'), (2,u'2 недели'), (3,u'неделя'), (4,u'3 суток'), (5,u'сутки')], required=False)
+    period = forms.ChoiceField(choices=PERIOD_CHOICES, required=False)
 
 class FlatSearchForm(SearchForm):
     # Object type and metrages
