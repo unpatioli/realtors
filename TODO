@@ -1,1 +1,3 @@
-Add _DELETE_ ability to models
+TODO:
+1. Replace buildings.location_dispatcher with several views dispatched from URLconf
+2. Add _DELETE_ ability to models
