@@ -2,7 +2,7 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.views.generic.simple import direct_to_template, redirect_to
+from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_list
 
 from buildings.models import RentFlat, SellFlat
@@ -51,7 +51,7 @@ def rentflat_new(request, location):
         if form.is_valid():
             flat = form.save()
             
-            return redirect_to(request, url=flat.get_absolute_url(), permanent=False)
+            return redirect(flat)
     else:
         form = form_dispatcher.form_class()
     return direct_to_template(
@@ -84,11 +84,7 @@ def rentflat_edit(request, id):
         form = form_dispatcher.form_class(request.POST, instance=flat)
         if form.is_valid():
             form.save()
-            return redirect_to(
-                request,
-                url=flat.get_absolute_url(),
-                permanent=False
-            )
+            return redirect(flat)
     else:
         form = form_dispatcher.form_class(instance=flat)
     return direct_to_template(
@@ -139,7 +135,7 @@ def sellflat_new(request, location):
         if form.is_valid():
             flat = form.save()
             
-            return redirect_to(request, url=flat.get_absolute_url(), permanent=False)
+            return redirect(flat)
     else:
         form = form_dispatcher.form_class()
     return direct_to_template(
@@ -170,11 +166,7 @@ def sellflat_edit(request, id):
         form = form_dispatcher.form_class(request.POST, instance=flat)
         if form.is_valid():
             form.save()
-            return redirect_to(
-                request,
-                url=flat.get_absolute_url(),
-                permanent=False
-            )
+            return redirect(flat)
     else:
         form = form_dispatcher.form_class(instance=flat)
     return direct_to_template(
