@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     (r'^accounts/', include('accounts.urls')),
     (r'^buildings/', include('buildings.urls')),
     
+    (r'^images/', include('images.urls')),
+    
     # Django comments system
     (r'^comments/', include('django.contrib.comments.urls')),
     

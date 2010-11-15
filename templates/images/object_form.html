@@ -1,0 +1,12 @@
+{% extends "images/base.html" %}
+
+{% block content %}
+	{% if form.instance.pk %}
+		<img src="{{ form.instance.image.url }}" />
+	{% endif %}
+	<form enctype="multipart/form-data" action="" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Сохранить" />
+	</form>
+{% endblock %}
