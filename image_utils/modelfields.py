@@ -20,12 +20,12 @@ class ResizedImageField(models.ImageField):
             name = ".".join([hashlib.md5(new_image.getvalue()).hexdigest(), 'jpg'])
             data = SimpleUploadedFile(name, new_image.getvalue(), data.content_type)
             
-            # Remove previous avatar
+            # Remove previous image
             try:
-                previous = instance.avatar.path
+                previous = getattr(instance, self.name).path
                 if os.path.isfile(previous):
                     os.remove(previous)
-            except ValueError:
+            except (AttributeError, ValueError):
                 pass
         super(ResizedImageField, self).save_form_data(instance, data)
     
