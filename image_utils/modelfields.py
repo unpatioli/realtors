@@ -5,7 +5,7 @@ class ResizedImageField(models.ImageField):
         self.dimensions = dimensions
         super(ResizedImageField, self).__init__(**kwargs)
         
-    def save_form_data(self, instance, data):
+    def save_form_data(self, instance, data, name=None):
         import os
         import hashlib
         from StringIO import StringIO
@@ -17,8 +17,10 @@ class ResizedImageField(models.ImageField):
             image = image_resize(data, self.dimensions)
             new_image = StringIO()
             image.save(new_image, 'JPEG', quality=85)
-            name = ".".join([hashlib.md5(new_image.getvalue()).hexdigest(), 'jpg'])
-            data = SimpleUploadedFile(name, new_image.getvalue(), data.content_type)
+            if not name:
+                name = hashlib.md5(new_image.getvalue()).hexdigest()
+            full_name = "%s.jpg" % name
+            data = SimpleUploadedFile(full_name, new_image.getvalue(), data.content_type)
             
             # Remove previous image
             try:
