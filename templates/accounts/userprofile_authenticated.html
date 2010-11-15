@@ -3,11 +3,11 @@
 {% block userprofile_controls %}
 	
 	{% if user.pk == userprofile.user.pk %}
-		<a href="/accounts/profile/edit">Редактировать</a>
+		<a href="{% url accounts_my_profile_edit %}">Редактировать</a>
 	{% endif %}
 	
 	{% if not user.realtor_set.exists %}
-		<a href="/accounts/profile/realtor/new">Обновиться до риэлтора</a>
+		<a href="{% url accounts_my_profile_realtor_new %}">Обновиться до риэлтора</a>
 	{% endif %}
 	
 {% endblock %}
