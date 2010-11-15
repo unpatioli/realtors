@@ -123,6 +123,13 @@ class Flat(Building):
     class Meta:
         abstract = True
     
+    def clean(self):
+        from django.core.exceptions import ValidationError
+        if self.floors_count and self.floor > self.floors_count:
+            raise ValidationError(u"Этаж не может быть больше количества этажей")
+        if self.total_area and self.kitchen_area > self.total_area:
+            raise ValidationError(u"Площадь кухни не может превышать общую площадь")
+    
 
 class RentFlat(Flat):
     PAYMENT_PERIOD_CHOICES = (
