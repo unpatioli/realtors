@@ -62,6 +62,7 @@ def rentflat_new(request, location):
             'locations': form_dispatcher.localized_titles('ru'),
             'location': location,
             'deal_type': 'rent',
+            'content_type': 'rentflat',
         }
     )
 
@@ -90,7 +91,10 @@ def rentflat_edit(request, id):
     return direct_to_template(
         request,
         template = "buildings/flat_form.html",
-        extra_context = {'form': form}
+        extra_context = {
+            'form': form,
+            'content_type': 'rentflat',
+        }
     )
 
 
@@ -146,6 +150,7 @@ def sellflat_new(request, location):
             'locations': form_dispatcher.localized_titles('ru'),
             'location': location,
             'deal_type': 'sell',
+            'content_type': 'sellflat',
         }
     )
 
@@ -172,8 +177,12 @@ def sellflat_edit(request, id):
     return direct_to_template(
         request,
         template = "buildings/flat_form.html",
-        extra_context = {'form': form}
+        extra_context = {
+            'form': form,
+            'content_type': 'sellflat',
+        }
     )
+
 
 
 # ==========
