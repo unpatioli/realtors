@@ -11,19 +11,41 @@ location_regexp = r"\b%s\b" % r"\b|\b".join([location for location in LOCATION_F
 deal_type_regexp = r"\b%s\b" % r"\b|\b".join([deal_type[0] for deal_type in LocationDispatcher.deal_types()])
 
 rentflat_patterns = patterns('buildings.views',
-    (r'user/(?P<user_id>\d+)/rent/flats/$', 'user_rentflat_list'),
-    (r'rent/flats/(?P<id>\d+)/$', 'rentflat_detail'),
-    (r'rent/flats/new/(?P<location>%s)/$' % location_regexp, 'rentflat_new'),
-    (r'rent/flats/(?P<id>\d+)/edit/$', 'rentflat_edit'),
-    # (r'rent/flats/(?P<id>\d+)/delete/$', 'rentflat_delete')
+    url(    r'user/(?P<user_id>\d+)/rent/flats/$',
+            'user_rentflat_list',
+            name = 'buildings_user_rentflat_list'
+    ),
+    url(    r'rent/flats/(?P<id>\d+)/$',
+            'rentflat_detail',
+            name = 'buildings_rentflat_detail'
+    ),
+    url(    r'rent/flats/(?P<location>%s)/new/$' % location_regexp,
+            'rentflat_new',
+            name = 'buildings_rentflat_new'
+    ),
+    url(    r'rent/flats/(?P<id>\d+)/edit/$',
+            'rentflat_edit',
+            name = 'buildings_rentflat_edit'
+    ),
 )
 
 sellflat_patterns = patterns('buildings.views',
-    (r'user/(?P<user_id>\d+)/sell/flats/$', 'user_sellflat_list'),
-    (r'sell/flats/(?P<id>\d+)/$', 'sellflat_detail'),
-    (r'sell/flats/new/(?P<location>%s)/$' % location_regexp, 'sellflat_new'),
-    (r'sell/flats/(?P<id>\d+)/edit/$', 'sellflat_edit'),
-    # (r'sell/flats/(?P<id>\d+)/delete/$', 'sellflat_delete')
+    url(    r'user/(?P<user_id>\d+)/sell/flats/$',
+            'user_sellflat_list',
+            name = 'buildings_user_sellflat_list'
+    ),
+    url(    r'sell/flats/(?P<id>\d+)/$',
+            'sellflat_detail',
+            name = 'buildings_sellflat_detail'
+    ),
+    url(    r'sell/flats/(?P<location>%s)/new/$' % location_regexp,
+            'sellflat_new',
+            name = 'buildings_sellflat_new'
+    ),
+    url(    r'sell/flats/(?P<id>\d+)/edit/$',
+            'sellflat_edit',
+            name = 'buildings_sellflat_edit'
+    ),
 )
 
 # search_patterns = patterns('buildings.views',

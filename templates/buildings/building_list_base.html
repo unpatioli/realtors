@@ -7,28 +7,28 @@
 				{% if objects_type == 'rent_flats' %}
 					Аренда
 				{% else %}
-					<a href="/buildings/user/{{ user_id }}/rent/flats">Аренда</a>
+					<a href="{% url buildings_user_rentflat_list user_id %}">Аренда</a>
 				{% endif %}
 			</li>
 			<li>
 				{% if objects_type == 'sell_flats' %}
 					Продажа
 				{% else %}
-					<a href="/buildings/user/{{ user_id }}/sell/flats">Продажа</a>
+					<a href="{% url buildings_user_sellflat_list user_id %}">Продажа</a>
 				{% endif %}
 			</li>
 			{# <li> #}
 			{# 	{% if objects_type == 'country_property' %} #}
 			{# 		Загородная недвижимость #}
 			{# 	{% else %} #}
-			{# 		<a href="/buildings/user/{{ user_id }}/country_property">Загородная недвижимость</a> #}
+			{# 		<a href="{% url buildings_user_country_property_list user_id %}">Загородная недвижимость</a> #}
 			{# 	{% endif %} #}
 			{# </li> #}
 			{# <li> #}
 			{# 	{% if objects_type == 'commercial_property' %} #}
 			{# 		Коммерческая недвижимость #}
 			{# 	{% else %} #}
-			{# 		<a href="/buildings/user/{{ user_id }}/commercial_property">Коммерческая недвижимость</a> #}
+			{# 		<a href="{% url buildings_user_commercial_property_list user_id %}">Коммерческая недвижимость</a> #}
 			{# 	{% endif %} #}
 			</li>
 		</ul>

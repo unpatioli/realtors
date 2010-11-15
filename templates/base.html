@@ -48,7 +48,7 @@
 					
 					{% if user.is_authenticated %}
 						<div id="manage_buildings">
-							<a href="/buildings/user/{{ user.pk }}/rent/flats">Мои объекты</a>
+							<a href="{% url buildings_user_rentflat_list user.pk %}">Мои объекты</a>
 						</div>
 					{% endif %}
 				</div>
@@ -56,7 +56,7 @@
 					{% block search_panel %}
 						<ul>
 							<li>
-								<a href="/buildings/search/rent/flat/moscow">Поиск</a>
+								<a href="{% url buildings_moscow_rentflat_search %}">Поиск</a>
 							</li>
 						</ul>
 					{% endblock %}

@@ -6,7 +6,7 @@
 			{% if k == location %}
 				{{ v }}
 			{% else %}
-				<a href='/buildings/{{ deal_type }}/flats/new/{{ k }}'>{{ v }}</a>
+				<a href='/buildings/{{ deal_type }}/flats/{{ k }}/new'>{{ v }}</a>
 			{% endif %}
 		{% endfor %}
 	{% endif %}

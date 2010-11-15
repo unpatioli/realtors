@@ -2,7 +2,7 @@
 
 {% block management_panel %}
 	{% if show_management_panel %}
-		<a href="/buildings/rent/flats/new/moscow">Добавить квартиру</a>
+		<a href="{% url buildings_rentflat_new 'moscow' %}">Добавить квартиру</a>
 	{% endif %}
 {% endblock %}
 
@@ -30,7 +30,7 @@
 		<tbody>
 			{% for flat in object_list %}
 				<tr>
-					<td><a href="/buildings/rent/flats/{{ flat.pk }}">{{ forloop.counter }}</a></td>
+					<td><a href="{% url buildings_rentflat_detail flat.pk %}">{{ forloop.counter }}</a></td>
 					<td>{{ flat.town }}</td>
 					<td>{{ flat.get_address }}</td>
 					<td>{{ flat.total_area }} м<sup>2</sup></td>
