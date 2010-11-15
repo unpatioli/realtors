@@ -11,10 +11,26 @@ class Currency(models.Model):
     def __unicode__(self):
         return self.symbol
 
+# ============
+# = Building =
+# ============
+
+# Managers
+class LocationManager(models.Manager):
+    def __init__(self, location, *args, **kwargs):
+        super(LocationManager, self).__init__(*args, **kwargs)
+        self.location = location
+    
+    def get_query_set(self):
+        return super(LocationManager, self).get_query_set().filter(location = self.location)
+    
+
+# Model
 class Building(models.Model):
     LOCATION_CHOICES = (
         ('moscow', u'Москва'),
         ('moscow_region', u'Область'),
+        ('common', u'Другой регион'),
     )
     
     owner = models.ForeignKey(User, verbose_name=u"Владелец")
@@ -44,6 +60,15 @@ class Building(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
+    
+    # ============
+    # = Managers =
+    # ============
+    objects = models.Manager()
+    moscow_objects = LocationManager(location='moscow')
+    moscow_region_objects = LocationManager(location='moscow_region')
+    common_objects = LocationManager(location = 'common')
+    
     
     class Meta:
         abstract = True

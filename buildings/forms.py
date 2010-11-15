@@ -20,7 +20,7 @@ class SliderWidget(forms.TextInput):
                 <script type="text/javascript">
                     $(function() {
                         $("#%(id)s_slider").slider({
-                            value: 1,
+                            value: 0,
                             min: 0,
                             max: 180,
                             slide: function(event, ui){

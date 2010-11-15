@@ -26,12 +26,39 @@ sellflat_patterns = patterns('buildings.views',
     # (r'sell/flats/(?P<id>\d+)/delete/$', 'sellflat_delete')
 )
 
+# search_patterns = patterns('buildings.views',
+#     (r'search/(?P<deal_type>%(deal_type)s)/(?P<location>%(location)s)/$' % {
+#         'deal_type': deal_type_regexp,
+#         'location': location_regexp,
+#         }, 'search'),
+#     # (r'find/$', 'find'),
+# )
 search_patterns = patterns('buildings.views',
-    (r'search/(?P<deal_type>%(deal_type)s)/(?P<location>%(location)s)/$' % {
-        'deal_type': deal_type_regexp,
-        'location': location_regexp,
-        }, 'search'),
-    # (r'find/$', 'find'),
+    url(    r'search/rent/flat/moscow/$',
+            'moscow_rentflat_search',
+            name = 'buildings_moscow_rentflat_search'
+    ),
+    url(    r'search/rent/flat/moscow_region/$',
+            'moscow_region_rentflat_search',
+            name = 'buildings_moscow_region_rentflat_search'
+    ),
+    url(    r'search/rent/flat/common/$',
+            'common_rentflat_search',
+            'buildings_common_rentflat_search'
+    ),
+    
+    url(    r'search/sell/flat/moscow/$',
+            'moscow_sellflat_search',
+            'buildings_moscow_sellflat_search'
+    ),
+    url(    r'search/sell/flat/moscow_region/$',
+            'moscow_region_sellflat_search',
+            'buildings_moscow_region_sellflat_search'
+    ),
+    url(    r'search/sell/flat/common/$',
+            'common_sellflat_search',
+            'buildings_common_sellflat_search'
+    ),
 )
 
 urlpatterns = common_patterns + rentflat_patterns + sellflat_patterns + search_patterns

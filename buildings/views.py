@@ -1,13 +1,13 @@
 # -*- coding:utf-8 -*-
-from buildings.models import RentFlat, SellFlat
-from buildings.location_dispatcher import LocationDispatcher
-from buildings.forms import RentFlatSearchForm
-
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template, redirect_to
 from django.views.generic.list_detail import object_list
+
+from buildings.models import RentFlat, SellFlat
+from buildings.location_dispatcher import LocationDispatcher
+from buildings import forms, find
 
 
 # ============
@@ -187,30 +187,75 @@ def sellflat_edit(request, id):
 # ==========
 # = Search =
 # ==========
-def search(request, deal_type, location):
+def moscow_rentflat_search(request):
+    return __flat_search(
+                request,
+                forms.MoscowRentFlatSearchForm,
+                'buildings/search/moscow_rentflat_search_form.html',
+                find.moscow_rentflat_find
+            )
+
+def moscow_region_rentflat_search(request):
+    return __flat_search(
+                request,
+                forms.MoscowRegionRentFlatSearchForm,
+                'buildings/search/moscow_region_rentflat_search_form.html',
+                find.moscow_region_rentflat_find
+            )
+
+def common_rentflat_search(request):
+    return __flat_search(
+                request,
+                forms.CommonRentFlatSearchForm,
+                'buildings/search/common_rentflat_search_form.html',
+                find.common_rentflat_find
+            )
+
+
+def moscow_sellflat_search(request):
+    return __flat_search(
+                request,
+                forms.MoscowSellFlatSearchForm,
+                'buildings/search/moscow_sellflat_search_form.html',
+                find.moscow_sellflat_find
+            )
+
+def moscow_region_sellflat_search(request):
+    return __flat_search(
+                request,
+                forms.MoscowRegionSellFlatSearchForm,
+                'buildings/search/moscow_region_sellflat_search_form.html',
+                find.moscow_region_sellflat_find
+            )
+
+def common_sellflat_search(request):
+    return __flat_search(
+                request,
+                forms.CommonSellFlatSearchForm,
+                'buildings/search/common_sellflat_search_form.html',
+                find.common_sellflat_find
+            )
+
+
+
+def __flat_search(request, form_class, form_template, find_function):
     if request.method != 'GET':
         raise Http404
-    form_dispatcher = LocationDispatcher(deal_type=deal_type, location=location)
-    
+
     if request.GET:
-        form = form_dispatcher.search_form_class(request.GET)
+        form = form_class(request.GET)
         if form.is_valid():
-            # Perform search actions
+            res = find_function(form)
             return direct_to_template(
                 request,
                 template = "buildings/search/results.html",
+                extra_context = {'res': res}
             )
     else:
-        form = form_dispatcher.search_form_class()
+        form = form_class()
     return direct_to_template(
         request,
-        template = form_dispatcher.search_form_template,
-        extra_context = {
-            'form': form,
-            'locations': LocationDispatcher.localized_titles('ru'),
-            'location': location,
-            'deal_types': LocationDispatcher.deal_types(),
-            'deal_type': deal_type,
-        }
+        template = form_template,
+        extra_context = {'form': form}
     )
 
