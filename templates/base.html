@@ -78,6 +78,18 @@
 						</div>
 					</div>
 					
+					{% if messages %}
+						<div id="messages_container" class="prepend-1 span-22 append-1 last">
+							<div class="messages" class="span-22 last">
+								<ul class="messages_list">
+									{% for message in messages %}
+										<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|safe }}</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					{% endif %}
+					
 				</div>
 			
 				<div id="content_container" class="span-24 last">
