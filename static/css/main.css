@@ -13,11 +13,3 @@
 ul.messages_list{
     list-style-type: none;
 }
-
-
-.align-left{
-    text-align: left;
-}
-.align-right{
-    text-align: right;
-}

@@ -3,3 +3,10 @@ ul.menu li{
     list-style-type: none;
     padding-right: 20px;
 }
+
+.align-left{
+    text-align: left;
+}
+.align-right{
+    text-align: right;
+}
