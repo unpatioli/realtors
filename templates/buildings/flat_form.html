@@ -11,6 +11,10 @@
 		{% endfor %}
 	{% endif %}
 	
+	{% if form.instance.pk %}
+		<a href="{% url images_object_image_list content_type=content_type object_id=form.instance.pk %}">Фотографии</a>
+	{% endif %}
+	
 	<form action="" method="post">
 		{% csrf_token %}
 		{{ form.as_p }}

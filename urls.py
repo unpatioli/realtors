@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     (r'^accounts/', include('accounts.urls')),
     (r'^buildings/', include('buildings.urls')),
     
+    (r'^images/', include('images.urls')),
+    
     # Django comments system
     (r'^comments/', include('django.contrib.comments.urls')),
     
@@ -27,7 +29,7 @@ urlpatterns = patterns('',
 # ¡¡¡ Only in dev mode !!!
 if settings.DEBUG:
     urlpatterns += patterns('',
-        (r'^{staticfiles_url}(?P<path>.*)$'.format(staticfiles_url=settings.STATICFILES_URL),
+        (r'^{staticfiles_url}(?P<path>.*)$'.format(staticfiles_url=settings.STATICFILES_URL[1:]),
             'django.views.static.serve',
             {'document_root': settings.STATICFILES_DOC_ROOT}),
     )
