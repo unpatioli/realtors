@@ -3,7 +3,7 @@ from accounts.models import UserProfile, Realtor
 
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 
 def register(request):
     from django.contrib.auth.models import User
@@ -33,17 +33,19 @@ def register(request):
 def profile(request, user_id):
     if request.user.is_authenticated() and request.user.id == int(user_id):
         return redirect(my_profile)
-    try:
-        userprofile = UserProfile.objects.get(user=user_id)
-    except UserProfile.DoesNotExist:
+    userprofile = get_object_or_404(UserProfile, user=user_id)
+    if not userprofile.can_show():
         return direct_to_template(
             request,
-            template = "accounts/userprofile_not_found.html"
+            template = "accounts/closed_profile.html",
         )
     return direct_to_template(
         request,
         template = "accounts/userprofile.html",
-        extra_context = {'userprofile': userprofile, 'is_my_profile': False}
+        extra_context = {
+            'userprofile': userprofile,
+            'is_my_profile': False
+        }
     )
 
 @login_required

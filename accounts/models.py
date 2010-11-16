@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from django.conf import settings
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 
@@ -27,8 +28,19 @@ class UserProfile(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
     
+    def __unicode__(self):
+        if self.user.first_name == "" and self.user.last_name == "":
+            return "%s's profile" % unicode(self.user)
+        return self.get_name
+    
+    def get_name(self):
+        return " ".join([self.user.first_name, self.user.last_name])
+    
     def get_absolute_url(self):
-        return "/accounts/profile/%i/" % self.user.pk
+        return reverse('accounts_profile', args=[self.user.pk])
+    
+    def can_show(self):
+        return not self.is_closed
     
 
 class Realtor(models.Model):
