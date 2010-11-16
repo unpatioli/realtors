@@ -18,7 +18,9 @@
 		<link href="{{ STATICFILES_URL }}css/blueprint/print.css" rel="stylesheet" type="text/css" media="print" />
 		<!--[if lt IE 8]><link href="{{ STATICFILES_URL }}css/blueprint/ie.css" rel="stylesheet" type="text/css" media="screen, projection" /><![endif]-->
 		
-		<link href="{{ STATICFILES_URL }}css/forms.css" rel="stylesheet" type="text/css" media="screen" />
+		<link href="{{ STATICFILES_URL }}css/common.css" rel="stylesheet" type="text/css" media="screen, projection" />
+		<link href="{{ STATICFILES_URL }}css/main.css" rel="stylesheet" type="text/css" media="screen, projection" />
+		<link href="{{ STATICFILES_URL }}css/forms.css" rel="stylesheet" type="text/css" media="screen, projection" />
 		
 		{% block head %}{% endblock %}
 		
@@ -31,15 +33,15 @@
 			<div id="main_container" class="span-24 last">
 			
 				<div id="header_container" class="span-24 last">
-					<div id="header" class="span-20">
+					<div id="header" class="span-16">
 						<div id="header_content">
 							{% block header %}
-								HEADER
+								<a href="/">Риэлторы москвы</a>
 							{% endblock %}
 						</div>
 					</div>
 					
-					<div id="auth_panel" class="span-4 last">
+					<div id="auth_panel" class="span-8 last">
 						<div id="auth_panel_content">
 							{% if user.is_authenticated %}
 								Hello, {{ user.username }}. <a href="{% url django.contrib.auth.views.logout %}">выйти</a>
