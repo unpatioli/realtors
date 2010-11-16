@@ -1,5 +1,35 @@
+div.form div.field{
+    padding-bottom: 10px;
+}
+div.form div.field div.label{
+    padding-top: 5px;
+    font-size: 1.2em;
+}
+
+div.form div.field input{
+    width: 230px;
+    font-size: 1.2em;
+}
+div.form div.submit{
+    padding-top: 25px;
+}
+div.form div.submit input.submit{
+    width: auto;
+}
+
 input.slider{
     border:0;
     color:#f6931f;
     font-weight: bold;
+}
+
+div.form div.non_field_errors,
+div.form div.field div.input_errors{
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #99281B;
+}
+div.form div.field div.input_errors ul.errorlist{
+    padding-top: 5px;
+    list-style-type: none;
 }

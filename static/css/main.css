@@ -9,3 +9,11 @@
 #header_content a:hover{
     color: #383838;
 }
+
+
+.align-left{
+    text-align: left;
+}
+.align-right{
+    text-align: right;
+}
