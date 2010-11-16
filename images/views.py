@@ -1,4 +1,5 @@
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.views.generic.simple import direct_to_template
 from django.http import Http404
@@ -22,12 +23,16 @@ def object_image_list(request, content_type, object_id):
             'images': obj.images.all(),
             'content_type': content_type,
             'object_id': object_id,
+            'show_object_controls': obj.can_edit(request.user),
         }
     )
 
+@login_required
 def object_image_new(request, content_type, object_id):
     try:
         obj = ContentType.objects.get(model=content_type).get_object_for_this_type(pk=object_id)
+        if not obj.can_edit(request.user):
+            raise Http404
     except:
         raise Http404
     
@@ -48,9 +53,12 @@ def object_image_new(request, content_type, object_id):
         }
     )
 
+@login_required
 def object_image_edit(request, content_type, object_id, id):
     try:
         obj = ContentType.objects.get(model=content_type).get_object_for_this_type(pk=object_id)
+        if not obj.can_edit(request.user):
+            raise Http404
         img = obj.images.get(pk=id)
     except:
         raise Http404

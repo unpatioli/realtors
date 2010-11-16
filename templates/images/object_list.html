@@ -1,8 +1,10 @@
 {% extends "images/base.html" %}
 
 {% block content %}
-	<a href="{% url images_object_image_new content_type=content_type object_id=object_id %}">Добавить фото</a>
-
+	{% if show_object_controls %}
+		<a href="{% url images_object_image_new content_type=content_type object_id=object_id %}">Добавить фото</a>
+	{% endif %}
+	
 	{% if images %}
 		<ul>
 			{% for image in images %}
