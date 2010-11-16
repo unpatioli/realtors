@@ -2,11 +2,12 @@ div.form div.field{
     padding-bottom: 10px;
 }
 div.form div.field div.label{
-    padding-top: 5px;
+    margin-top: 5px;
     font-size: 1.2em;
 }
 
 div.form div.field input{
+    margin-top: 10px;
     width: 230px;
     font-size: 1.2em;
 }
