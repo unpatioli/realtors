@@ -14,6 +14,20 @@
 		{% render_field userprofile.description "Дополнительно" %}
 	</ul>
 	
-	{% block userprofile_controls %}{% endblock %}
+	{% if user.pk == userprofile.user.pk %}
+		<ul class="menu">
+			<li>
+				<a href="{% url accounts_my_profile_edit %}">Редактировать</a>
+			</li>
+			
+			<li>
+			{% if not user.realtor_set.exists %}
+				<a href="{% url accounts_my_profile_realtor_new %}">Обновиться до риэлтора</a>
+			{% else %}
+				<a href="{% url accounts_my_profile_realtor_edit %}">Профиль риэлтора</a>
+			{% endif %}
+			</li>
+		</ul>
+	{% endif %}
 	
 {% endblock %}

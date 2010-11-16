@@ -44,7 +44,8 @@
 					<div id="auth_panel" class="span-8 last">
 						<div id="auth_panel_content">
 							{% if user.is_authenticated %}
-								Hello, {{ user.username }}. <a href="{% url django.contrib.auth.views.logout %}">выйти</a>
+								Hello, <a href="{{ user.get_profile.get_absolute_url }}">{{ user.username }}</a>.
+								<a href="{% url django.contrib.auth.views.logout %}">выйти</a>
 							{% else %}
 								<form action="{% url django.contrib.auth.views.login %}" method="post">
 									{% csrf_token %}
