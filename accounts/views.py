@@ -1,9 +1,11 @@
+# -*- coding:utf-8 -*-
 from accounts.forms import RegistrationForm, UserprofileForm, RealtorForm
 from accounts.models import UserProfile, Realtor
 
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib import messages
 
 def register(request):
     from django.contrib.auth.models import User
@@ -19,8 +21,10 @@ def register(request):
             user.first_name = form.cleaned_data["first_name"]
             user.last_name = form.cleaned_data["last_name"]
             user.save()
-            
+            messages.success(request, u"Аккаунт зарегистрирован")
             return redirect('/')
+        else:
+            messages.error(request, u"Аккаунт не зарегистрирован")
     else:
         form = RegistrationForm()
     
@@ -71,8 +75,10 @@ def my_profile_new(request):
             up = form.save(commit=False)
             up.user = request.user
             up.save()
-            
+            messages.success(request, u"Профиль пользователя создан")
             return redirect(up)
+        else:
+            messages.error(request, u"Профиль пользователя не создан")
     else:
         form = UserprofileForm()
     
@@ -93,7 +99,10 @@ def my_profile_edit(request):
         form = UserprofileForm(request.POST, request.FILES, instance=userprofile)
         if form.is_valid():
             form.save()
+            messages.success(request, u"Профиль пользователя обновлен")
             return redirect(userprofile)
+        else:
+            messages.error(request, u"Профиль пользователя не обновлен")
     else:
         form = UserprofileForm(instance=userprofile)
     
@@ -113,8 +122,10 @@ def realtor_new(request):
             r = form.save(commit=False)
             r.user = request.user
             r.save()
-            
+            messages.success(request, u"Профиль риэлтора создан")
             return redirect(r)
+        else:
+            messages.error(request, u"Профиль риэлтора не создан")
     else:
         form = RealtorForm()
     
@@ -135,7 +146,10 @@ def realtor_edit(request):
         form = RealtorForm(request.POST, instance=realtor)
         if form.is_valid():
             form.save()
+            messages.success(request, u"Профиль риэлтора обновлен")
             return redirect(realtor)
+        else:
+            messages.error(request, u"Профиль риэлтора не обновлен")
     else:
         form = RealtorForm(instance=realtor)
     
