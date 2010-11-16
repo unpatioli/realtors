@@ -22,6 +22,18 @@ class RegistrationForm(forms.Form):
             raise forms.ValidationError(u"Пароли не совпадают")
         return password_retype
     
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username):
+            raise forms.ValidationError(u"Это имя уже занято")
+        return username
+    
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email):
+            raise forms.ValidationError(u"Такой email уже зарегистрирован")
+        return email
+    
 
 class UserprofileForm(forms.ModelForm):
     class Meta:
