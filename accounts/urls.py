@@ -30,8 +30,13 @@ urlpatterns = patterns('',
     ),
     url(    r'profile/edit/$',
             'accounts.views.my_profile_edit',
-            name = 'accounts_my_profile_edit'),
+            name = 'accounts_my_profile_edit'
+    ),
     
+    url(    r'profile/realtor/(?P<user_id>\d+)/$',
+            'accounts.views.profile_realtor',
+            name = 'accounts_profile_realtor'
+    ),
     url(    r'profile/realtor/new/$',
             'accounts.views.realtor_new',
             name = 'accounts_my_profile_realtor_new'

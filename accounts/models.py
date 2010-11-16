@@ -79,6 +79,10 @@ class Realtor(models.Model):
     
     def get_absolute_url(self):
         return "/accounts/profile/%i/" % self.user.pk
+    
+    def can_show(self):
+        return True
+    
 
 # ===========
 # = Signals =

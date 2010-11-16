@@ -109,6 +109,21 @@ def my_profile_edit(request):
         extra_context = {'form': form}
     )
 
+
+
+def profile_realtor(request, user_id):
+    realtor = get_object_or_404(Realtor, user=user_id)
+    if not realtor.can_show():
+        return direct_to_template(
+            request,
+            template = "accounts/closed_profile.html"
+        )
+    return direct_to_template(
+        request,
+        template = "accounts/realtor.html",
+        extra_context = {'realtor': realtor}
+    )
+
 @login_required
 def realtor_new(request):
     if request.user.realtor_set.exists():

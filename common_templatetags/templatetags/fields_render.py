@@ -15,3 +15,9 @@ def render_field(value, name, safe = False):
     return mark_safe(res)
 render_field.needs_autoescape = True
 
+@register.simple_tag
+def flag_field(value, text):
+    res = ""
+    if value:
+        res = "<li>%s</li>" % text
+    return res
