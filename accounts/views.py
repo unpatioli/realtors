@@ -112,6 +112,8 @@ def my_profile_edit(request):
 
 
 def profile_realtor(request, user_id):
+    if request.user.is_authenticated() and request.user.id == int(user_id):
+        return redirect(my_profile_realtor)
     realtor = get_object_or_404(Realtor, user=user_id)
     if not realtor.can_show():
         return direct_to_template(
