@@ -1,16 +1,5 @@
-{% extends "accounts/settings_base.html" %}
+{% extends "accounts/userprofile_settings_base.html" %}
 {% load fields_render %}
-
-{% block sidebar_items %}
-	<li>Личные данные</li>
-	<li>
-		{% if not user.realtor_set.exists %}
-			<a href="{% url accounts_my_profile_realtor_new %}">Обновиться до риэлтора</a>
-		{% else %}
-			<a href="{% url accounts_my_profile_realtor %}">Профиль риэлтора</a>
-		{% endif %}
-	</li>
-{% endblock %}
 
 {% block page %}
 	
