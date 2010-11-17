@@ -30,27 +30,6 @@ object_patterns = patterns('buildings.views',
     ),
 )
 
-rentflat_patterns = patterns('buildings.views',
-    # url(    r'rent/flats/(?P<id>\d+)/edit/$',
-    #         'rentflat_edit',
-    #         name = 'buildings_rentflat_edit'
-    # ),
-)
-
-sellflat_patterns = patterns('buildings.views',
-    # url(    r'sell/flats/(?P<id>\d+)/edit/$',
-    #         'sellflat_edit',
-    #         name = 'buildings_sellflat_edit'
-    # ),
-)
-
-# search_patterns = patterns('buildings.views',
-#     (r'search/(?P<deal_type>%(deal_type)s)/(?P<location>%(location)s)/$' % {
-#         'deal_type': deal_type_regexp,
-#         'location': location_regexp,
-#         }, 'search'),
-#     # (r'find/$', 'find'),
-# )
 search_patterns = patterns('buildings.views',
     url(    r'search/rent/flat/moscow/$',
             'moscow_rentflat_search',
@@ -79,4 +58,4 @@ search_patterns = patterns('buildings.views',
     ),
 )
 
-urlpatterns = common_patterns + object_patterns + rentflat_patterns + sellflat_patterns + search_patterns
+urlpatterns = common_patterns + object_patterns + search_patterns

@@ -7,7 +7,6 @@ from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_list
 from django.contrib import messages
 
-from buildings.models import RentFlat, SellFlat
 from buildings.location_dispatcher import LocationDispatcher
 from buildings import model_forms, forms, find
 
@@ -106,75 +105,6 @@ def object_edit(request, location, object_type, id):
             'object_type': object_type
         }
     )
-
-# ============
-# = RentFlat =
-# ============
-# @login_required
-# def rentflat_edit(request, id):
-#     # get object
-#     flat = get_object_or_404(RentFlat, pk=id)
-#     
-#     if not flat.can_edit(request.user):
-#         raise Http404
-#     
-#     # get form
-#     form_dispatcher = LocationDispatcher(deal_type='rent', location=flat.location)
-#     
-#     # process form
-#     if request.method == 'POST':
-#         form = form_dispatcher.form_class(request.POST, instance=flat)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, u"Информация о квартире обновлена")
-#             return redirect(flat)
-#         else:
-#             messages.error(request, u"Информация о квартире не обновлена")
-#     else:
-#         form = form_dispatcher.form_class(instance=flat)
-#     return direct_to_template(
-#         request,
-#         template = "buildings/flat_form.html",
-#         extra_context = {
-#             'form': form,
-#             'content_type': 'rentflat',
-#         }
-#     )
-
-
-# =============
-# = SellFlats =
-# =============
-# @login_required
-# def sellflat_edit(request, id):
-#     # get object
-#     flat = get_object_or_404(SellFlat, pk=id)
-#     
-#     if not flat.can_edit(request.user):
-#         raise Http404
-#     
-#     # get form
-#     form_dispatcher = LocationDispatcher(deal_type='sell', location=flat.location)
-#     
-#     # process form
-#     if request.method == 'POST':
-#         form = form_dispatcher.form_class(request.POST, instance=flat)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, u"Информация о квартире обновлена")
-#             return redirect(flat)
-#         else:
-#             messages.error(request, u"Информация о квартире не обновлена")
-#     else:
-#         form = form_dispatcher.form_class(instance=flat)
-#     return direct_to_template(
-#         request,
-#         template = "buildings/flat_form.html",
-#         extra_context = {
-#             'form': form,
-#             'content_type': 'sellflat',
-#         }
-#     )
 
 
 
