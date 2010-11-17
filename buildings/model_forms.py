@@ -105,3 +105,23 @@ class CommonSellFlatForm(SellFlatForm):
         exclude = ('mkad_remoteness', 'metro_remoteness_by_legs', 'metro_remoteness_by_bus', 'nearest_metro_stations', )
     
 
+# ================
+# = Form factory =
+# ================
+FORMS = {
+    'moscow': {
+        'rentflat': MoscowRentFlatForm,
+        'sellflat': MoscowSellFlatForm,
+    },
+    'moscow_region': {
+        'rentflat': MoscowRegionRentFlatForm,
+        'sellflat': MoscowRegionSellFlatForm,
+    },
+    'common': {
+        'rentflat': CommonRentFlatForm,
+        'sellflat': CommonSellFlatForm,
+    },
+}
+def form_factory(location, object_type):
+    return FORMS[location][object_type]
+

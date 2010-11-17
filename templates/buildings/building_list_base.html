@@ -35,7 +35,7 @@
 	{% if show_management_panel %}
 		<div id="management_panel" class="span-24 last">
 			<ul class="menu">
-				{% block management_panel_items %}{% endblock %}
+				<li><a href="{% url buildings_object_new location object_type %}">Добавить объект</a></li>
 			</ul>
 		</div>
 	{% endif %}

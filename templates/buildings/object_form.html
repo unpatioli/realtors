@@ -1,40 +1,37 @@
 {% extends "buildings/form_base.html" %}
 
 {% block sidebar_items %}
-	{% if locations %}
-		{% for k, v in locations %}
-			<li>
-				{% if k == location %}
-					{{ v }}
-				{% else %}
-					<a href='/buildings/{{ deal_type }}/flats/{{ k }}/new'>{{ v }}</a>
-				{% endif %}
-			</li>
-		{% endfor %}
-	{% endif %}
+	{% for k, v in locations %}
+		<li>
+			{% if k == location %}
+				{{ v }}
+			{% else %}
+				<a href="{% url buildings_object_new k object_type %}">{{ v }}</a>
+			{% endif %}
+		</li>
+	{% endfor %}
 {% endblock %}
 
 {% block page %}
 	<div class="span-18 last">
 		<h3>
-			Квартира
 			{% if not form.instance.pk %}
-				(
-				{% for k, v in deal_types %}
-					{% if k == deal_type %}
-						{{ v|lower }}
+				{% for k, v in object_types %}
+					{% if k == object_type %}
+						{{ v }}
 					{% else %}
-						<a href='/buildings/{{ k }}/flats/{{ location }}/new'>{{ v|lower }}</a>
+						<a href="{% url buildings_object_new location k %}">{{ v }}</a>
 					{% endif %}
 				{% endfor %}
-				)
+			{% else %}
+				{{ v }}
 			{% endif %}
 		</h3>
 	</div>
 	
 	<div class="span-18 last">
 		{% if form.instance.pk %}
-			<a href="{% url images_object_image_list content_type=content_type object_id=form.instance.pk %}">Фотографии</a>
+			<a href="{% url images_object_image_list object_type form.instance.pk %}">Фотографии</a>
 		{% endif %}
 	</div>
 	
