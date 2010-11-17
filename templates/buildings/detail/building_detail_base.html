@@ -29,6 +29,15 @@
 			{% block remoteness %}{% endblock %}
 		</ul>
 		
+		{% if object.nearest_metro_stations %}
+			<div class="section_title">Ближайшие станции метро</div>
+			<ul class="nearest_metro_stations">
+				{% for station in object.nearest_metro_stations.all %}
+					<li>{{ station.title }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
+		
 		<div class="section_title">Тип здания</div>
 		<ul class="building_type">
 			{% block building_type %}{% endblock %}
