@@ -78,7 +78,7 @@ class Realtor(models.Model):
     description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
     
     def get_absolute_url(self):
-        return "/accounts/profile/%i/" % self.user.pk
+        return reverse('accounts_profile_realtor', args=[self.user.pk])
     
     def can_show(self):
         return True
