@@ -36,7 +36,41 @@ class RegistrationForm(forms.Form):
         return email
     
 
+class CalendarWidget(forms.TextInput):
+    class Media:
+        css = {
+            'all': (
+                "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/base/jquery-ui.css",
+            ),
+        }
+        js = (
+            "https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js",
+            "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/i18n/jquery-ui-i18n.min.js",
+        )
+
+    def render(self, name, value, attrs=None):
+        from django.utils.safestring import mark_safe
+        res = super(CalendarWidget, self).render(name, value, attrs=attrs)
+        if attrs and 'id' in attrs:
+            res += mark_safe(u"""
+                <script type="text/javascript">
+                    $(function() {
+                        $.datepicker.setDefaults( $.datepicker.regional[ "ru" ] );
+                        $( "#%s" ).datepicker({
+                                changeYear: true,
+                                changeMonth: true,
+                                yearRange: '-90:+00',
+                                defaultDate: '-18y'
+                            });
+                    });
+                </script>
+            """ % attrs['id'])
+        return res
+    
+
+
 class UserprofileForm(forms.ModelForm):
+    birthday = forms.DateField(label=u"День рождения", widget=CalendarWidget)
     class Meta:
         model = UserProfile
         fields = ('birthday', 'gender', 'is_closed', 'avatar', 'description')
@@ -47,3 +81,5 @@ class RealtorForm(forms.ModelForm):
         model = Realtor
         # fields = ('')
         exclude = ('user',)
+    
+

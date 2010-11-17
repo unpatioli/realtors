@@ -1,5 +1,9 @@
 {% extends "accounts/userprofile_settings_base.html" %}
 
+{% block head %}
+	{{ form.media.render }}
+{% endblock %}
+
 {% block page %}
 	
 	<div class="span-18 last">
