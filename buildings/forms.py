@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import forms
+from buildings import widgets
 from buildings.models import Currency, HouseType, RenovationType, Metro, Flat, RentFlat
 
 class SliderWidget(forms.TextInput):
@@ -63,7 +64,7 @@ class FlatSearchForm(SearchForm):
     
     rooms_count = forms.MultipleChoiceField(required=False,
                                             choices=ROOMS_COUNT_CHOICES,
-                                            widget=forms.CheckboxSelectMultiple()
+                                            widget=widgets.DivCheckboxSelectMultiple(classes = ['rooms'])
                                         )
     total_area_gt = forms.DecimalField(required=False)
     total_area_lt = forms.DecimalField(required=False)
@@ -108,14 +109,10 @@ class MoscowFlatSearchForm(forms.Form):
                                                 })
                                             )
     
-    # nearest_metro_stations = forms.MultipleChoiceField(required=False,
-    #                                                 choices=Flat.METRO_STATION_CHOICES,
-    #                                                 widget=forms.CheckboxSelectMultiple()
-    #                                             )
     nearest_metro_stations = forms.ModelMultipleChoiceField(
                                     queryset = Metro.objects.all(),
                                     label = u"Ближайшие станции метро",
-                                    widget = forms.CheckboxSelectMultiple(),
+                                    widget = widgets.DivCheckboxSelectMultiple(classes = ['metro', 'scroll']),
                                     required = False
                             )
 

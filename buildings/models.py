@@ -107,7 +107,7 @@ class RenovationType(models.Model):
         return self.title
 
 class Flat(Building):
-    __MAX_ROOMS_COUNT = 10
+    __MAX_ROOMS_COUNT = 7
     ROOMS_COUNT_CHOICES = zip(
             xrange(1,__MAX_ROOMS_COUNT + 1), 
             map(str, xrange(1,__MAX_ROOMS_COUNT + 1))

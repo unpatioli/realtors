@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
-from buildings.models import Metro, RentFlat, SellFlat
 from django import forms
+
+from buildings import widgets
+from buildings.models import Metro, RentFlat, SellFlat
 
 # ==================
 # = RentFlat forms =
@@ -9,7 +11,7 @@ class RentFlatForm(forms.ModelForm):
     nearest_metro_stations = forms.ModelMultipleChoiceField(
                                     queryset = Metro.objects.all(),
                                     label = u"Ближайшие станции метро",
-                                    widget = forms.CheckboxSelectMultiple(),
+                                    widget = widgets.DivCheckboxSelectMultiple(classes=['metro', 'scroll', 'reset']),
                                     required = False
                             )
     

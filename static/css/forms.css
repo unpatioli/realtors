@@ -56,3 +56,35 @@ div.form div.field div.field-info{
     padding-top: 10px;
     font-style: italic;
 }
+
+
+
+
+
+
+
+div.checkbox-select-multiple ul{
+    margin:0;
+    padding:0;
+    border: 0;
+    
+    list-style-type: none;
+}
+div.checkbox-select-multiple ul li label,
+div.checkbox-select-multiple ul li input{
+    margin:0;
+    padding:0;
+    
+    width: auto !important;
+    
+    font-size: 1em;
+    font-weight: normal;
+}
+div.checkbox-select-multiple.scroll{
+    max-height: 150px;
+    overflow: auto;
+}
+
+div.checkbox-select-multiple.rooms ul li{
+    padding-right: 20px;
+}
