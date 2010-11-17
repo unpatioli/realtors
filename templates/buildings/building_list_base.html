@@ -1,46 +1,53 @@
 {% extends "buildings/base.html" %}
 
 {% block top_panel %}
-	{% if not show_object_types_list %}
-		<ul class="objects_type_list">
-			<li>
-				{% if objects_type == 'rent_flats' %}
-					Аренда
-				{% else %}
-					<a href="{% url buildings_user_rentflat_list user_id %}">Аренда</a>
-				{% endif %}
-			</li>
-			<li>
-				{% if objects_type == 'sell_flats' %}
-					Продажа
-				{% else %}
-					<a href="{% url buildings_user_sellflat_list user_id %}">Продажа</a>
-				{% endif %}
-			</li>
-			{# <li> #}
-			{# 	{% if objects_type == 'country_property' %} #}
-			{# 		Загородная недвижимость #}
-			{# 	{% else %} #}
-			{# 		<a href="{% url buildings_user_country_property_list user_id %}">Загородная недвижимость</a> #}
-			{# 	{% endif %} #}
-			{# </li> #}
-			{# <li> #}
-			{# 	{% if objects_type == 'commercial_property' %} #}
-			{# 		Коммерческая недвижимость #}
-			{# 	{% else %} #}
-			{# 		<a href="{% url buildings_user_commercial_property_list user_id %}">Коммерческая недвижимость</a> #}
-			{# 	{% endif %} #}
-			</li>
-		</ul>
-	{% endif %}
+	<ul class="menu">
+		<li>
+			{% if objects_type == 'rent_flats' %}
+				Аренда
+			{% else %}
+				<a href="{% url buildings_user_rentflat_list user_id %}">Аренда</a>
+			{% endif %}
+		</li>
+		<li>
+			{% if objects_type == 'sell_flats' %}
+				Продажа
+			{% else %}
+				<a href="{% url buildings_user_sellflat_list user_id %}">Продажа</a>
+			{% endif %}
+		</li>
+		{# <li> #}
+		{# 	{% if objects_type == 'country_property' %} #}
+		{# 		Загородная недвижимость #}
+		{# 	{% else %} #}
+		{# 		<a href="{% url buildings_user_country_property_list user_id %}">Загородная недвижимость</a> #}
+		{# 	{% endif %} #}
+		{# </li> #}
+		{# <li> #}
+		{# 	{% if objects_type == 'commercial_property' %} #}
+		{# 		Коммерческая недвижимость #}
+		{# 	{% else %} #}
+		{# 		<a href="{% url buildings_user_commercial_property_list user_id %}">Коммерческая недвижимость</a> #}
+		{# 	{% endif %} #}
+		</li>
+	</ul>
 {% endblock %}
 
 {% block content %}
-	{% block management_panel %}{% endblock %}
-	
-	{% if object_list %}
-		{% block objects_table %}{% endblock %}
-	{% else %}
-		<h3>Ничего не найдено</h3>
+	{% if show_management_panel %}
+		<div id="management_panel" class="span-24 last">
+			<ul class="menu">
+				{% block management_panel_items %}{% endblock %}
+			</ul>
+		</div>
 	{% endif %}
+	</div>
+	
+	<div id="object_list" class="span-24 last">
+		{% if object_list %}
+			{% block objects_table %}{% endblock %}
+		{% else %}
+			<h3>Ничего не найдено</h3>
+		{% endif %}
+	</div>
 {% endblock %}

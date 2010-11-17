@@ -24,16 +24,35 @@ input.slider{
     font-weight: bold;
 }
 
-div.form div.non_field_errors ul.errorlist{
-    list-style-type: none;
+div.form div.field{
+
 }
+div.form div.field.error{
+    padding:0;
+    margin: 2px 0 2px 0;
+    border: none;
+}
+
 div.form div.non_field_errors,
-div.form div.field div.input_errors{
+div.form div.field div.input_errors,
+div.form div.field div.input_errors_top{
     font-size: 1.2em;
     font-weight: bold;
     color: #99281B;
 }
+div.form div.non_field_errors ul.errorlist{
+    list-style-type: none;
+}
 div.form div.field div.input_errors ul.errorlist{
     padding-top: 5px;
     list-style-type: none;
+}
+div.form div.field div.input_errors_top ul.errorlist{
+    margin: 0;
+    padding:0;
+    list-style-type: none;
+}
+div.form div.field div.field-info{
+    padding-top: 10px;
+    font-style: italic;
 }

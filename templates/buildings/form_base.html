@@ -1,0 +1,12 @@
+{% extends "buildings/base.html" %}
+
+{% block content %}
+	<div class="sidebar span-6">
+		<ul>
+			{% block sidebar_items %}{% endblock %}
+		</ul>
+	</div>
+	<div class="page span-18 last">
+		{% block page %}{% endblock %}
+	</div>
+{% endblock %}

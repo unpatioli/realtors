@@ -61,6 +61,7 @@ def rentflat_new(request, location):
             'form': form,
             'locations': form_dispatcher.localized_titles('ru'),
             'location': location,
+            'deal_types': form_dispatcher.deal_types(),
             'deal_type': 'rent',
             'content_type': 'rentflat',
         }
@@ -149,6 +150,7 @@ def sellflat_new(request, location):
             'form': form,
             'locations': form_dispatcher.localized_titles('ru'),
             'location': location,
+            'deal_types': form_dispatcher.deal_types(),
             'deal_type': 'sell',
             'content_type': 'sellflat',
         }

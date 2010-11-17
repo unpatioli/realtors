@@ -1,9 +1,7 @@
 {% extends "buildings/building_list_base.html" %}
 
-{% block management_panel %}
-	{% if show_management_panel %}
-		<a href="{% url buildings_rentflat_new 'moscow' %}">Добавить квартиру</a>
-	{% endif %}
+{% block management_panel_items %}
+	<li><a href="{% url buildings_rentflat_new 'moscow' %}">Добавить квартиру</a></li>
 {% endblock %}
 
 {% block objects_table %}
