@@ -12,6 +12,15 @@ class Currency(models.Model):
     def __unicode__(self):
         return self.symbol
 
+class Metro(models.Model):
+    town = models.CharField(max_length = 100, db_index=True, verbose_name=u"Город")
+    title = models.CharField(max_length = 100, db_index=True, verbose_name=u"Название станции")
+    
+    def __unicode__(self):
+        return self.title
+    
+
+
 # ============
 # = Building =
 # ============
@@ -52,7 +61,7 @@ class Building(models.Model):
     metro_remoteness_by_legs = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро пешком", help_text=u"время в минутах")
     metro_remoteness_by_bus = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро транспортом", help_text=u"время в минутах")
     mkad_remoteness = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"от МКАД", help_text=u"расстояние в километрах")
-    nearest_metro_stations = models.CharField(max_length = 150, null=True, blank=True, verbose_name=u"ближайшие станции метро", help_text=u"перечислите через запятую")
+    nearest_metro_stations = models.ManyToManyField(Metro, verbose_name=u"ближайшие станции метро")
     
     description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
     
@@ -98,7 +107,12 @@ class RenovationType(models.Model):
         return self.title
 
 class Flat(Building):
-    ROOMS_COUNT_CHOICES = zip(xrange(1,11), map(str, xrange(1,11)))
+    __MAX_ROOMS_COUNT = 10
+    ROOMS_COUNT_CHOICES = zip(
+            xrange(1,__MAX_ROOMS_COUNT + 1), 
+            map(str, xrange(1,__MAX_ROOMS_COUNT + 1))
+        )
+    
     BALCONY_COUNT_CHOICES = zip(xrange(6), map(str, xrange(6)))
     BATHROOM_COUNT_CHOICES = zip(xrange(4), map(str, xrange(4)))
     

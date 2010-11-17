@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import forms
-from buildings.models import Currency, HouseType, RenovationType, Flat, RentFlat
+from buildings.models import Currency, HouseType, RenovationType, Metro, Flat, RentFlat
 
 class SliderWidget(forms.TextInput):
     class Media:
@@ -56,7 +56,15 @@ class SearchForm(forms.Form):
 
 class FlatSearchForm(SearchForm):
     # Object type and metrages
-    rooms_count = forms.MultipleChoiceField(choices=Flat.ROOMS_COUNT_CHOICES, required=False)
+    from copy import deepcopy
+    ROOMS_COUNT_CHOICES = deepcopy(Flat.ROOMS_COUNT_CHOICES)
+    ROOMS_COUNT_CHOICES[-1] = ( ROOMS_COUNT_CHOICES[-1][0],
+                                ROOMS_COUNT_CHOICES[-1][1] + " и более" )
+    
+    rooms_count = forms.MultipleChoiceField(required=False,
+                                            choices=ROOMS_COUNT_CHOICES,
+                                            widget=forms.CheckboxSelectMultiple()
+                                        )
     total_area_gt = forms.DecimalField(required=False)
     total_area_lt = forms.DecimalField(required=False)
     
@@ -100,7 +108,16 @@ class MoscowFlatSearchForm(forms.Form):
                                                 })
                                             )
     
-    nearest_metro_stations = forms.CharField(required=False)
+    # nearest_metro_stations = forms.MultipleChoiceField(required=False,
+    #                                                 choices=Flat.METRO_STATION_CHOICES,
+    #                                                 widget=forms.CheckboxSelectMultiple()
+    #                                             )
+    nearest_metro_stations = forms.ModelMultipleChoiceField(
+                                    queryset = Metro.objects.all(),
+                                    label = u"Ближайшие станции метро",
+                                    widget = forms.CheckboxSelectMultiple(),
+                                    required = False
+                            )
 
 class MoscowRegionFlatSearchForm(forms.Form):
     # Location

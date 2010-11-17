@@ -61,5 +61,884 @@
     "pk": 5,
     "fields": {
       "title": "евро" }
+  },
+  
+  
+  
+  {   "model": "buildings.Metro",
+      "pk": 1,
+      "fields": {
+          "town": "moscow",
+          "title": "Авиамоторная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 2,
+      "fields": {
+          "town": "moscow",
+          "title": "Академическая"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 3,
+      "fields": {
+          "town": "moscow",
+          "title": "Александровский сад"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 4,
+      "fields": {
+          "town": "moscow",
+          "title": "Алексеевская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 5,
+      "fields": {
+          "town": "moscow",
+          "title": "Алтуфьево"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 6,
+      "fields": {
+          "town": "moscow",
+          "title": "Арбатская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 7,
+      "fields": {
+          "town": "moscow",
+          "title": "Аэропорт"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 8,
+      "fields": {
+          "town": "moscow",
+          "title": "Бабушкинская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 9,
+      "fields": {
+          "town": "moscow",
+          "title": "Багратионовская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 10,
+      "fields": {
+          "town": "moscow",
+          "title": "Баррикадная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 11,
+      "fields": {
+          "town": "moscow",
+          "title": "Бауманская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 12,
+      "fields": {
+          "town": "moscow",
+          "title": "Беговая"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 13,
+      "fields": {
+          "town": "moscow",
+          "title": "Белорусская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 14,
+      "fields": {
+          "town": "moscow",
+          "title": "Беляево"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 15,
+      "fields": {
+          "town": "moscow",
+          "title": "Библиотека имени Ленина"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 16,
+      "fields": {
+          "town": "moscow",
+          "title": "Боровицкая"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 17,
+      "fields": {
+          "town": "moscow",
+          "title": "Бульвар Дмитрия Донского"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 18,
+      "fields": {
+          "town": "moscow",
+          "title": "Варшавская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 19,
+      "fields": {
+          "town": "moscow",
+          "title": "ВДНХ"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 20,
+      "fields": {
+          "town": "moscow",
+          "title": "Водный стадион"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 21,
+      "fields": {
+          "town": "moscow",
+          "title": "Войковская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 22,
+      "fields": {
+          "town": "moscow",
+          "title": "Волгоградский проспект"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 23,
+      "fields": {
+          "town": "moscow",
+          "title": "Волоколамская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 24,
+      "fields": {
+          "town": "moscow",
+          "title": "Воробьевы горы"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 25,
+      "fields": {
+          "town": "moscow",
+          "title": "Выстовочная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 26,
+      "fields": {
+          "town": "moscow",
+          "title": "Динамо"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 27,
+      "fields": {
+          "town": "moscow",
+          "title": "Дмитровская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 28,
+      "fields": {
+          "town": "moscow",
+          "title": "Добрынинская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 29,
+      "fields": {
+          "town": "moscow",
+          "title": "Достоевская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 30,
+      "fields": {
+          "town": "moscow",
+          "title": "Калужская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 31,
+      "fields": {
+          "town": "moscow",
+          "title": "Кантемировская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 32,
+      "fields": {
+          "town": "moscow",
+          "title": "Каховская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 33,
+      "fields": {
+          "town": "moscow",
+          "title": "Киевская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 34,
+      "fields": {
+          "town": "moscow",
+          "title": "Китай-город"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 35,
+      "fields": {
+          "town": "moscow",
+          "title": "Коломенская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 36,
+      "fields": {
+          "town": "moscow",
+          "title": "Коньково"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 37,
+      "fields": {
+          "town": "moscow",
+          "title": "Краснопресненская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 38,
+      "fields": {
+          "town": "moscow",
+          "title": "Красносельская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 39,
+      "fields": {
+          "town": "moscow",
+          "title": "Красные ворота"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 40,
+      "fields": {
+          "town": "moscow",
+          "title": "Крестьянская застава"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 41,
+      "fields": {
+          "town": "moscow",
+          "title": "Кропоткинская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 42,
+      "fields": {
+          "town": "moscow",
+          "title": "Крылатское"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 43,
+      "fields": {
+          "town": "moscow",
+          "title": "Кузнецкий мост"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 44,
+      "fields": {
+          "town": "moscow",
+          "title": "Кузьминки"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 45,
+      "fields": {
+          "town": "moscow",
+          "title": "Кунцевская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 46,
+      "fields": {
+          "town": "moscow",
+          "title": "Курская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 47,
+      "fields": {
+          "town": "moscow",
+          "title": "Кутузовская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 48,
+      "fields": {
+          "town": "moscow",
+          "title": "Ленинский проспект"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 49,
+      "fields": {
+          "town": "moscow",
+          "title": "Лубянка"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 50,
+      "fields": {
+          "town": "moscow",
+          "title": "Марксистская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 51,
+      "fields": {
+          "town": "moscow",
+          "title": "Марьина роща"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 52,
+      "fields": {
+          "town": "moscow",
+          "title": "Маяковская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 53,
+      "fields": {
+          "town": "moscow",
+          "title": "Международная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 54,
+      "fields": {
+          "town": "moscow",
+          "title": "Менделеевская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 55,
+      "fields": {
+          "town": "moscow",
+          "title": "Митино"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 56,
+      "fields": {
+          "town": "moscow",
+          "title": "Молодежная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 57,
+      "fields": {
+          "town": "moscow",
+          "title": "Нахимовский проспект"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 58,
+      "fields": {
+          "town": "moscow",
+          "title": "Новокузнецкая"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 59,
+      "fields": {
+          "town": "moscow",
+          "title": "Новослободская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 60,
+      "fields": {
+          "town": "moscow",
+          "title": "Новые черемушки"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 61,
+      "fields": {
+          "town": "moscow",
+          "title": "Октябрьская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 62,
+      "fields": {
+          "town": "moscow",
+          "title": "Октябрьское поле"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 63,
+      "fields": {
+          "town": "moscow",
+          "title": "Орехово"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 64,
+      "fields": {
+          "town": "moscow",
+          "title": "Отрадное"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 65,
+      "fields": {
+          "town": "moscow",
+          "title": "Охотный ряд"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 66,
+      "fields": {
+          "town": "moscow",
+          "title": "Павелецкая"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 67,
+      "fields": {
+          "town": "moscow",
+          "title": "Парк культуры"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 68,
+      "fields": {
+          "town": "moscow",
+          "title": "Парк победы"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 69,
+      "fields": {
+          "town": "moscow",
+          "title": "Первомайская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 70,
+      "fields": {
+          "town": "moscow",
+          "title": "Перово"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 71,
+      "fields": {
+          "town": "moscow",
+          "title": "Пионерская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 72,
+      "fields": {
+          "town": "moscow",
+          "title": "Планерная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 73,
+      "fields": {
+          "town": "moscow",
+          "title": "Площадь революции"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 74,
+      "fields": {
+          "town": "moscow",
+          "title": "Полежаевская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 75,
+      "fields": {
+          "town": "moscow",
+          "title": "Полянка"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 76,
+      "fields": {
+          "town": "moscow",
+          "title": "Преображенская площадь"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 77,
+      "fields": {
+          "town": "moscow",
+          "title": "Пролетарская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 78,
+      "fields": {
+          "town": "moscow",
+          "title": "Проспект Вернадского"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 79,
+      "fields": {
+          "town": "moscow",
+          "title": "Проспект мира"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 80,
+      "fields": {
+          "town": "moscow",
+          "title": "Профсоюзная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 81,
+      "fields": {
+          "town": "moscow",
+          "title": "Пушкинская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 82,
+      "fields": {
+          "town": "moscow",
+          "title": "Речной вокзал"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 83,
+      "fields": {
+          "town": "moscow",
+          "title": "Рижская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 84,
+      "fields": {
+          "town": "moscow",
+          "title": "Рязанский проспект"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 85,
+      "fields": {
+          "town": "moscow",
+          "title": "Савеловская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 86,
+      "fields": {
+          "town": "moscow",
+          "title": "Свиблово"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 87,
+      "fields": {
+          "town": "moscow",
+          "title": "Севастопольская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 88,
+      "fields": {
+          "town": "moscow",
+          "title": "Серпуховская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 89,
+      "fields": {
+          "town": "moscow",
+          "title": "Славянский бульвар"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 90,
+      "fields": {
+          "town": "moscow",
+          "title": "Смоленская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 91,
+      "fields": {
+          "town": "moscow",
+          "title": "Сокол"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 92,
+      "fields": {
+          "town": "moscow",
+          "title": "Сокольники"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 93,
+      "fields": {
+          "town": "moscow",
+          "title": "Спортивная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 94,
+      "fields": {
+          "town": "moscow",
+          "title": "Сретенский бульвар"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 95,
+      "fields": {
+          "town": "moscow",
+          "title": "Строгино"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 96,
+      "fields": {
+          "town": "moscow",
+          "title": "Студенческая"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 97,
+      "fields": {
+          "town": "moscow",
+          "title": "Сухаревская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 98,
+      "fields": {
+          "town": "moscow",
+          "title": "Сходненская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 99,
+      "fields": {
+          "town": "moscow",
+          "title": "Таганская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 100,
+      "fields": {
+          "town": "moscow",
+          "title": "Тверская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 101,
+      "fields": {
+          "town": "moscow",
+          "title": "Театральная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 102,
+      "fields": {
+          "town": "moscow",
+          "title": "Теплый cтан"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 103,
+      "fields": {
+          "town": "moscow",
+          "title": "Тимирязевская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 104,
+      "fields": {
+          "town": "moscow",
+          "title": "Третьяковская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 105,
+      "fields": {
+          "town": "moscow",
+          "title": "Трубная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 106,
+      "fields": {
+          "town": "moscow",
+          "title": "Тульская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 107,
+      "fields": {
+          "town": "moscow",
+          "title": "Тургеневская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 108,
+      "fields": {
+          "town": "moscow",
+          "title": "Тушинская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 109,
+      "fields": {
+          "town": "moscow",
+          "title": "Улица 1905 года"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 110,
+      "fields": {
+          "town": "moscow",
+          "title": "Улица Академика Янгеля"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 111,
+      "fields": {
+          "town": "moscow",
+          "title": "Улица Старокачаловская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 112,
+      "fields": {
+          "town": "moscow",
+          "title": "Университет"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 113,
+      "fields": {
+          "town": "moscow",
+          "title": "Филевский парк"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 114,
+      "fields": {
+          "town": "moscow",
+          "title": "Фили"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 115,
+      "fields": {
+          "town": "moscow",
+          "title": "Фрунзенская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 116,
+      "fields": {
+          "town": "moscow",
+          "title": "Цветной бульвар"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 117,
+      "fields": {
+          "town": "moscow",
+          "title": "Чеховская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 118,
+      "fields": {
+          "town": "moscow",
+          "title": "Чистые пруды"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 119,
+      "fields": {
+          "town": "moscow",
+          "title": "Чкаловская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 120,
+      "fields": {
+          "town": "moscow",
+          "title": "Шаболовская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 121,
+      "fields": {
+          "town": "moscow",
+          "title": "Щелковская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 122,
+      "fields": {
+          "town": "moscow",
+          "title": "Щукинская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 123,
+      "fields": {
+          "town": "moscow",
+          "title": "Электрозаводская"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 124,
+      "fields": {
+          "town": "moscow",
+          "title": "Юго-Западная"
+      }
+  },
+  {   "model": "buildings.Metro",
+      "pk": 125,
+      "fields": {
+          "town": "moscow",
+          "title": "Южная"
+      }
   }
+  
 ]
