@@ -78,74 +78,103 @@ def object_new(request, location, object_type):
         }
     )
 
+@login_required
+def object_edit(request, location, object_type, id):
+    model = ContentType.objects.get(model=object_type).model_class()
+    obj = get_object_or_404(model, pk=id)
+    if not obj.can_edit(request.user):
+        raise Http404
+    
+    form_class = model_forms.form_factory(location, object_type)
+    if request.method == 'POST':
+        form = form_class(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            messages.success(request, u"Информация об объекте обновлена")
+            return redirect(obj)
+        else:
+            messages.error(request, u"Информация об объекте не обновлена")
+    else:
+        form = form_class(instance=obj)
+    return direct_to_template(
+        request,
+        template = "buildings/object_form.html",
+        extra_context = {
+            'form': form,
+            
+            'object_types': LocationDispatcher.object_types(),
+            'object_type': object_type
+        }
+    )
+
 # ============
 # = RentFlat =
 # ============
-@login_required
-def rentflat_edit(request, id):
-    # get object
-    flat = get_object_or_404(RentFlat, pk=id)
-    
-    if not flat.can_edit(request.user):
-        raise Http404
-    
-    # get form
-    form_dispatcher = LocationDispatcher(deal_type='rent', location=flat.location)
-    
-    # process form
-    if request.method == 'POST':
-        form = form_dispatcher.form_class(request.POST, instance=flat)
-        if form.is_valid():
-            form.save()
-            messages.success(request, u"Информация о квартире обновлена")
-            return redirect(flat)
-        else:
-            messages.error(request, u"Информация о квартире не обновлена")
-    else:
-        form = form_dispatcher.form_class(instance=flat)
-    return direct_to_template(
-        request,
-        template = "buildings/flat_form.html",
-        extra_context = {
-            'form': form,
-            'content_type': 'rentflat',
-        }
-    )
+# @login_required
+# def rentflat_edit(request, id):
+#     # get object
+#     flat = get_object_or_404(RentFlat, pk=id)
+#     
+#     if not flat.can_edit(request.user):
+#         raise Http404
+#     
+#     # get form
+#     form_dispatcher = LocationDispatcher(deal_type='rent', location=flat.location)
+#     
+#     # process form
+#     if request.method == 'POST':
+#         form = form_dispatcher.form_class(request.POST, instance=flat)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, u"Информация о квартире обновлена")
+#             return redirect(flat)
+#         else:
+#             messages.error(request, u"Информация о квартире не обновлена")
+#     else:
+#         form = form_dispatcher.form_class(instance=flat)
+#     return direct_to_template(
+#         request,
+#         template = "buildings/flat_form.html",
+#         extra_context = {
+#             'form': form,
+#             'content_type': 'rentflat',
+#         }
+#     )
 
 
 # =============
 # = SellFlats =
 # =============
-@login_required
-def sellflat_edit(request, id):
-    # get object
-    flat = get_object_or_404(SellFlat, pk=id)
-    
-    if not flat.can_edit(request.user):
-        raise Http404
-    
-    # get form
-    form_dispatcher = LocationDispatcher(deal_type='sell', location=flat.location)
-    
-    # process form
-    if request.method == 'POST':
-        form = form_dispatcher.form_class(request.POST, instance=flat)
-        if form.is_valid():
-            form.save()
-            messages.success(request, u"Информация о квартире обновлена")
-            return redirect(flat)
-        else:
-            messages.error(request, u"Информация о квартире не обновлена")
-    else:
-        form = form_dispatcher.form_class(instance=flat)
-    return direct_to_template(
-        request,
-        template = "buildings/flat_form.html",
-        extra_context = {
-            'form': form,
-            'content_type': 'sellflat',
-        }
-    )
+# @login_required
+# def sellflat_edit(request, id):
+#     # get object
+#     flat = get_object_or_404(SellFlat, pk=id)
+#     
+#     if not flat.can_edit(request.user):
+#         raise Http404
+#     
+#     # get form
+#     form_dispatcher = LocationDispatcher(deal_type='sell', location=flat.location)
+#     
+#     # process form
+#     if request.method == 'POST':
+#         form = form_dispatcher.form_class(request.POST, instance=flat)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, u"Информация о квартире обновлена")
+#             return redirect(flat)
+#         else:
+#             messages.error(request, u"Информация о квартире не обновлена")
+#     else:
+#         form = form_dispatcher.form_class(instance=flat)
+#     return direct_to_template(
+#         request,
+#         template = "buildings/flat_form.html",
+#         extra_context = {
+#             'form': form,
+#             'content_type': 'sellflat',
+#         }
+#     )
 
 
 
