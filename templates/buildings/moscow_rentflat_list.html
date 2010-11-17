@@ -24,7 +24,7 @@
 		<tbody>
 			{% for flat in object_list %}
 				<tr>
-					<td><a href="{% url buildings_rentflat_detail flat.pk %}">{{ forloop.counter }}</a></td>
+					<td><a href="{% url buildings_object_detail location object_type flat.pk %}">{{ forloop.counter }}</a></td>
 					<td>{{ flat.town }}</td>
 					<td>{{ flat.get_address }}</td>
 					<td>{{ flat.total_area }} м<sup>2</sup></td>

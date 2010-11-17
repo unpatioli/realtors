@@ -16,13 +16,13 @@ object_patterns = patterns('buildings.views',
             'user_object_list',
             name = 'buildings_user_object_list'
     ),
+    url(    r'(?P<location>%s)/(?P<object_type>%s)/(?P<id>\d+)/$' % (location_regexp, object_type_regexp),
+            'object_detail',
+            name = 'buildings_object_detail'
+    ),
 )
 
 rentflat_patterns = patterns('buildings.views',
-    url(    r'rent/flats/(?P<id>\d+)/$',
-            'rentflat_detail',
-            name = 'buildings_rentflat_detail'
-    ),
     url(    r'rent/flats/(?P<location>%s)/new/$' % location_regexp,
             'rentflat_new',
             name = 'buildings_rentflat_new'
@@ -34,10 +34,6 @@ rentflat_patterns = patterns('buildings.views',
 )
 
 sellflat_patterns = patterns('buildings.views',
-    url(    r'sell/flats/(?P<id>\d+)/$',
-            'sellflat_detail',
-            name = 'buildings_sellflat_detail'
-    ),
     url(    r'sell/flats/(?P<location>%s)/new/$' % location_regexp,
             'sellflat_new',
             name = 'buildings_sellflat_new'

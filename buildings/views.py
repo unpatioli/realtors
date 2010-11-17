@@ -31,22 +31,38 @@ def user_object_list(request, user_id, location, object_type):
         }
     )
 
-# ============
-# = RentFlat =
-# ============
-def rentflat_detail(request, id):
-    flat = get_object_or_404(RentFlat, pk=id)
-    dispatcher = LocationDispatcher(deal_type='rent', location=flat.location)
-    # TODO check if dispatcher has wrong location
+def object_detail(request, location, object_type, id):
+    model = ContentType.objects.get(model=object_type).model_class()
+    obj = get_object_or_404(model, pk=id)
     
     return direct_to_template(
         request,
-        template = dispatcher.detail_template,
+        template = 'buildings/detail/%s_%s_detail.html' % (location, object_type),
         extra_context = {
-            'object': flat,
-            'show_object_controls': flat.can_edit(request.user),
+            'object': obj,
+            'show_object_controls': obj.can_edit(request.user),
+            
+            'location': location,
+            'object_type': object_type,
         }
     )
+
+# ============
+# = RentFlat =
+# ============
+# def rentflat_detail(request, id):
+#     flat = get_object_or_404(RentFlat, pk=id)
+#     dispatcher = LocationDispatcher(deal_type='rent', location=flat.location)
+#     # TODO check if dispatcher has wrong location
+#     
+#     return direct_to_template(
+#         request,
+#         template = dispatcher.detail_template,
+#         extra_context = {
+#             'object': flat,
+#             'show_object_controls': flat.can_edit(request.user),
+#         }
+#     )
 
 
 @login_required
@@ -114,19 +130,19 @@ def rentflat_edit(request, id):
 # =============
 # = SellFlats =
 # =============
-def sellflat_detail(request, id):
-    flat = get_object_or_404(SellFlat, pk=id)
-    dispatcher = LocationDispatcher(deal_type='sell', location=flat.location)
-    # TODO check if dispatcher has wrong location
-    
-    return direct_to_template(
-        request,
-        template = dispatcher.detail_template,
-        extra_context = {
-            'object': flat,
-            'show_object_controls': flat.can_edit(request.user),
-        }
-    )
+# def sellflat_detail(request, id):
+#     flat = get_object_or_404(SellFlat, pk=id)
+#     dispatcher = LocationDispatcher(deal_type='sell', location=flat.location)
+#     # TODO check if dispatcher has wrong location
+#     
+#     return direct_to_template(
+#         request,
+#         template = dispatcher.detail_template,
+#         extra_context = {
+#             'object': flat,
+#             'show_object_controls': flat.can_edit(request.user),
+#         }
+#     )
 
 
 @login_required

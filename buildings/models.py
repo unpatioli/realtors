@@ -158,7 +158,7 @@ class RentFlat(Flat):
     children = models.BooleanField(default=False, verbose_name=u"Можно с детьми")
     
     def get_absolute_url(self):
-        return reverse('buildings_rentflat_detail', args=[self.pk])
+        return reverse('buildings_object_detail', args=[self.location, 'rentflat', self.pk])
     
 
 class SellFlat(Flat):
@@ -167,6 +167,6 @@ class SellFlat(Flat):
     part_in_flat = models.BooleanField(default=False, verbose_name=u"Доля в квартире")
     
     def get_absolute_url(self):
-        return reverse('buildings_sellflat_detail', args=[self.pk])
+        return reverse('buildings_object_detail', args=[self.location, 'sellflat', self.pk])
     
 
