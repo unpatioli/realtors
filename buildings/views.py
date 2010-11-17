@@ -2,6 +2,7 @@
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.contenttypes.models import ContentType
 from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_list
 from django.contrib import messages
@@ -11,24 +12,28 @@ from buildings.location_dispatcher import LocationDispatcher
 from buildings import forms, find
 
 
-# ============
-# = RentFlat =
-# ============
-def user_rentflat_list(request, user_id, location):
+def user_object_list(request, user_id, location, object_type):
+    model = ContentType.objects.get(model=object_type).model_class()
+    
     return object_list(
         request,
-        queryset = RentFlat.objects.filter(owner__pk=user_id, location=location),
-        template_name = 'buildings/%s_rentflat_list.html' % location,
+        queryset = model.objects.filter(owner__pk=user_id, location=location),
+        template_name = 'buildings/%s_%s_list.html' % (location, object_type),
         extra_context = {
-            'objects_type': 'rent_flats',
             'show_management_panel': request.user.id == int(user_id),
             'user_id': user_id,
             
             'locations': LocationDispatcher.localized_titles('ru'),
             'location': location,
-        },
+            
+            'object_types': LocationDispatcher.object_types(),
+            'object_type': object_type,
+        }
     )
 
+# ============
+# = RentFlat =
+# ============
 def rentflat_detail(request, id):
     flat = get_object_or_404(RentFlat, pk=id)
     dispatcher = LocationDispatcher(deal_type='rent', location=flat.location)
@@ -109,21 +114,6 @@ def rentflat_edit(request, id):
 # =============
 # = SellFlats =
 # =============
-def user_sellflat_list(request, user_id, location):
-    return object_list(
-        request,
-        queryset = SellFlat.objects.filter(owner__pk__exact=user_id),
-        template_name = 'buildings/%s_sellflat_list.html' % location,
-        extra_context = {
-            'objects_type': 'sell_flats',
-            'show_management_panel': request.user.id == int(user_id),
-            'user_id': user_id,
-            
-            'locations': LocationDispatcher.localized_titles('ru'),
-            'location': location,
-        },
-    )
-
 def sellflat_detail(request, id):
     flat = get_object_or_404(SellFlat, pk=id)
     dispatcher = LocationDispatcher(deal_type='sell', location=flat.location)

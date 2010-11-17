@@ -9,12 +9,16 @@ common_patterns = patterns('buildings.views',
 
 location_regexp = r"\b%s\b" % r"\b|\b".join([location for location in LOCATION_FORMS])
 deal_type_regexp = r"\b%s\b" % r"\b|\b".join([deal_type[0] for deal_type in LocationDispatcher.deal_types()])
+object_type_regexp = r"\b%s\b" % r"\b|\b".join([object_type[0] for object_type in LocationDispatcher.object_types()])
+
+object_patterns = patterns('buildings.views',
+    url(    r'user/(?P<user_id>\d+)/(?P<location>%s)/(?P<object_type>%s)/$' % (location_regexp, object_type_regexp),
+            'user_object_list',
+            name = 'buildings_user_object_list'
+    ),
+)
 
 rentflat_patterns = patterns('buildings.views',
-    url(    r'user/(?P<user_id>\d+)/rent/flats/(?P<location>%s)/$' % location_regexp,
-            'user_rentflat_list',
-            name = 'buildings_user_rentflat_list'
-    ),
     url(    r'rent/flats/(?P<id>\d+)/$',
             'rentflat_detail',
             name = 'buildings_rentflat_detail'
@@ -30,10 +34,6 @@ rentflat_patterns = patterns('buildings.views',
 )
 
 sellflat_patterns = patterns('buildings.views',
-    url(    r'user/(?P<user_id>\d+)/sell/flats/(?P<location>%s)/$' % location_regexp,
-            'user_sellflat_list',
-            name = 'buildings_user_sellflat_list'
-    ),
     url(    r'sell/flats/(?P<id>\d+)/$',
             'sellflat_detail',
             name = 'buildings_sellflat_detail'
@@ -83,4 +83,4 @@ search_patterns = patterns('buildings.views',
     ),
 )
 
-urlpatterns = common_patterns + rentflat_patterns + sellflat_patterns + search_patterns
+urlpatterns = common_patterns + object_patterns + rentflat_patterns + sellflat_patterns + search_patterns

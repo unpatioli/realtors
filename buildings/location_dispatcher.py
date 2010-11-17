@@ -87,4 +87,8 @@ class LocationDispatcher(object):
     def deal_types(lang='ru'):
         return [('rent', 'Аренда'), ('sell', 'Продажа')]
     
+    @staticmethod
+    def object_types(lang='ru'):
+        return [('rentflat', 'Аренда квартир'), ('sellflat', 'Продажа квартир')]
+    
 
