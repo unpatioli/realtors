@@ -6,14 +6,14 @@
 			{% if objects_type == 'rent_flats' %}
 				Аренда
 			{% else %}
-				<a href="{% url buildings_user_rentflat_list user_id %}">Аренда</a>
+				<a href="{% url buildings_user_rentflat_list user_id 'moscow' %}">Аренда</a>
 			{% endif %}
 		</li>
 		<li>
 			{% if objects_type == 'sell_flats' %}
 				Продажа
 			{% else %}
-				<a href="{% url buildings_user_sellflat_list user_id %}">Продажа</a>
+				<a href="{% url buildings_user_sellflat_list user_id 'moscow' %}">Продажа</a>
 			{% endif %}
 		</li>
 		{# <li> #}
@@ -31,6 +31,21 @@
 		{# 	{% endif %} #}
 		</li>
 	</ul>
+	
+	
+	{% if locations %}
+		<ul class="menu">
+			{% for k, v in locations %}
+				<li>
+					{% if k == location %}
+						{{ v }}
+					{% else %}
+						<a href="{% url buildings_user_rentflat_list user_id k %}">{{ v }}</a>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
 {% endblock %}
 
 {% block content %}

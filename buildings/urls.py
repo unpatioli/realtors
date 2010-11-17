@@ -11,7 +11,7 @@ location_regexp = r"\b%s\b" % r"\b|\b".join([location for location in LOCATION_F
 deal_type_regexp = r"\b%s\b" % r"\b|\b".join([deal_type[0] for deal_type in LocationDispatcher.deal_types()])
 
 rentflat_patterns = patterns('buildings.views',
-    url(    r'user/(?P<user_id>\d+)/rent/flats/$',
+    url(    r'user/(?P<user_id>\d+)/rent/flats/(?P<location>%s)/$' % location_regexp,
             'user_rentflat_list',
             name = 'buildings_user_rentflat_list'
     ),
@@ -30,7 +30,7 @@ rentflat_patterns = patterns('buildings.views',
 )
 
 sellflat_patterns = patterns('buildings.views',
-    url(    r'user/(?P<user_id>\d+)/sell/flats/$',
+    url(    r'user/(?P<user_id>\d+)/sell/flats/(?P<location>%s)/$' % location_regexp,
             'user_sellflat_list',
             name = 'buildings_user_sellflat_list'
     ),

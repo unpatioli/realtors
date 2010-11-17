@@ -14,14 +14,18 @@ from buildings import forms, find
 # ============
 # = RentFlat =
 # ============
-def user_rentflat_list(request, user_id):
+def user_rentflat_list(request, user_id, location):
     return object_list(
         request,
-        queryset = RentFlat.objects.filter(owner__pk__exact=user_id),
+        queryset = RentFlat.objects.filter(owner__pk=user_id, location=location),
+        template_name = 'buildings/%s_rentflat_list.html' % location,
         extra_context = {
             'objects_type': 'rent_flats',
             'show_management_panel': request.user.id == int(user_id),
             'user_id': user_id,
+            
+            'locations': LocationDispatcher.localized_titles('ru'),
+            'location': location,
         },
     )
 
@@ -105,14 +109,18 @@ def rentflat_edit(request, id):
 # =============
 # = SellFlats =
 # =============
-def user_sellflat_list(request, user_id):
+def user_sellflat_list(request, user_id, location):
     return object_list(
         request,
         queryset = SellFlat.objects.filter(owner__pk__exact=user_id),
+        template_name = 'buildings/%s_sellflat_list.html' % location,
         extra_context = {
             'objects_type': 'sell_flats',
             'show_management_panel': request.user.id == int(user_id),
             'user_id': user_id,
+            
+            'locations': LocationDispatcher.localized_titles('ru'),
+            'location': location,
         },
     )
 
@@ -202,7 +210,8 @@ def moscow_rentflat_search(request):
                 request,
                 forms.MoscowRentFlatSearchForm,
                 'buildings/search/moscow_rentflat_search_form.html',
-                find.moscow_rentflat_find
+                find.moscow_rentflat_find,
+                'buildings/moscow_rentflat_list.html'
             )
 
 def moscow_region_rentflat_search(request):
@@ -210,7 +219,8 @@ def moscow_region_rentflat_search(request):
                 request,
                 forms.MoscowRegionRentFlatSearchForm,
                 'buildings/search/moscow_region_rentflat_search_form.html',
-                find.moscow_region_rentflat_find
+                find.moscow_region_rentflat_find,
+                'buildings/moscow_region_rentflat_list.html'
             )
 
 def common_rentflat_search(request):
@@ -218,7 +228,8 @@ def common_rentflat_search(request):
                 request,
                 forms.CommonRentFlatSearchForm,
                 'buildings/search/common_rentflat_search_form.html',
-                find.common_rentflat_find
+                find.common_rentflat_find,
+                'buildings/common_rentflat_list.html'
             )
 
 
@@ -227,7 +238,8 @@ def moscow_sellflat_search(request):
                 request,
                 forms.MoscowSellFlatSearchForm,
                 'buildings/search/moscow_sellflat_search_form.html',
-                find.moscow_sellflat_find
+                find.moscow_sellflat_find,
+                'buildings/moscow_sellflat_list.html'
             )
 
 def moscow_region_sellflat_search(request):
@@ -235,7 +247,8 @@ def moscow_region_sellflat_search(request):
                 request,
                 forms.MoscowRegionSellFlatSearchForm,
                 'buildings/search/moscow_region_sellflat_search_form.html',
-                find.moscow_region_sellflat_find
+                find.moscow_region_sellflat_find,
+                'buildings/moscow_region_sellflat_list.html'
             )
 
 def common_sellflat_search(request):
@@ -243,12 +256,13 @@ def common_sellflat_search(request):
                 request,
                 forms.CommonSellFlatSearchForm,
                 'buildings/search/common_sellflat_search_form.html',
-                find.common_sellflat_find
+                find.common_sellflat_find,
+                'buildings/common_sellflat_list.html'
             )
 
 
 
-def __flat_search(request, form_class, form_template, find_function):
+def __flat_search(request, form_class, form_template, find_function, result_template):
     if request.method != 'GET':
         raise Http404
     
@@ -258,7 +272,7 @@ def __flat_search(request, form_class, form_template, find_function):
             res = find_function(form)
             return direct_to_template(
                 request,
-                template = "buildings/search/results.html",
+                template = result_template,
                 extra_context = {'res': res}
             )
     else:
