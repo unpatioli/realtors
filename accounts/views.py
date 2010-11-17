@@ -125,6 +125,19 @@ def profile_realtor(request, user_id):
     )
 
 @login_required
+def my_profile_realtor(request):
+    try:
+        realtor = request.user.realtor_set.get()
+    except Realtor.DoesNotExist:
+        return redirect(realtor_new)
+    
+    return direct_to_template(
+        request,
+        template = "accounts/realtor.html",
+        extra_context = {'realtor': realtor}
+    )
+
+@login_required
 def realtor_new(request):
     if request.user.realtor_set.exists():
         return redirect(realtor_edit)

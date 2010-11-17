@@ -6,7 +6,7 @@
 		{% if not user.realtor_set.exists %}
 			<a href="{% url accounts_my_profile_realtor_new %}">Обновиться до риэлтора</a>
 		{% else %}
-			<a href="{% url accounts_my_profile_realtor_edit %}">Профиль риэлтора</a>
+			<a href="{% url accounts_my_profile_realtor %}">Профиль риэлтора</a>
 		{% endif %}
 	</li>
 {% endblock %}

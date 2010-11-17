@@ -37,6 +37,10 @@ urlpatterns = patterns('',
             'accounts.views.profile_realtor',
             name = 'accounts_profile_realtor'
     ),
+    url(    r'profile/realtor/$',
+            'accounts.views.my_profile_realtor',
+            name = 'accounts_my_profile_realtor'
+    ),
     url(    r'profile/realtor/new/$',
             'accounts.views.realtor_new',
             name = 'accounts_my_profile_realtor_new'
