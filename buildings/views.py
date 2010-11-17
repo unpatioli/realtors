@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 from django.views.generic.list_detail import object_list
+from django.contrib import messages
 
 from buildings.models import RentFlat, SellFlat
 from buildings.location_dispatcher import LocationDispatcher
@@ -50,8 +51,10 @@ def rentflat_new(request, location):
         form = form_dispatcher.form_class(request.POST, instance=instance)
         if form.is_valid():
             flat = form.save()
-            
+            messages.success(request, u"Квартира сохранена")
             return redirect(flat)
+        else:
+            messages.error(request, u"Квартира не сохранена")
     else:
         form = form_dispatcher.form_class()
     return direct_to_template(
@@ -77,16 +80,16 @@ def rentflat_edit(request, id):
     
     # get form
     form_dispatcher = LocationDispatcher(deal_type='rent', location=flat.location)
-    # TODO check is form_dispatcher has wrong location
-    # if not form_dispatcher.location_valid():
-    #     raise
     
     # process form
     if request.method == 'POST':
         form = form_dispatcher.form_class(request.POST, instance=flat)
         if form.is_valid():
             form.save()
+            messages.success(request, u"Информация о квартире обновлена")
             return redirect(flat)
+        else:
+            messages.error(request, u"Информация о квартире не обновлена")
     else:
         form = form_dispatcher.form_class(instance=flat)
     return direct_to_template(
@@ -139,8 +142,10 @@ def sellflat_new(request, location):
         form = form_dispatcher.form_class(request.POST, instance=instance)
         if form.is_valid():
             flat = form.save()
-            
+            messages.success(request, u"Квартира сохранена")
             return redirect(flat)
+        else:
+            messages.error(request, u"Квартира не сохранена")
     else:
         form = form_dispatcher.form_class()
     return direct_to_template(
@@ -166,14 +171,16 @@ def sellflat_edit(request, id):
     
     # get form
     form_dispatcher = LocationDispatcher(deal_type='sell', location=flat.location)
-    # TODO check if form_dispatcher has wrong location
     
     # process form
     if request.method == 'POST':
         form = form_dispatcher.form_class(request.POST, instance=flat)
         if form.is_valid():
             form.save()
+            messages.success(request, u"Информация о квартире обновлена")
             return redirect(flat)
+        else:
+            messages.error(request, u"Информация о квартире не обновлена")
     else:
         form = form_dispatcher.form_class(instance=flat)
     return direct_to_template(
@@ -244,7 +251,7 @@ def common_sellflat_search(request):
 def __flat_search(request, form_class, form_template, find_function):
     if request.method != 'GET':
         raise Http404
-
+    
     if request.GET:
         form = form_class(request.GET)
         if form.is_valid():
