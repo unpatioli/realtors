@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db import models
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.generic import GenericRelation
 
@@ -143,7 +144,7 @@ class RentFlat(Flat):
     children = models.BooleanField(default=False, verbose_name=u"Можно с детьми")
     
     def get_absolute_url(self):
-        return "/buildings/rent/flats/%i/" % self.pk
+        return reverse('buildings_rentflat_detail', args=[self.pk])
     
 
 class SellFlat(Flat):
@@ -152,6 +153,6 @@ class SellFlat(Flat):
     part_in_flat = models.BooleanField(default=False, verbose_name=u"Доля в квартире")
     
     def get_absolute_url(self):
-        return "/buildings/sell/flats/%i/" % self.pk
+        return reverse('buildings_sellflat_detail', args=[self.pk])
     
 
