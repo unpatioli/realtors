@@ -2,12 +2,6 @@
 {% load building_fields_render %}
 
 {% block price %}
-	{# {% render_field object.mortgage "Ипотека" %} #}
-	{# {% render_field object.part_in_flat "Доля в квартире" %} #}
-	
-	{# <li>Ипотека: {{ object.mortgage|yesno:"Да,Нет" }}</li> #}
-	{# <li>Доля в квартире: {{ object.part_in_flat|yesno:"Да,Нет" }}</li> #}
-	
 	{% flag_field object.mortgage "Ипотека" %}
 	{% flag_field object.part_in_flat "Доля в квартире" %}
 {% endblock %}

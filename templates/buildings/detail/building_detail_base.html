@@ -1,49 +1,71 @@
 {% extends "buildings/base.html" %}
 {% load building_fields_render %}
 
-{% block top_panel %}
-	{% if show_object_controls %}
-		<a href="{{ object.get_absolute_url }}edit">Редактировать</a>
-	{% endif %}
-{% endblock %}
-
 {% block content %}
-	<ul class="address">
-		{% render_field object.town "Город" %}
-		{% render_field object.street "Улица" %}
-		{% render_field object.house_id "Дом" %}
-		{% render_field object.building_id "Строение" %}
+	<div class="span-24 last">
+		<h3>Квартира</h3>
+	</div>
+	{% if show_object_controls %}
+		<div id="object_controls" class="span-24 last">
+			<ul class="menu">
+				<li><a href="{{ object.get_absolute_url }}edit">Редактировать</a></li>
+			</ul>
+		</div>
+	{% endif %}
+	
+	<div class="span-8">
+		<div class="section_title">Адрес</div>
+		<ul class="address">
+			{% render_field object.town "Город" %}
+			{% render_field object.street "Улица" %}
+			{% render_field object.house_id "Дом" %}
+			{% render_field object.building_id "Строение" %}
 		
-		{% block address %}{% endblock %}
-	</ul>
-	
-	<ul class="parameters">
-		{% render_field object.total_area "Общая площадь" "м<sup>2</sup>" %}
+			{% block address %}{% endblock %}
+		</ul>
 		
-		{% block parameters %}{% endblock %}
-	</ul>
-	
-	<ul class="building_type">
-		{% block building_type %}{% endblock %}
-	</ul>
-	
-	<ul class="additional_parameters">
-		{% block additional_parameters %}{% endblock %}
-	</ul>
-	
-	<ul class="remoteness">
-		{% block remoteness %}{% endblock %}
-	</ul>
-	
-	<ul class="price">
-		{% render_field object.price "Цена" object.currency %}
+		<div class="section_title">Удаленность</div>
+		<ul class="remoteness">
+			{% block remoteness %}{% endblock %}
+		</ul>
 		
-		{% block price %}{% endblock %}
-	</ul>
-	
-	<ul class="description">
-		{% render_field object.description "Дополнительно" %}
+		<div class="section_title">Тип здания</div>
+		<ul class="building_type">
+			{% block building_type %}{% endblock %}
+		</ul>
 		
-		{% block description %}{% endblock %}
-	</ul>
+		<div class="section_title">Цена</div>
+		<ul class="price">
+			{% render_field object.price "Цена" object.currency %}
+		
+			{% block price %}{% endblock %}
+		</ul>
+	</div>
+	
+	<div class="span-8">
+		<div class="section_title">Параметры</div>
+		<ul class="parameters">
+			{% render_field object.total_area "Общая площадь" "м<sup>2</sup>" %}
+		
+			{% block parameters %}{% endblock %}
+		</ul>
+		
+		<div class="section_title">Дополнительные параметры</div>
+		<ul class="additional_parameters">
+			{% block additional_parameters %}{% endblock %}
+		</ul>
+	</div>
+	
+	<div class="span-8 last">
+		TODO: Тут будет карта
+	</div>
+	
+	{% if object.description %}
+		<div class="span-24 last">
+			<div class="section_title">Дополнительно</div>
+			<div class="description">
+				{{ object.description }}
+			</div>
+		</div>
+	{% endif %}
 {% endblock %}
