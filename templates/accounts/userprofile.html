@@ -1,13 +1,34 @@
-{% extends "accounts/base.html" %}
+{% extends "accounts/settings_base.html" %}
 {% load fields_render %}
 
-{% block content %}
+{% block sidebar_items %}
+	<li>Личные данные</li>
+	<li>
+		{% if not user.realtor_set.exists %}
+			<a href="{% url accounts_my_profile_realtor_new %}">Обновиться до риэлтора</a>
+		{% else %}
+			<a href="{% url accounts_my_profile_realtor_edit %}">Профиль риэлтора</a>
+		{% endif %}
+	</li>
+{% endblock %}
+
+{% block page %}
 	
-	<div class="span-24 last">
-		<h3>Профиль {{ userprofile.user.username }}</h3>
+	<div class="span-18 last">
+		<h3>Профиль {{ userprofile.user.get_profile.get_name }}</h3>
 	</div>
 	
-	<div class="span-24 last">
+	{% if user.pk == userprofile.user.pk %}
+		<div class="span-18 last">
+			<ul class="menu">
+				<li>
+					<a href="{% url accounts_my_profile_edit %}">Редактировать</a>
+				</li>
+			</ul>
+		</div>
+	{% endif %}
+	
+	<div class="span-18 last">
 		<ul>
 			{% render_field userprofile.birthday "День рождения" %}
 			{% render_field userprofile.get_gender_display "Пол" %}
@@ -17,23 +38,5 @@
 			{% render_field userprofile.description "Дополнительно" %}
 		</ul>
 	</div>
-	
-	{% if user.pk == userprofile.user.pk %}
-		<div class="span-24 last">
-			<ul class="menu">
-				<li>
-					<a href="{% url accounts_my_profile_edit %}">Редактировать</a>
-				</li>
-			
-				<li>
-				{% if not user.realtor_set.exists %}
-					<a href="{% url accounts_my_profile_realtor_new %}">Обновиться до риэлтора</a>
-				{% else %}
-					<a href="{% url accounts_my_profile_realtor_edit %}">Профиль риэлтора</a>
-				{% endif %}
-				</li>
-			</ul>
-		</div>
-	{% endif %}
 	
 {% endblock %}

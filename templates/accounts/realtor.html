@@ -1,13 +1,28 @@
-{% extends "accounts/base.html" %}
+{% extends "accounts/settings_base.html" %}
 {% load fields_render %}
 
-{% block content %}
+{% block sidebar_items %}
+	<li><a href="{% url accounts_my_profile %}">Личные данные</a></li>
+	<li>Профиль риэлтора</li>
+{% endblock %}
+
+{% block page %}
 	
-	<div class="span-24 last">
-		<h3>Профиль риэлтора {{ realtor.user.username }}</h3>
+	<div class="span-18 last">
+		<h3>Профиль риэлтора {{ realtor.user.get_profile.get_name }}</h3>
 	</div>
 	
-	<div class="span-12">
+	{% if user.pk == realtor.user.pk %}
+		<div class="span-18 last">
+			<ul class="menu">
+				<li>
+					<a href="{% url accounts_my_profile_realtor_edit %}">Редактировать</a>
+				</li>
+			</ul>
+		</div>
+	{% endif %}
+	
+	<div class="span-9">
 		<div class="section_title">Личные данные</div>
 		<ul>
 			{% flag_field realtor.is_private "Частный риэлтор" %}
@@ -26,7 +41,7 @@
 	</div>
 	
 	
-	<div class="span-12 last">
+	<div class="span-9 last">
 		<div class="section_title">Регион</div>
 		<ul>
 			{% flag_field realtor.in_msk "Москва" %}
@@ -41,20 +56,11 @@
 		</ul>
 	</div>
 	
-	<div class="span-24 last">
-		<ul>
-			{% render_field realtor.description "Дополнительно" %}
-		</ul>
-	</div>
-	
-	{% if user.pk == realtor.user.pk %}
-		<div class="span-24 last">
-			<ul class="menu">
-				<li>
-					<a href="{% url accounts_my_profile_realtor_edit %}">Редактировать</a>
-				</li>
-			</ul>
+	<div class="span-18 last">
+		<div class="section_title">Дополнительно</div>
+		<div class="description">
+			{{ realtor.description }}
 		</div>
-	{% endif %}
+	</div>
 	
 {% endblock %}

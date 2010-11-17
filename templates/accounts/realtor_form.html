@@ -1,26 +1,35 @@
-{% extends "accounts/base.html" %}
+{% extends "accounts/settings_base.html" %}
 
-{% block content %}
+{% block sidebar_items %}
+	<li><a href="{% url accounts_my_profile %}">Личные данные</a></li>
+	<li>Профиль риэлтора</li>
+{% endblock %}
+
+{% block page %}
+	<div class="span-18 last">
+		<h3>Профиль риэлтора {% if form.instance.pk %}{{ form.instance.user.get_profile.get_name }}{% endif %}</h3>
+	</div>
+	
 	<form action="" method="post">
 		{% csrf_token %}
-		<div class="form span-24 last">
-			<div class="non_field_errors span-24 last">
+		<div class="form span-18 last">
+			<div class="non_field_errors span-18 last">
 				{{ form.non_field_errors }}
 			</div>
 			{% for field in form %}
-				<div class="field span-24 last">
+				<div class="field span-18 last">
 					<div class="label align-right span-4">
 						{{ field.label_tag }}
 					</div>
 					<div class="input align-left span-6">
 						{{ field }}
 					</div>
-					<div class="input_errors align-left span-14 last">
+					<div class="input_errors align-left span-8 last">
 						{{ field.errors }}
 					</div>
 				</div>
 			{% endfor %}
-			<div class="field submit span-24 last">
+			<div class="field submit span-18 last">
 				<input type="submit" class="submit" value="Сохранить" />
 			</div>
 		</div>
