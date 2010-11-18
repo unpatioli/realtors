@@ -62,11 +62,11 @@
 						<div id="top_submenu_content">
 							<ul class="menu">
 								<li>
-									<a href="{% url buildings_moscow_rentflat_search %}">Поиск</a>
+									<a href="{% url buildings_object_search %}">Поиск</a>
 								</li>
 								{% if user.is_authenticated %}
 									<li>
-										<a href="{% url buildings_user_object_list user.pk 'moscow' 'rentflat' %}">Мои объекты</a>
+										<a href="{% url buildings_user_object_list user.pk %}">Мои объекты</a>
 									</li>
 								{% endif %}
 							</ul>

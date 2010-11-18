@@ -1,34 +1,38 @@
 {% extends "buildings/search/base.html" %}
 {% load building_form %}
 
-{% block content %}
-	<div id="location_menu">
-		<ul>
+{% block top_panel %}
+	{% if object_types %}
+		<ul class="menu">
+			{% for k, v in object_types %}
+				<li>
+					{% if k == object_type %}
+						{{ v }}
+					{% else %}
+						<a href="{% url buildings_object_search location k %}">{{ v }}</a>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+	
+	
+	{% if locations %}
+		<ul class="menu">
 			{% for k, v in locations %}
 				<li>
 					{% if k == location %}
 						{{ v }}
 					{% else %}
-						<a href="{% url buildings.views.search deal_type k %}">{{ v }}</a>
+						<a href="{% url buildings_object_search k object_type %}">{{ v }}</a>
 					{% endif %}
 				</li>
 			{% endfor %}
 		</ul>
-	</div>
-	<div id="deal_type_menu">
-		<ul>
-			{% for k, v in deal_types %}
-				<li>
-					{% if k == deal_type %}
-						{{ v }}
-					{% else %}
-						<a href="{% url buildings.views.search k location %}">{{ v }}</a>
-					{% endif %}
-				</li>
-			{% endfor %}
-		</ul>
-	</div>
-	
+	{% endif %}
+{% endblock %}
+
+{% block content %}
 	<form action="" method="get">
 		{{ form.non_field_errors }}
 		<ul>
@@ -78,6 +82,6 @@
 			</fieldset>
 		</ul>
 		
-		<input type="submit" value="Искать" />
+		<input type="submit" name="search" value="Искать" />
 	</form>
 {% endblock %}

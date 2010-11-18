@@ -87,7 +87,7 @@ def __flat_find(form):
     if form.cleaned_data.get('balcony'):
         balcony_q = Q(balcony_count__gt = 0)
     q_arr = __building_find(form) + [
-        q(form, 'rooms_count'),
+        q(form, 'rooms_count', query_type='in'),
         q_gt_lt(form, 'total_area'),
         q_gt_lt(form, 'kitchen_area'),
         q_gt_lt(form, 'floor'),
@@ -146,14 +146,17 @@ def __common_flat_find(form):
 # = By deal type =
 # ================
 def __rent_flat_find(form):
+    zero_commission_q = Q()
+    if form.cleaned_data.get('zero_commission'):
+        zero_commission_q = Q(owner__realtor__commission_from = 0) & Q(owner__realtor__commission_to = 0)
     q_arr = [
         q(form, 'payment_period'),
         
         q(form, 'pets'),
         q(form, 'children'),
         
-        q(form, 'agency') | q(form, 'private'),
-        q(form, 'zero_commission')
+        q(form, 'agency', model_field_name='owner__realtor__agency_title') | q(form, 'owner__realtor__private'),
+        zero_commission_q
     ]
     return q_arr
 

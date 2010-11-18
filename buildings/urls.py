@@ -12,6 +12,10 @@ deal_type_regexp = r"\b%s\b" % r"\b|\b".join([deal_type[0] for deal_type in Loca
 object_type_regexp = r"\b%s\b" % r"\b|\b".join([object_type[0] for object_type in LocationDispatcher.object_types()])
 
 object_patterns = patterns('buildings.views',
+    url(    r'user/(?P<user_id>\d+)/objects/$',
+            'user_object_list',
+            name = 'buildings_user_object_list'
+    ),
     url(    r'user/(?P<user_id>\d+)/(?P<location>%s)/(?P<object_type>%s)/$' % (location_regexp, object_type_regexp),
             'user_object_list',
             name = 'buildings_user_object_list'
@@ -31,30 +35,13 @@ object_patterns = patterns('buildings.views',
 )
 
 search_patterns = patterns('buildings.views',
-    url(    r'search/rent/flat/moscow/$',
-            'moscow_rentflat_search',
-            name = 'buildings_moscow_rentflat_search'
+    url(    r'search/$',
+            'object_search',
+            name = 'buildings_object_search'
     ),
-    url(    r'search/rent/flat/moscow_region/$',
-            'moscow_region_rentflat_search',
-            name = 'buildings_moscow_region_rentflat_search'
-    ),
-    url(    r'search/rent/flat/common/$',
-            'common_rentflat_search',
-            'buildings_common_rentflat_search'
-    ),
-    
-    url(    r'search/sell/flat/moscow/$',
-            'moscow_sellflat_search',
-            'buildings_moscow_sellflat_search'
-    ),
-    url(    r'search/sell/flat/moscow_region/$',
-            'moscow_region_sellflat_search',
-            'buildings_moscow_region_sellflat_search'
-    ),
-    url(    r'search/sell/flat/common/$',
-            'common_sellflat_search',
-            'buildings_common_sellflat_search'
+    url(    r'search/(?P<location>%s)/(?P<object_type>%s)/$' % (location_regexp, object_type_regexp),
+            'object_search',
+            name = 'buildings_object_search'
     ),
 )
 

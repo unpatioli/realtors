@@ -21,7 +21,7 @@ class SliderWidget(forms.TextInput):
                 <script type="text/javascript">
                     $(function() {
                         $("#%(id)s_slider").slider({
-                            value: 0,
+                            value: $("#%(id)s").val(),
                             min: 0,
                             max: 180,
                             slide: function(event, ui){
@@ -174,4 +174,25 @@ class MoscowRegionSellFlatSearchForm(SellFlatSearchForm, MoscowRegionFlatSearchF
 
 class CommonSellFlatSearchForm(SellFlatSearchForm, CommonFlatSearchForm):
     pass
+
+
+# ================
+# = Form factory =
+# ================
+FORMS = {
+    'moscow': {
+        'rentflat': MoscowRentFlatSearchForm,
+        'sellflat': MoscowSellFlatSearchForm,
+    },
+    'moscow_region': {
+        'rentflat': MoscowRegionRentFlatSearchForm,
+        'sellflat': MoscowRegionSellFlatSearchForm,
+    },
+    'common': {
+        'rentflat': CommonRentFlatSearchForm,
+        'sellflat': CommonSellFlatSearchForm,
+    },
+}
+def form_factory(location, object_type):
+    return FORMS[location][object_type]
 

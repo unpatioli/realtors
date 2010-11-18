@@ -10,7 +10,7 @@ from django.contrib import messages
 from buildings.location_dispatcher import LocationDispatcher
 from buildings import model_forms, forms, find
 
-def user_object_list(request, user_id, location, object_type):
+def user_object_list(request, user_id, location='moscow', object_type='rentflat'):
     model = ContentType.objects.get(model=object_type).model_class()
     
     return object_list(
@@ -111,98 +111,47 @@ def object_edit(request, location, object_type, id):
 # ==========
 # = Search =
 # ==========
-def moscow_rentflat_search(request):
-    return __flat_search(
-                request,
-                forms.MoscowRentFlatSearchForm,
-                'buildings/search/moscow_rentflat_search_form.html',
-                find.moscow_rentflat_find,
-                'buildings/moscow_rentflat_list.html',
-                'moscow',
-                'rentflat'
-            )
-
-def moscow_region_rentflat_search(request):
-    return __flat_search(
-                request,
-                forms.MoscowRegionRentFlatSearchForm,
-                'buildings/search/moscow_region_rentflat_search_form.html',
-                find.moscow_region_rentflat_find,
-                'buildings/moscow_region_rentflat_list.html',
-                'moscow_region',
-                'rentflat'
-            )
-
-def common_rentflat_search(request):
-    return __flat_search(
-                request,
-                forms.CommonRentFlatSearchForm,
-                'buildings/search/common_rentflat_search_form.html',
-                find.common_rentflat_find,
-                'buildings/common_rentflat_list.html',
-                'common',
-                'rentflat'
-            )
-
-
-def moscow_sellflat_search(request):
-    return __flat_search(
-                request,
-                forms.MoscowSellFlatSearchForm,
-                'buildings/search/moscow_sellflat_search_form.html',
-                find.moscow_sellflat_find,
-                'buildings/moscow_sellflat_list.html',
-                'moscow',
-                'sellflat'
-            )
-
-def moscow_region_sellflat_search(request):
-    return __flat_search(
-                request,
-                forms.MoscowRegionSellFlatSearchForm,
-                'buildings/search/moscow_region_sellflat_search_form.html',
-                find.moscow_region_sellflat_find,
-                'buildings/moscow_region_sellflat_list.html',
-                'moscow_region',
-                'sellflat'
-            )
-
-def common_sellflat_search(request):
-    return __flat_search(
-                request,
-                forms.CommonSellFlatSearchForm,
-                'buildings/search/common_sellflat_search_form.html',
-                find.common_sellflat_find,
-                'buildings/common_sellflat_list.html',
-                'common',
-                'sellflat'
-            )
-
-
-
-def __flat_search(request, form_class, form_template, find_function, result_template, location, object_type):
+def object_search(request, location='moscow', object_type='rentflat'):
     if request.method != 'GET':
         raise Http404
     
-    if request.GET:
+    params = request.GET.copy()
+    if 'search' in params:
+        is_submitted = True
+        del params['search']
+    else:
+        is_submitted = False
+    form_class = forms.form_factory(location, object_type)
+    if is_submitted:
         form = form_class(request.GET)
         if form.is_valid():
-            res = find_function(form)
+            res = find.__dict__['%s_%s_find' % (location, object_type)](form)
             return direct_to_template(
                 request,
-                template = result_template,
+                template = 'buildings/%s_%s_list.html' % (location, object_type),
                 extra_context = {
                     'object_list': res,
                     
                     'location': location,
-                    'object_type': object_type
+                    'object_type': object_type,
+                    
+                    'is_search_result': True,
+                    'q_string': params.urlencode()
                 }
             )
     else:
-        form = form_class()
+        form = form_class(params)
     return direct_to_template(
         request,
-        template = form_template,
-        extra_context = {'form': form}
+        template = 'buildings/search/%s_%s_search_form.html' % (location, object_type),
+        extra_context = {
+            'form': form,
+            
+            'locations': LocationDispatcher.localized_titles('ru'),
+            'location': location,
+            
+            'object_types': LocationDispatcher.object_types(),
+            'object_type': object_type,
+        }
     )
 

@@ -32,13 +32,17 @@
 {% endblock %}
 
 {% block content %}
-	{% if show_management_panel %}
-		<div id="management_panel" class="span-24 last">
-			<ul class="menu">
+	<div id="management_panel" class="span-24 last">
+		<ul class="menu">
+			{% if is_search_result %}
+				<li><a href="{% url buildings_object_search location object_type %}?{{ q_string }}">&larr; Изменить условия поиска</a></li>
+			{% endif %}
+			
+			{% if show_management_panel %}
 				<li><a href="{% url buildings_object_new location object_type %}">Добавить объект</a></li>
-			</ul>
-		</div>
-	{% endif %}
+			{% endif %}
+		</ul>
+	</div>
 	
 	<div id="object_list" class="span-24 last">
 		{% if object_list %}

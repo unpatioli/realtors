@@ -4,17 +4,22 @@ from django import forms
 from buildings import widgets
 from buildings.models import Metro, RentFlat, SellFlat
 
-# ==================
-# = RentFlat forms =
-# ==================
-class RentFlatForm(forms.ModelForm):
-    nearest_metro_stations = forms.ModelMultipleChoiceField(
+class Baseform(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(Baseform, self).__init__(*args, **kwargs)
+        if 'nearest_metro_stations' in self.fields:
+            self.fields['nearest_metro_stations'] = forms.ModelMultipleChoiceField(
                                     queryset = Metro.objects.all(),
                                     label = u"Ближайшие станции метро",
                                     widget = widgets.DivCheckboxSelectMultiple(classes=['metro', 'scroll', 'reset']),
                                     required = False
                             )
     
+
+# ==================
+# = RentFlat forms =
+# ==================
+class RentFlatForm(Baseform):
     class Meta:
         model = RentFlat
         fields = (
@@ -57,14 +62,7 @@ class CommonRentFlatForm(RentFlatForm):
 # ==================
 # = SellFlat forms =
 # ==================
-class SellFlatForm(forms.ModelForm):
-    nearest_metro_stations = forms.ModelMultipleChoiceField(
-                                    queryset = Metro.objects.all(),
-                                    label = u"Ближайшие станции метро",
-                                    widget = widgets.DivCheckboxSelectMultiple(classes=['metro', 'scroll', 'reset']),
-                                    required = False
-                            )
-    
+class SellFlatForm(Baseform):
     class Meta:
         model = SellFlat
         fields = (
