@@ -83,7 +83,9 @@ def __flat_find(form):
     if floor_no_last:
         q_floor_no_last = ~Q(floor__exact = F('floors_count'))
     
-    
+    balcony_q = Q()
+    if form.cleaned_data.get('balcony'):
+        balcony_q = Q(balcony_count__gt = 0)
     q_arr = __building_find(form) + [
         q(form, 'rooms_count'),
         q_gt_lt(form, 'total_area'),
@@ -95,7 +97,7 @@ def __flat_find(form):
         q(form, 'renovation_type'),
         
         q(form, 'furniture'),
-        q(form, 'balcony'),
+        balcony_q,
         q(form, 'fridge'),
         q(form, 'wash_machine'),
     ]
