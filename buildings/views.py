@@ -117,7 +117,9 @@ def moscow_rentflat_search(request):
                 forms.MoscowRentFlatSearchForm,
                 'buildings/search/moscow_rentflat_search_form.html',
                 find.moscow_rentflat_find,
-                'buildings/moscow_rentflat_list.html'
+                'buildings/moscow_rentflat_list.html',
+                'moscow',
+                'rentflat'
             )
 
 def moscow_region_rentflat_search(request):
@@ -126,7 +128,9 @@ def moscow_region_rentflat_search(request):
                 forms.MoscowRegionRentFlatSearchForm,
                 'buildings/search/moscow_region_rentflat_search_form.html',
                 find.moscow_region_rentflat_find,
-                'buildings/moscow_region_rentflat_list.html'
+                'buildings/moscow_region_rentflat_list.html',
+                'moscow_region',
+                'rentflat'
             )
 
 def common_rentflat_search(request):
@@ -135,7 +139,9 @@ def common_rentflat_search(request):
                 forms.CommonRentFlatSearchForm,
                 'buildings/search/common_rentflat_search_form.html',
                 find.common_rentflat_find,
-                'buildings/common_rentflat_list.html'
+                'buildings/common_rentflat_list.html',
+                'common',
+                'rentflat'
             )
 
 
@@ -145,7 +151,9 @@ def moscow_sellflat_search(request):
                 forms.MoscowSellFlatSearchForm,
                 'buildings/search/moscow_sellflat_search_form.html',
                 find.moscow_sellflat_find,
-                'buildings/moscow_sellflat_list.html'
+                'buildings/moscow_sellflat_list.html',
+                'moscow',
+                'sellflat'
             )
 
 def moscow_region_sellflat_search(request):
@@ -154,7 +162,9 @@ def moscow_region_sellflat_search(request):
                 forms.MoscowRegionSellFlatSearchForm,
                 'buildings/search/moscow_region_sellflat_search_form.html',
                 find.moscow_region_sellflat_find,
-                'buildings/moscow_region_sellflat_list.html'
+                'buildings/moscow_region_sellflat_list.html',
+                'moscow_region',
+                'sellflat'
             )
 
 def common_sellflat_search(request):
@@ -163,12 +173,14 @@ def common_sellflat_search(request):
                 forms.CommonSellFlatSearchForm,
                 'buildings/search/common_sellflat_search_form.html',
                 find.common_sellflat_find,
-                'buildings/common_sellflat_list.html'
+                'buildings/common_sellflat_list.html',
+                'common',
+                'sellflat'
             )
 
 
 
-def __flat_search(request, form_class, form_template, find_function, result_template):
+def __flat_search(request, form_class, form_template, find_function, result_template, location, object_type):
     if request.method != 'GET':
         raise Http404
     
@@ -179,7 +191,12 @@ def __flat_search(request, form_class, form_template, find_function, result_temp
             return direct_to_template(
                 request,
                 template = result_template,
-                extra_context = {'res': res}
+                extra_context = {
+                    'object_list': res,
+                    
+                    'location': location,
+                    'object_type': object_type
+                }
             )
     else:
         form = form_class()
