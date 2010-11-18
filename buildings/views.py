@@ -152,6 +152,8 @@ def object_search(request, location='moscow', object_type='rentflat'):
             
             'object_types': LocationDispatcher.object_types(),
             'object_type': object_type,
+            
+            'q_string': params.urlencode()
         }
     )
 

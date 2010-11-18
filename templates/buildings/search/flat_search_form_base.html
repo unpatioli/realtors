@@ -9,7 +9,7 @@
 					{% if k == object_type %}
 						{{ v }}
 					{% else %}
-						<a href="{% url buildings_object_search location k %}">{{ v }}</a>
+						<a href="{% url buildings_object_search location k %}{% if q_string %}?{{ q_string }}{% endif %}">{{ v }}</a>
 					{% endif %}
 				</li>
 			{% endfor %}
@@ -24,12 +24,16 @@
 					{% if k == location %}
 						{{ v }}
 					{% else %}
-						<a href="{% url buildings_object_search k object_type %}">{{ v }}</a>
+						<a href="{% url buildings_object_search k object_type %}{% if q_string %}?{{ q_string }}{% endif %}">{{ v }}</a>
 					{% endif %}
 				</li>
 			{% endfor %}
 		</ul>
 	{% endif %}
+	
+	<ul class="menu">
+		<li><a href="{% url buildings_object_search location object_type %}">Очистить форму</a></li>
+	</ul>
 {% endblock %}
 
 {% block content %}
