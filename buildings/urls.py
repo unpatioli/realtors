@@ -32,6 +32,10 @@ object_patterns = patterns('buildings.views',
             'object_edit',
             name = 'buildings_object_edit'
     ),
+    url(    r'(?P<location>%s)/(?P<object_type>%s)/(?P<id>\d+)/delete/$' % (location_regexp, object_type_regexp),
+            'object_delete',
+            name = 'buildings_object_delete'
+    ),
 )
 
 search_patterns = patterns('buildings.views',

@@ -106,6 +106,26 @@ def object_edit(request, location, object_type, id):
         }
     )
 
+@login_required
+def object_delete(request, location, object_type, id):
+    model = ContentType.objects.get(model=object_type).model_class()
+    obj = get_object_or_404(model, pk=id)
+    if not obj.can_edit(request.user):
+        raise Http404
+    if request.method == "POST":
+        obj.delete()
+        messages.success(request, u"Объект успешно удален")
+        return redirect(user_object_list, request.user.pk, location, object_type)
+    return direct_to_template(
+        request,
+        template = "buildings/object_confirm_delete.html",
+        extra_context = {
+            'object': obj,
+            'user_id': request.user.pk,
+            'location': location,
+            'object_type': object_type
+        }
+    )
 
 
 # ==========

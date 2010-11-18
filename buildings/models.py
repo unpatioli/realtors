@@ -71,6 +71,9 @@ class Building(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
     
+    def __unicode__(self):
+        return u"Объект"
+    
     # ============
     # = Managers =
     # ============

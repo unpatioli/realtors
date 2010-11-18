@@ -9,6 +9,7 @@
 		<div id="object_controls" class="span-24 last">
 			<ul class="menu">
 				<li><a href="{% url buildings_object_edit location object_type object.id %}">Редактировать</a></li>
+				<li><a href="{% url buildings_object_delete location object_type object.id %}">Удалить</a></li>
 			</ul>
 		</div>
 	{% endif %}

@@ -1,0 +1,18 @@
+{% extends "buildings/base.html" %}
+
+{% block top_panel %}
+	<ul class="menu">
+		<li><a href="{% url buildings_user_object_list user_id location object_type %}">&larr; Назад к списку объектов</a></li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<div class="span-24 last">
+		<h3>Вы действительно хотите удалить этот объект?</h3>
+		<form action="" method="post">
+			{% csrf_token %}
+			<input type="submit" value="Да"/>
+			<a href="{{ object.get_absolute_url }}">Нет</a>
+		</form>
+	</div>
+{% endblock %}
