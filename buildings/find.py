@@ -57,9 +57,11 @@ def __building_find(form):
         delta = datetime.timedelta(days=period)
         q_period = Q(created_at__gte = today - delta)
     
+    q_price_currency = q_gt_lt(form, 'price')
+    if len(q_price_currency.children):
+        q_price_currency = q_price_currency & q(form, 'currency')
     q_arr = [
-        q_gt_lt(form, 'price'),
-        q(form, 'currency'),
+        q_price_currency,
         q(  form,
             'with_photo',
             model_field_name = 'images',
