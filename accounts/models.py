@@ -84,6 +84,33 @@ class Realtor(models.Model):
         return True
     
 
+class Agency(models.Model):
+    administrators = models.ManyToManyField(User, verbose_name=u"Администраторы")
+    is_moderated = models.BooleanField(default=False, verbose_name=u"Проверено")
+    
+    town = models.CharField(max_length = 100, verbose_name=u"Город")
+    title = models.CharField(max_length = 150, verbose_name=u"Название")
+    address = models.CharField(max_length = 250, null=True, blank=True, verbose_name=u"Адрес")
+    phone = models.CharField(max_length = 200, null=True, blank=True, verbose_name=u"Телефон")
+    website = models.URLField(max_length = 200, verify_exists=True, null=True, blank=True, verbose_name=u"Сайт")
+    email = models.EmailField(max_length = 75, null=True, blank=True, verbose_name=u"e-mail")
+    label = ResizedImageField(upload_to='agency_labels', dimensions=settings.AGENCY_LABEL_SIZE, null=True, blank=True, verbose_name=u"Эмблема")
+    staff_count = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"Кол-во сотрудников")
+    establishment_year = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"На рынке с", help_text=u"года")
+    description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
+    
+    created_at = models.DateTimeField(auto_now_add=True, editable=False)
+    updated_at = models.DateTimeField(auto_now=True, editable=False)
+    deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
+    
+    def __unicode__(self):
+        return self.title
+    
+    def can_edit(self, user):
+        return user in self.administrators.all()
+    
+
+
 # ===========
 # = Signals =
 # ===========
