@@ -3,6 +3,9 @@
 {% block top_panel %}
 	<ul class="menu">
 		<li><a href="{% url images_object_image_list content_type object_id %}">&larr; К списку фотографий</a></li>
+		{% if form.instance.pk %}
+			<li><a href="{% url images_object_image_delete content_type object_id form.instance.pk %}">Удалить</a></li>
+		{% endif %}
 	</ul>
 {% endblock %}
 

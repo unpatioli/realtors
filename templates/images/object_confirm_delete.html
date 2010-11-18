@@ -1,0 +1,21 @@
+{% extends "images/base.html" %}
+
+{% block top_panel %}
+	<ul class="menu">
+		<li><a href="{% url images_object_image_list content_type object_id %}">&larr; К списку фотографий</a></li>
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<div class="span-24 last">
+		<img src="{{ image.image.url }}" />
+	</div>
+	<div class="span-24 last">
+		<h3>Вы действительно хотите удалить эту фотографию?</h3>
+		<form action="" method="post">
+			{% csrf_token %}
+			<input type="submit" value="Да"/>
+			<a href="{% url images_object_image_edit content_type object_id id %}">Нет</a>
+		</form>
+	</div>
+{% endblock %}

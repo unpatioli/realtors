@@ -1,8 +1,10 @@
+# -*- coding:utf-8 -*-
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.views.generic.simple import direct_to_template
 from django.http import Http404
+from django.contrib import messages
 
 from images.models import ImagedItem
 from images.forms import ImageForm
@@ -86,3 +88,28 @@ def object_image_edit(request, content_type, object_id, id):
         }
     )
 
+@login_required
+def object_image_delete(request, content_type, object_id, id):
+    try:
+        obj = ContentType.objects.get(model=content_type).get_object_for_this_type(pk=object_id)
+        if not obj.can_edit(request.user):
+            raise Http404
+        img = obj.images.get(pk=id)
+    except:
+        raise Http404
+    
+    if request.method == "POST":
+        img.delete()
+        messages.success(request, u"Фотография успешно удалена")
+        return redirect(object_image_list, content_type=content_type, object_id=object_id)
+    return direct_to_template(
+        request,
+        template = "images/object_confirm_delete.html",
+        extra_context = {
+            'image': img,
+            
+            'content_type': content_type,
+            'object_id': object_id,
+            'id': id
+        }
+    )
