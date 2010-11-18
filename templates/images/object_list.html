@@ -1,25 +1,55 @@
 {% extends "images/base.html" %}
 
 {% block top_panel %}
-	{% if show_object_controls %}
-		<ul class="menu">
-			<li><a href="{{ object.get_absolute_url }}">&larr; К параметрам объекта</a></li>
+	<ul class="menu">
+		{% if can_edit %}
+			<li><a href="{% url buildings_object_edit object.location content_type object_id %}">&larr; К редактированию объекта</a></li>
 			<li><a href="{% url images_object_image_new content_type=content_type object_id=object_id %}">Добавить фото</a></li>
-		</ul>
-	{% endif %}
+		{% else %}
+			<li><a href="{{ object.get_absolute_url }}">&larr; К параметрам объекта</a></li>
+		{% endif %}
+	</ul>
 {% endblock %}
 
 {% block content %}
-
 	<div id="image_list" class="span-24 last">
 		{% if images %}
-			<ul class="menu">
-				{% for image in images %}
-					<li>
-						<a href="{% url images_object_image_edit content_type=content_type object_id=object_id id=image.pk%}"><img src="{{ image.thumbnail.url }}" /></a>
-					</li>
-				{% endfor %}
-			</ul>
+			<div class="span-24 last">
+				<div id="gallery" class="images gallery">
+					{% for image in object.images.all %}
+						{% if can_edit %}
+							<a href="{% url images_object_image_edit content_type=content_type object_id=object_id id=image.pk%}">
+						{% else %}
+							<a href="{{ image.image.url }}">
+						{% endif %}
+							<img src="{{ image.thumbnail.url }}" title="{{ image.title }}"/>
+						</a>
+					{% endfor %}
+				</div>
+			</div>
+			
+			{% if not can_edit %}
+				{% block head %}
+					<script type="text/javascript" src="{{ STATICFILES_URL }}galleria/src/galleria.js"></script>
+					<script type="text/javascript" src="{{ STATICFILES_URL }}galleria/src/themes/classic/galleria.classic.js"></script>
+				{% endblock %}
+			
+				<script type="text/javascript">
+					$("#gallery").galleria({
+						preload: 3,
+
+						show_info: true,
+						show_counter: false,
+
+						min_scale_ratio: 1,
+						max_scale_ratio: 1,
+
+					});
+				</script>
+			{% endif %}
+			
+			
+			
 		{% else %}
 			<h3>У этого объекта нет загруженных фотографий</h3>
 		{% endif %}

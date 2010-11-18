@@ -22,7 +22,7 @@ def object_image_list(request, content_type, object_id):
         extra_context = {
             'object': obj,
             'images': obj.images.all(),
-            'show_object_controls': obj.can_edit(request.user),
+            'can_edit': obj.can_edit(request.user),
             
             'content_type': content_type,
             'object_id': object_id,

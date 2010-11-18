@@ -10,6 +10,10 @@
 			{% endif %}
 		</li>
 	{% endfor %}
+	
+	{% if form.instance.pk %}
+		<li><a href="{% url images_object_image_list object_type form.instance.pk %}">Фотографии</a></li>
+	{% endif %}
 {% endblock %}
 
 {% block page %}
@@ -27,12 +31,6 @@
 				Изменение объекта
 			{% endif %}
 		</h3>
-	</div>
-	
-	<div class="span-18 last">
-		{% if form.instance.pk %}
-			<a href="{% url images_object_image_list object_type form.instance.pk %}">Фотографии</a>
-		{% endif %}
 	</div>
 	
 	<form action="" method="post">

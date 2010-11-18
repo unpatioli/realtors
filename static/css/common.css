@@ -10,3 +10,7 @@ ul.menu li{
 .align-right{
     text-align: right;
 }
+
+div.images.gallery{
+    height:460px;
+}
