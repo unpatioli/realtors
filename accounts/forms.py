@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django import forms
 from django.contrib.auth.models import User
-from accounts.models import UserProfile, Realtor
+from accounts.models import UserProfile, Realtor, Agency
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=30, label=u"Имя пользователя")
@@ -81,5 +81,10 @@ class RealtorForm(forms.ModelForm):
         model = Realtor
         # fields = ('')
         exclude = ('user',)
+    
+
+class AgencyForm(forms.ModelForm):
+    class Meta:
+        model = Agency
     
 
