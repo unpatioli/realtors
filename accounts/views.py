@@ -186,3 +186,23 @@ def realtor_edit(request):
         extra_context = {'form': form}
     )
 
+
+
+def agency_list(request):
+    raise NotImplementedError
+
+def agency_detail(request, id):
+    raise NotImplementedError
+
+@login_required
+def agency_new(request):
+    raise NotImplementedError
+
+@login_required
+def agency_edit(request, id):
+    raise NotImplementedError
+
+@login_required
+def agency_delete(request, id):
+    raise NotImplementedError
+
