@@ -60,14 +60,13 @@ def __building_find(form):
     q_price_currency = q_gt_lt(form, 'price')
     if len(q_price_currency.children):
         q_price_currency = q_price_currency & q(form, 'currency')
+    
+    with_photo_q = Q()
+    if form.cleaned_data.get('with_photo'):
+        with_photo_q = Q(images__isnull = False)
     q_arr = [
         q_price_currency,
-        q(  form,
-            'with_photo',
-            model_field_name = 'images',
-            query_type = 'isnull',
-            negative = True
-        ),
+        with_photo_q,
         q_period,
     ]
     return q_arr
@@ -175,28 +174,28 @@ def __sell_flat_find(form):
 # ========
 def moscow_rentflat_find(form):
     q_arr = __moscow_flat_find(form) + __rent_flat_find(form)
-    return RentFlat.moscow_objects.filter(reduce_and(q_arr))
+    return RentFlat.moscow_objects.filter(reduce_and(q_arr)).distinct()
 
 def moscow_region_rentflat_find(form):
     q_arr = __moscow_region_flat_find(form) + __rent_flat_find(form)
-    return RentFlat.moscow_region_objects.filter(reduce_and(q_arr))
+    return RentFlat.moscow_region_objects.filter(reduce_and(q_arr)).distinct()
 
 def common_rentflat_find(form):
     q_arr = __common_flat_find(form) + __rent_flat_find(form)
-    return RentFlat.common_objects.filter(reduce_and(q_arr))
+    return RentFlat.common_objects.filter(reduce_and(q_arr)).distinct()
 
 # ========
 # = Sell =
 # ========
 def moscow_sellflat_find(form):
     q_arr = __moscow_flat_find(form) + __sell_flat_find(form)
-    return SellFlat.moscow_objects.filter(reduce_and(q_arr))
+    return SellFlat.moscow_objects.filter(reduce_and(q_arr)).distinct()
     
 def moscow_region_sellflat_find(form):
     q_arr = __moscow_region_flat_find(form) + __sell_flat_find(form)
-    return SellFlat.moscow_region_objects.filter(reduce_and(q_arr))
+    return SellFlat.moscow_region_objects.filter(reduce_and(q_arr)).distinct()
 
 def common_sellflat_find(form):
     q_arr = __common_flat_find(form) + __sell_flat_find(form)
-    return SellFlat.common_objects.filter(reduce_and(q_arr))
+    return SellFlat.common_objects.filter(reduce_and(q_arr)).distinct()
 
