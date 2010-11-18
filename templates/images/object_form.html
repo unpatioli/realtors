@@ -1,12 +1,42 @@
 {% extends "images/base.html" %}
 
+{% block top_panel %}
+	<ul class="menu">
+		<li><a href="{% url images_object_image_list content_type object_id %}">&larr; К списку фотографий</a></li>
+	</ul>
+{% endblock %}
+
 {% block content %}
 	{% if form.instance.pk %}
-		<img src="{{ form.instance.image.url }}" />
+		<div class="span-24 last">
+			<img src="{{ form.instance.image.url }}" />
+		</div>
 	{% endif %}
+	
 	<form enctype="multipart/form-data" action="" method="post">
 		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Сохранить" />
+		<div class="form span-24 last">
+			<div class="non_field_errors span-24 last">
+				{{ form.non_field_errors }}
+			</div>
+			{% for field in form %}
+				<div class="field span-24 last {% if field.errors %}error{% endif %}">
+					{% if field.errors %}
+						<div class="input_errors_top align-left prepend-4 span-20 last">
+							{{ field.errors }}
+						</div>
+					{% endif %}
+					<div class="label align-right span-4">
+						{{ field.label.tag }}
+					</div>
+					<div class="input align-left span-20 last">
+						{{ field }}
+					</div>
+				</div>
+			{% endfor %}
+			<div class="field submit span-24 last">
+				<input type="submit" class="submit" value="Сохранить" />
+			</div>
+		</div>
 	</form>
 {% endblock %}

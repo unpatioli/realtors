@@ -20,10 +20,12 @@ def object_image_list(request, content_type, object_id):
         request,
         template = "images/object_list.html",
         extra_context = {
+            'object': obj,
             'images': obj.images.all(),
+            'show_object_controls': obj.can_edit(request.user),
+            
             'content_type': content_type,
             'object_id': object_id,
-            'show_object_controls': obj.can_edit(request.user),
         }
     )
 
@@ -49,7 +51,10 @@ def object_image_new(request, content_type, object_id):
         request,
         template = "images/object_form.html",
         extra_context = {
-            'form': form
+            'form': form,
+            
+            'content_type': content_type,
+            'object_id': object_id
         }
     )
 
@@ -74,7 +79,10 @@ def object_image_edit(request, content_type, object_id, id):
         request,
         template = "images/object_form.html",
         extra_context = {
-            'form': form
+            'form': form,
+            
+            'content_type': content_type,
+            'object_id': object_id
         }
     )
 
