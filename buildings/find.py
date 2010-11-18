@@ -163,7 +163,7 @@ def __rent_flat_find(form):
 def __sell_flat_find(form):
     q_arr = [
         q(form, 'mortgage'),
-        q(part_in_flat, 'part_in_flat'),
+        q(form, 'part_in_flat'),
     ]
     return q_arr
 
