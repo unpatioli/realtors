@@ -145,6 +145,9 @@ def __common_flat_find(form):
 # = By deal type =
 # ================
 def __rent_flat_find(form):
+    agency_q = Q()
+    if form.cleaned_data.get('agency'):
+        agency_q = Q(owner__realtor__agencies__isnull = False)
     zero_commission_q = Q()
     if form.cleaned_data.get('zero_commission'):
         zero_commission_q = Q(owner__realtor__commission_from = 0) & Q(owner__realtor__commission_to = 0)
@@ -154,7 +157,7 @@ def __rent_flat_find(form):
         q(form, 'pets'),
         q(form, 'children'),
         
-        q(form, 'agency', model_field_name='owner__realtor__agencies__title') | q(form, 'owner__realtor__private'),
+        agency_q | q(form, 'private', model_field_name='owner__realtor__is_private'),
         zero_commission_q
     ]
     return q_arr
