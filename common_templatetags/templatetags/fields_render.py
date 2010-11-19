@@ -21,3 +21,4 @@ def flag_field(value, text):
     if value:
         res = "<li>%s</li>" % text
     return res
+

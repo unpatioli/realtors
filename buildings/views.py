@@ -146,6 +146,9 @@ def object_search(request, location='moscow', object_type='rentflat'):
         form = form_class(request.GET)
         if form.is_valid():
             res = find.__dict__['%s_%s_find' % (location, object_type)](form)
+            model = ContentType.objects.get(model=object_type).model_class()
+            if 'sort' in params and params['sort'] in model.FIELDS_ALLOWED_TO_SORT:
+                res = res.order_by(model.FIELDS_ALLOWED_TO_SORT[params['sort']])
             return direct_to_template(
                 request,
                 template = 'buildings/%s_%s_list.html' % (location, object_type),

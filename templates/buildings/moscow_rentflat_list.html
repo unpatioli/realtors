@@ -1,4 +1,5 @@
 {% extends "buildings/rentflat_list_base.html" %}
+{% load request_operations %}
 
 {% block objects_table %}
 	<table>
@@ -10,27 +11,78 @@
 			<col/>
 			<col/>
 			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
 			
 			<tr>
 				<th>№</th>
+				<th>{% sort_header sort rooms_count Комн. &darr; &uarr; %}</th>
 				<th>Город</th>
 				<th>Адрес</th>
-				<th>Общая площадь</th>
+				<th>Удаленность от метро</th>
+				<th>Тип дома</th>
+				<th>Этаж</th>
+				<th>{% sort_header sort total_area Площ. &darr; &uarr; %} м<sup>2</sup></th>
 				<th>Цена</th>
-				<th>Период оплаты</th>
-				<th>Дополнительно</th>
+				{# <th>Комисс. %</th> #}
+				<th>{% sort_header sort commission Комисс. &darr; &uarr; %} %</th>
+				<th>Риэлтор</th>
+				<th>Телефон</th>
+				<th>Параметры</th>
+				<th>Фото</th>
 			</tr>
 		</thead>
 		<tbody>
 			{% for flat in object_list %}
 				<tr>
 					<td><a href="{% url buildings_object_detail location object_type flat.pk %}">{{ forloop.counter }}</a></td>
+					<td>{{ flat.rooms_count }}</td>
 					<td>{{ flat.town }}</td>
 					<td>{{ flat.get_address }}</td>
-					<td>{{ flat.total_area }} м<sup>2</sup></td>
-					<td>{{ flat.price }} {{ flat.currency }}</td>
-					<td>{{ flat.get_payment_period_display }}</td>
-					<td>{{ flat.description }}</td>
+					<td>
+						{% if flat.metro_remoteness_by_legs %}
+							{{ flat.metro_remoteness_by_legs }} мин. пешком
+						{% endif %}
+						<br/>
+						{% if flat.metro_remoteness_by_bus %}
+							{{ flat.metro_remoteness_by_bus }} мин. на транспорте
+						{% endif %}
+					</td>
+					<td>{{ flat.house_type }}</td>
+					<td>{{ flat.floor }} / {{ flat.floors_count }}</td>
+					<td>{{ flat.total_area|default:"" }}</td>
+					<td>{{ flat.price }} {{ flat.currency }} в {{ flat.get_payment_period_display }}</td>
+					<td>{{ flat.agent_commission|default:"" }}</td>
+					<td><a href="{{ flat.owner.get_profile.get_absolute_url }}">{{ flat.owner.get_profile.get_name }}</a></td>
+					<td>{{ flat.owner.realtor.phone }}</td>
+					<td>
+						{% if flat.furniture %}
+							Furniture
+						{% endif %}
+						{% if flat.fridge %}
+							Fridge
+						{% endif %}
+						{% if flat.wash_machine %}
+							Furniture
+						{% endif %}
+						{% if flat.separated_bathroom %}
+							Furniture
+						{% endif %}
+						{% if flat.parking %}
+							Parking
+						{% endif %}
+					</td>
+					<td>
+						{% if flat.images.all %}
+							{# <a href="{% url images_object_image_list 'rentflat' flat.pk %}"><img src="{{ flat.images.all.0.thumbnail.url }}" /></a> #}
+							<a href="{% url images_object_image_list 'rentflat' flat.pk %}">фото</a>
+						{% endif %}
+					</td>
 				</tr>
 			{% endfor %}
 		</tbody>

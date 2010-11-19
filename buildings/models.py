@@ -71,6 +71,11 @@ class Building(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False)
     deleted_at = models.DateTimeField(null=True, blank=True, editable=False)
     
+    FIELDS_ALLOWED_TO_SORT = {
+        'total_area': 'total_area',
+        '-total_area': '-total_area',
+    }
+    
     def __unicode__(self):
         return u"Объект"
     
@@ -88,7 +93,8 @@ class Building(models.Model):
     
     @property
     def get_address(self):
-        return ", ".join([self.street, self.house_id, self.building_id])
+        address = filter(None, [self.street, self.house_id, self.building_id])
+        return ", ".join(address)
     
     def can_edit(self, user):
         return self.owner == user
@@ -138,6 +144,11 @@ class Flat(Building):
     
     kitchen_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True, verbose_name=u"Площадь кухни", help_text=u"площадь в м\u00B2")
     
+    Building.FIELDS_ALLOWED_TO_SORT.update({
+        'rooms_count': 'rooms_count',
+        '-rooms_count': '-rooms_count',
+    })
+    
     class Meta:
         abstract = True
     
@@ -159,6 +170,11 @@ class RentFlat(Flat):
     
     pets = models.BooleanField(default=False, verbose_name=u"Можно с животными")
     children = models.BooleanField(default=False, verbose_name=u"Можно с детьми")
+    
+    Flat.FIELDS_ALLOWED_TO_SORT.update({
+        'commission': 'agent_commission',
+        '-commission': '-agent_commission',
+    })
     
     def get_absolute_url(self):
         return reverse('buildings_object_detail', args=[self.location, 'rentflat', self.pk])
