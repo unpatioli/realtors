@@ -4,7 +4,7 @@
 {% block page %}
 	
 	<div class="span-18 last">
-		<h3>Профиль {{ userprofile.user.get_profile.get_name }}</h3>
+		<h3>Профиль {{ userprofile.get_name }}</h3>
 	</div>
 	
 	{% if user.pk == userprofile.user.pk %}
@@ -17,15 +17,24 @@
 		</div>
 	{% endif %}
 	
-	<div class="span-18 last">
+	<div class="span-9">
 		<ul>
 			{% render_field userprofile.birthday "День рождения" %}
 			{% render_field userprofile.get_gender_display "Пол" %}
-			{% if userprofile.avatar %}
-				<img src="{{ userprofile.avatar.url }}" />
-			{% endif %}
-			{% render_field userprofile.description "Дополнительно" %}
 		</ul>
+	</div>
+	
+	<div class="span-9 last">
+		{% if userprofile.avatar %}
+			<img src="{{ userprofile.avatar.url }}" />
+		{% endif %}
+	</div>
+	
+	<div class="span-18 last">
+		<div class="section_title">Дополнительно</div>
+		<div class="description">
+			{{ userprofile.description }}
+		</div>
 	</div>
 	
 {% endblock %}
