@@ -83,8 +83,11 @@ class RealtorForm(forms.ModelForm):
         exclude = ('user',)
     
 
-class AgencyForm(forms.ModelForm):
+class AgencyFormBase(forms.ModelForm):
     class Meta:
         model = Agency
     
 
+class AgencyForm(AgencyFormBase):
+    class Meta(AgencyFormBase.Meta):
+        exclude = ('administrators', 'is_moderated',)

@@ -1,11 +1,13 @@
 # -*- coding:utf-8 -*-
-from accounts.forms import RegistrationForm, UserprofileForm, RealtorForm
-from accounts.models import UserProfile, Realtor
-
+from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
+from django.views.generic.list_detail import object_list, object_detail
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
+
+from accounts.forms import RegistrationForm, UserprofileForm, RealtorForm, AgencyForm
+from accounts.models import UserProfile, Realtor, Agency
 
 def register(request):
     from django.contrib.auth.models import User
@@ -189,20 +191,81 @@ def realtor_edit(request):
 
 
 def agency_list(request):
-    raise NotImplementedError
+    return object_list(
+        request,
+        queryset = Agency.moderated_objects.all(),
+        extra_context = {
+            'show_management_panel': request.user.is_authenticated(),
+        }
+    )
 
-def agency_detail(request, id):
-    raise NotImplementedError
+def agency_detail(request, object_id):
+    agency = get_object_or_404(Agency, pk=object_id)
+    if not agency.is_moderated and not agency.is_administrator(request.user):
+        raise Http404
+    return direct_to_template(
+        request,
+        template = "accounts/agency_detail.html",
+        extra_context = {
+            'object': agency,
+            'show_object_controls': agency.can_edit(request.user),
+        }
+    )
 
 @login_required
 def agency_new(request):
-    raise NotImplementedError
+    if request.method == "POST":
+        form = AgencyForm(request.POST)
+        if form.is_valid():
+            a = form.save()
+            a.administrators.add(request.user)
+            messages.success(request, u"Агентство добавлено и появится в списке после проверки модератором")
+            return redirect(a)
+        else:
+            messages.error(request, u"Агентство не добавлено")
+    else:
+        form = AgencyForm()
+    return direct_to_template(
+        request,
+        template = "accounts/agency_form.html",
+        extra_context = {'form': form}
+    )
 
 @login_required
-def agency_edit(request, id):
-    raise NotImplementedError
+def agency_edit(request, object_id):
+    agency = get_object_or_404(Agency, pk=object_id)
+    if not agency.can_edit(request.user):
+        raise Http404
+    if request.method == "POST":
+        form = AgencyForm(request.POST, instance=agency)
+        if form.is_valid():
+            form.save()
+            messages.success(request, u"Информация об агентстве изменена")
+            return redirect(agency)
+        else:
+            messages.error(request, u"Информация об агентстве не изменена")
+    else:
+        form = AgencyForm(instance=agency)
+    return direct_to_template(
+        request,
+        template = "accounts/agency_form.html",
+        extra_context = {'form': form}
+    )
 
 @login_required
-def agency_delete(request, id):
-    raise NotImplementedError
+def agency_delete(request, object_id):
+    agency = get_object_or_404(Agency, pk=object_id)
+    if not agency.can_edit(request.user):
+        raise Http404
+    if request.method == "POST":
+        agency.delete()
+        messages.success(request, u"Агентство удалено")
+        return redirect(agency_list)
+    return direct_to_template(
+        request,
+        template = "accounts/agency_confirm_delete.html",
+        extra_context = {
+            'agency': agency,
+        }
+    )
 

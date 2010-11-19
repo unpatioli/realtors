@@ -1,0 +1,15 @@
+{% extends "accounts/agency_base.html" %}
+
+{% block top_panel %}
+	{% if show_object_controls %}
+		<ul class="menu">
+			<li><a href="{% url accounts_agency_list %}">&larr; Назад к списку агентств</a></li>
+			<li><a href="{% url accounts_agency_edit object.pk %}">Редактировать</a></li>
+			<li><a href="{% url accounts_agency_delete object.pk %}">Удалить</a></li>
+		</ul>
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+	{{ object }}
+{% endblock %}

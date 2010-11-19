@@ -1,0 +1,52 @@
+{% extends "accounts/agency_base.html" %}
+
+{% block content %}
+	<div id="management_panel" class="span-24 last">
+		<ul class="menu">
+			{% if show_management_panel %}
+				<li><a href="{% url accounts_agency_new %}">Добавить агентство</a></li>
+			{% endif %}
+		</ul>
+	</div>
+	
+	<div id="object_list" class="span-24 last">
+		{% if object_list %}
+			<table>
+				<thead>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+					<col/>
+					
+					<tr>
+						<th>№</th>
+						<th>Город</th>
+						<th>Название</th>
+						<th>Адрес</th>
+						<th>Телефон</th>
+						<th>Сайт</th>
+						<th>email</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for agency in object_list %}
+						<tr>
+							<td><a href="{{ agency.get_absolute_url }}">{{ forloop.counter }}</a></td>
+							<td>{{ agency.town }}</td>
+							<td>{{ agency.title }}</td>
+							<td>{{ agency.address }}</td>
+							<td>{{ agency.phone }}</td>
+							<td>{{ agency.website|urlize }}</td>
+							<td>{{ agency.email }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			<h3>Ничего не найдено</h3>
+		{% endif %}
+	</div>
+{% endblock %}

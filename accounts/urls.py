@@ -54,7 +54,7 @@ urlpatterns = patterns('',
             'accounts.views.agency_list',
             name = 'accounts_agency_list'
     ),
-    url(    r'agency/(?P<id>\d+)/$',
+    url(    r'agency/(?P<object_id>\d+)/$',
             'accounts.views.agency_detail',
             name = 'accounts_agency_detail'
     ),
@@ -62,11 +62,11 @@ urlpatterns = patterns('',
             'accounts.views.agency_new',
             name = 'accounts_agency_new'
     ),
-    url(    r'agency/(?P<id>\d+)/edit/$',
+    url(    r'agency/(?P<object_id>\d+)/edit/$',
             'accounts.views.agency_edit',
             name = 'accounts_agency_edit'
     ),
-    url(    r'agency/(?P<id>\d+)/delete/$',
+    url(    r'agency/(?P<object_id>\d+)/delete/$',
             'accounts.views.agency_delete',
             name = 'accounts_agency_delete'
     ),

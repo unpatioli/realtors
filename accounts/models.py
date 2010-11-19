@@ -84,6 +84,14 @@ class Realtor(models.Model):
         return True
     
 
+
+# Managers
+class ModeratedAgenciesManager(models.Manager):
+    def get_query_set(self):
+        return super(ModeratedAgenciesManager, self).get_query_set().filter(is_moderated = True)
+    
+
+# Model
 class Agency(models.Model):
     administrators = models.ManyToManyField(User, verbose_name=u"Администраторы")
     is_moderated = models.BooleanField(default=False, verbose_name=u"Проверено")
@@ -106,8 +114,20 @@ class Agency(models.Model):
     def __unicode__(self):
         return self.title
     
-    def can_edit(self, user):
+    # ============
+    # = Managers =
+    # ============
+    objects = models.Manager() # default manager
+    moderated_objects = ModeratedAgenciesManager()
+    
+    def is_administrator(self, user):
         return user in self.administrators.all()
+    
+    def can_edit(self, user):
+        return self.is_administrator(user)
+    
+    def get_absolute_url(self):
+        return reverse('accounts_agency_detail', args=[self.pk])
     
 
 
