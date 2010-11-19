@@ -19,6 +19,10 @@ urlpatterns = patterns('',
             'accounts.views.account_edit',
             name = 'accounts_account_edit'
     ),
+    url(    r'password_change/$',
+            'accounts.views.password_change',
+            name = 'accounts_password_change'
+    ),
     
     url(    r'profile/(?P<user_id>\d+)/$',
             'accounts.views.profile',

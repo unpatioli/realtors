@@ -42,6 +42,32 @@ class AccountForm(forms.ModelForm):
         fields = ('first_name', 'last_name', 'email',)
     
 
+class PasswordChangeForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        if 'user' not in kwargs:
+            raise TypeError('PasswordChangeForm "user" parameter is mandatory')
+        self.user = kwargs.pop('user')
+        super(PasswordChangeForm, self).__init__(*args, **kwargs)
+    
+    old_password = forms.CharField(max_length=30, widget=forms.PasswordInput(render_value=False), label=u"Текущий пароль")
+    password = forms.CharField(max_length=30, widget=forms.PasswordInput(render_value=False), label=u"Новый пароль")
+    password_retype = forms.CharField(max_length=30, widget=forms.PasswordInput(render_value=False), label=u"Новый пароль еще раз")
+    
+    def clean_old_password(self):
+        old_password = self.cleaned_data['old_password']
+        if not self.user.check_password(old_password):
+            raise forms.ValidationError(u"Неверный пароль")
+        return old_password
+    
+    def clean_password_retype(self):
+        password = self.cleaned_data['password']
+        password_retype = self.cleaned_data['password_retype']
+        if password_retype != password:
+            raise forms.ValidationError(u"Пароли не совпадают")
+        return password_retype
+    
+
+
 class UserprofileForm(forms.ModelForm):
     class Meta:
         from form_utils.widgets import CalendarWidget

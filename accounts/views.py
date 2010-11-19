@@ -6,12 +6,11 @@ from django.views.generic.list_detail import object_list, object_detail
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
-from accounts.forms import RegistrationForm, AccountForm, UserprofileForm, RealtorForm, AgencyForm
+from django.contrib.auth.models import User
+from accounts.forms import RegistrationForm, AccountForm, PasswordChangeForm, UserprofileForm, RealtorForm, AgencyForm
 from accounts.models import UserProfile, Realtor, Agency
 
 def register(request):
-    from django.contrib.auth.models import User
-    
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -38,7 +37,6 @@ def register(request):
 
 @login_required
 def account_edit(request):
-    from django.contrib.auth.models import User
     user = get_object_or_404(User, pk = request.user.pk)
     if request.method == 'POST':
         form = AccountForm(request.POST, instance=user)
@@ -54,6 +52,27 @@ def account_edit(request):
     return direct_to_template(
         request,
         template = "accounts/account_form.html",
+        extra_context = {'form': form}
+    )
+
+@login_required
+def password_change(request):
+    user = get_object_or_404(User, pk = request.user.pk)
+    if request.method == "POST":
+        form = PasswordChangeForm(request.POST, user=user)
+        if form.is_valid():
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            messages.success(request, u"Пароль изменен")
+            return redirect('accounts_my_profile')
+        else:
+            messages.error(request, u"Пароль не изменен")
+    else:
+        form = PasswordChangeForm(user=user)
+    
+    return direct_to_template(
+        request,
+        template = "accounts/password_change_form.html",
         extra_context = {'form': form}
     )
 
