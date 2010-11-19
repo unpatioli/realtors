@@ -64,6 +64,16 @@
 		<ul class="additional_parameters">
 			{% block additional_parameters %}{% endblock %}
 		</ul>
+		
+		<div class="section_title">Сведения о продавце</div>
+		<ul class="realtor">
+			<li>
+				Риэлтор:
+				<span>
+					<a href="{{ object.owner.get_profile.get_absolute_url }}">{{ object.owner.get_profile.get_name }}</a>
+				</span>
+			</li>
+		</ul>
 	</div>
 	
 	<div class="span-8 last">
