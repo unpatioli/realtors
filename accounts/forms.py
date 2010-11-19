@@ -52,6 +52,7 @@ class RealtorForm(forms.ModelForm):
     
     agencies = forms.ModelMultipleChoiceField(
                                 label=u"Агентство",
+                                required = False,
                                 help_text=u"Если вашего агентства нет в списке, вы можете его <a href=\"/accounts/agency/new\">добавить</a>",
                                 queryset=Agency.moderated_objects.all(),
                                 widget=DivCheckboxSelectMultiple(classes=['scroll'])
