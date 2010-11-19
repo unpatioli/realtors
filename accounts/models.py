@@ -100,7 +100,7 @@ class Realtor(models.Model):
     
     experience = models.PositiveSmallIntegerField(choices=EXPERIENCE_CHOICES, null=True, blank=True, verbose_name=u"Опыт работы")
     is_private = models.BooleanField(default=False, verbose_name=u"Частный риэлтор")
-    agencies = models.ManyToManyField(Agency, verbose_name=u"Агентство", help_text=u"Привет <a href='http://www.google.com'>google.com</a>")
+    agencies = models.ManyToManyField(Agency, verbose_name=u"Агентство")
     
     in_sales = models.BooleanField(default=False, verbose_name=u"Продажа")
     in_rents = models.BooleanField(default=False, verbose_name=u"Аренда")
