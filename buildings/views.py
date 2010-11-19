@@ -12,10 +12,13 @@ from buildings import model_forms, forms, find
 
 def user_object_list(request, user_id, location='moscow', object_type='rentflat'):
     model = ContentType.objects.get(model=object_type).model_class()
-    
+    queryset = model.objects.filter(owner__pk=user_id, location=location)
+    params = request.GET
+    if 'sort' in params and params['sort'] in model.FIELDS_ALLOWED_TO_SORT:
+        queryset = queryset.order_by(model.FIELDS_ALLOWED_TO_SORT[params['sort']])
     return object_list(
         request,
-        queryset = model.objects.filter(owner__pk=user_id, location=location),
+        queryset = queryset,
         template_name = 'buildings/%s_%s_list.html' % (location, object_type),
         extra_context = {
             'show_management_panel': request.user.id == int(user_id),
