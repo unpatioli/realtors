@@ -215,7 +215,7 @@ def agency_detail(request, object_id):
 @login_required
 def agency_new(request):
     if request.method == "POST":
-        form = AgencyForm(request.POST)
+        form = AgencyForm(request.POST, request.FILES)
         if form.is_valid():
             a = form.save()
             a.administrators.add(request.user)
@@ -237,7 +237,7 @@ def agency_edit(request, object_id):
     if not agency.can_edit(request.user):
         raise Http404
     if request.method == "POST":
-        form = AgencyForm(request.POST, instance=agency)
+        form = AgencyForm(request.POST, request.FILES, instance=agency)
         if form.is_valid():
             form.save()
             messages.success(request, u"Информация об агентстве изменена")
