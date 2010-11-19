@@ -36,6 +36,12 @@ class RegistrationForm(forms.Form):
         return email
     
 
+class AccountForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email',)
+    
+
 class UserprofileForm(forms.ModelForm):
     class Meta:
         from form_utils.widgets import CalendarWidget

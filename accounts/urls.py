@@ -15,6 +15,10 @@ urlpatterns = patterns('',
             'accounts.views.register',
             name = 'accounts_register'
     ),
+    url(    r'account/$',
+            'accounts.views.account_edit',
+            name = 'accounts_account_edit'
+    ),
     
     url(    r'profile/(?P<user_id>\d+)/$',
             'accounts.views.profile',

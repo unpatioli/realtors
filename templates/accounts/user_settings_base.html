@@ -3,7 +3,14 @@
 {% block content %}
 	<div class="sidebar span-6">
 		<ul>
-			{% block sidebar_items %}{% endblock %}
+			<li><a href="{% url accounts_my_profile %}">Личные данные</a></li>
+			<li>
+				{% if not user.realtor_set.exists %}
+					<a href="{% url accounts_my_profile_realtor_new %}">Обновиться до риэлтора</a>
+				{% else %}
+					<a href="{% url accounts_my_profile_realtor %}">Профиль риэлтора</a>
+				{% endif %}
+			</li>
 		</ul>
 	</div>
 	<div class="page span-18 last">

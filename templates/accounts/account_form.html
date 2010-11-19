@@ -1,26 +1,7 @@
 {% extends "accounts/userprofile_settings_base.html" %}
 
-{% block head %}
-	{{ form.media.render }}
-{% endblock %}
-
 {% block page %}
-	
-	<div class="span-18 last">
-		<h3>Профиль {% if form.instance.pk %}{{ form.instance.user.get_profile.get_name }}{% endif %}</h3>
-	</div>
-	
-	<div class="prepend-4 span-14 last">
-		{% if user.get_profile and user.get_profile.avatar %}
-			<img src="{{ user.get_profile.avatar.url }}" />
-		{% endif %}
-	</div>
-	
-	{% if form.is_multipart %}
-		<form enctype="multipart/form-data" action="" method="post">
-	{% else %}
-		<form action="" method="post">
-	{% endif %}
+	<form action="" method="post">
 		{% csrf_token %}
 		<div class="form span-18 last">
 			<div class="non_field_errors span-18 last">

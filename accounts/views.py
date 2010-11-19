@@ -6,7 +6,7 @@ from django.views.generic.list_detail import object_list, object_detail
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 
-from accounts.forms import RegistrationForm, UserprofileForm, RealtorForm, AgencyForm
+from accounts.forms import RegistrationForm, AccountForm, UserprofileForm, RealtorForm, AgencyForm
 from accounts.models import UserProfile, Realtor, Agency
 
 def register(request):
@@ -33,6 +33,27 @@ def register(request):
     return direct_to_template(
         request,
         template = "accounts/user_form.html",
+        extra_context = {'form': form}
+    )
+
+@login_required
+def account_edit(request):
+    from django.contrib.auth.models import User
+    user = get_object_or_404(User, pk = request.user.pk)
+    if request.method == 'POST':
+        form = AccountForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, u"Учетная запись изменена")
+            return redirect('accounts_my_profile')
+        else:
+            messages.error(request, u"Учетная запись не изменена")
+    else:
+        form = AccountForm(instance=user)
+    
+    return direct_to_template(
+        request,
+        template = "accounts/account_form.html",
         extra_context = {'form': form}
     )
 

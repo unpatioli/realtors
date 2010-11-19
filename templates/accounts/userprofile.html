@@ -2,31 +2,45 @@
 {% load fields_render %}
 
 {% block page %}
-	
+
 	<div class="span-18 last">
 		<h3>Профиль {{ userprofile.get_name }}</h3>
 	</div>
 	
-	{% if user.pk == userprofile.user.pk %}
-		<div class="span-18 last">
-			<ul class="menu">
-				<li>
-					<a href="{% url accounts_my_profile_edit %}">Редактировать</a>
-				</li>
+	<div class="span-9">
+		<div class="span-9 last">
+			<ul>
+				{% render_field userprofile.user.first_name "Имя" %}
+				{% render_field userprofile.user.last_name "Фамилия" %}
+				{% render_field userprofile.user.email "email" %}
 			</ul>
 		</div>
-	{% endif %}
-	
-	<div class="span-9">
-		<ul>
-			{% render_field userprofile.birthday "День рождения" %}
-			{% render_field userprofile.get_gender_display "Пол" %}
-		</ul>
+		{% if user.pk == userprofile.user.pk %}
+			<div class="span-9 last">
+				<ul class="menu">
+					<li>
+						<a href="{% url accounts_account_edit %}">Редактировать</a>
+					</li>
+				</ul>
+			</div>
+		{% endif %}
 	</div>
 	
 	<div class="span-9 last">
-		{% if userprofile.avatar %}
-			<img src="{{ userprofile.avatar.url }}" />
+		<div class="span-9 last">
+			<ul>
+				{% render_field userprofile.birthday "День рождения" %}
+				{% render_field userprofile.get_gender_display "Пол" %}
+			</ul>
+		</div>
+		{% if user.pk == userprofile.user.pk %}
+			<div class="span-9 last">
+				<ul class="menu">
+					<li>
+						<a href="{% url accounts_my_profile_edit %}">Редактировать</a>
+					</li>
+				</ul>
+			</div>
 		{% endif %}
 	</div>
 	
