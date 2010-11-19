@@ -43,48 +43,6 @@ class UserProfile(models.Model):
         return not self.is_closed
     
 
-class Realtor(models.Model):
-    EXPERIENCE_CHOICES = (
-        (0, u'Нет опыта'),
-        (1, u'1 год'),
-        (3, u'3 года'),
-        (4, u'более 4 лет'),
-    )
-    
-    user = models.ForeignKey(User, unique=True)
-    
-    experience = models.PositiveSmallIntegerField(choices=EXPERIENCE_CHOICES, null=True, blank=True, verbose_name=u"Опыт работы")
-    is_private = models.BooleanField(default=False, verbose_name=u"Частный риэлтор")
-    agency_title = models.CharField(max_length = 150, null=True, blank=True, verbose_name=u"Агентство")
-    
-    in_sales = models.BooleanField(default=False, verbose_name=u"Продажа")
-    in_rents = models.BooleanField(default=False, verbose_name=u"Аренда")
-    in_camps = models.BooleanField(default=False, verbose_name=u"Загородная недвижимость")
-    in_commercials = models.BooleanField(default=False, verbose_name=u"Коммерческая недвижимость")
-    
-    in_msk = models.BooleanField(default=True, db_index=True, verbose_name=u"Москва")
-    in_msk_region = models.BooleanField(default=False, db_index=True, verbose_name=u"Область")
-    
-    commission_from = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия от")
-    commission_to = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия до")
-    
-    deal_commission = models.BooleanField(default=False, verbose_name=u"Договорная комиссия")
-    
-    phone = models.CharField(max_length = 50, null=True, blank=True, verbose_name=u"Телефон")
-    
-    rating = models.PositiveSmallIntegerField(default=0, editable=False, verbose_name=u"Рейтинг")
-    views_count = models.PositiveIntegerField(default=0, editable=False, verbose_name=u"Кол-во просмотров")
-    
-    description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
-    
-    def get_absolute_url(self):
-        return reverse('accounts_profile_realtor', args=[self.user.pk])
-    
-    def can_show(self):
-        return True
-    
-
-
 # Managers
 class ModeratedAgenciesManager(models.Manager):
     def get_query_set(self):
@@ -128,6 +86,47 @@ class Agency(models.Model):
     
     def get_absolute_url(self):
         return reverse('accounts_agency_detail', args=[self.pk])
+    
+
+class Realtor(models.Model):
+    EXPERIENCE_CHOICES = (
+        (0, u'Нет опыта'),
+        (1, u'1 год'),
+        (3, u'3 года'),
+        (4, u'более 4 лет'),
+    )
+    
+    user = models.ForeignKey(User, unique=True)
+    
+    experience = models.PositiveSmallIntegerField(choices=EXPERIENCE_CHOICES, null=True, blank=True, verbose_name=u"Опыт работы")
+    is_private = models.BooleanField(default=False, verbose_name=u"Частный риэлтор")
+    agencies = models.ManyToManyField(Agency, verbose_name=u"Агентство", help_text=u"Привет <a href='http://www.google.com'>google.com</a>")
+    
+    in_sales = models.BooleanField(default=False, verbose_name=u"Продажа")
+    in_rents = models.BooleanField(default=False, verbose_name=u"Аренда")
+    in_camps = models.BooleanField(default=False, verbose_name=u"Загородная недвижимость")
+    in_commercials = models.BooleanField(default=False, verbose_name=u"Коммерческая недвижимость")
+    
+    in_msk = models.BooleanField(default=True, db_index=True, verbose_name=u"Москва")
+    in_msk_region = models.BooleanField(default=False, db_index=True, verbose_name=u"Область")
+    
+    commission_from = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия от")
+    commission_to = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия до")
+    
+    deal_commission = models.BooleanField(default=False, verbose_name=u"Договорная комиссия")
+    
+    phone = models.CharField(max_length = 50, null=True, blank=True, verbose_name=u"Телефон")
+    
+    rating = models.PositiveSmallIntegerField(default=0, editable=False, verbose_name=u"Рейтинг")
+    views_count = models.PositiveIntegerField(default=0, editable=False, verbose_name=u"Кол-во просмотров")
+    
+    description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
+    
+    def get_absolute_url(self):
+        return reverse('accounts_profile_realtor', args=[self.user.pk])
+    
+    def can_show(self):
+        return True
     
 
 

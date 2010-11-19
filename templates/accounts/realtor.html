@@ -21,7 +21,8 @@
 		<div class="section_title">Личные данные</div>
 		<ul>
 			{% flag_field realtor.is_private "Частный риэлтор" %}
-			{% render_field realtor.agency_title "Агентство" %}
+			{# TODO: Show agencies #}
+			{# {% render_field realtor.agency_title "Агентство" %} #}
 			{% render_field realtor.get_experience_display "Опыт работы" %}
 			{% render_field realtor.phone "Телефон" %}
 		</ul>

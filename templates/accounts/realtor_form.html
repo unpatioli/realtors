@@ -1,5 +1,9 @@
 {% extends "accounts/realtor_settings_base.html" %}
 
+{% block head %}
+	{{ form.media.render }}
+{% endblock %}
+
 {% block page %}
 	<div class="span-18 last">
 		<h3>Профиль риэлтора {% if form.instance.pk %}{{ form.instance.user.get_profile.get_name }}{% endif %}</h3>
@@ -21,6 +25,10 @@
 					</div>
 					<div class="input_errors align-left span-8 last">
 						{{ field.errors }}
+					</div>
+					
+					<div class="field-info prepend-4 span-14">
+						{{ field.help_text|safe }}
 					</div>
 				</div>
 			{% endfor %}

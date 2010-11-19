@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django import forms
 
-from buildings import widgets
+from form_utils import widgets
 from buildings.models import Metro, RentFlat, SellFlat
 
 class Baseform(forms.ModelForm):

@@ -154,7 +154,7 @@ def __rent_flat_find(form):
         q(form, 'pets'),
         q(form, 'children'),
         
-        q(form, 'agency', model_field_name='owner__realtor__agency_title') | q(form, 'owner__realtor__private'),
+        q(form, 'agency', model_field_name='owner__realtor__agencies__title') | q(form, 'owner__realtor__private'),
         zero_commission_q
     ]
     return q_arr
