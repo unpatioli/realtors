@@ -1,4 +1,5 @@
 {% extends "accounts/agency_base.html" %}
+{% load fields_render %}
 
 {% block top_panel %}
 	{% if show_object_controls %}
@@ -11,5 +12,42 @@
 {% endblock %}
 
 {% block content %}
-	{{ object }}
+	<div class="span-24 last">
+		<h3>{{ object.title }}</h3>
+	</div>
+	{% if object.label %}
+		<div class="span-24 last">
+			<img src="{{ object.label.url }}" />
+		</div>
+	{% endif %}
+	
+	<div class="span-12">
+		<div class="section_title">Адрес</div>
+		<ul>
+			{% render_field object.town "Город" %}
+			{% render_field object.address "Адрес" %}
+		</ul>
+	</div>
+	
+	<div class="span-12 last">
+		<div class="section_title">Контакты</div>
+		<ul>
+			{% render_field object.phone "Телефон" %}
+			{% if object.website %}
+				<li>
+					Сайт: <span>{{ object.website|urlize }}</span>
+				</li>
+			{% endif %}
+			{% render_field object.email "e-mail" %}
+		</ul>
+	</div>
+	
+	{% if object.description %}
+		<div class="span-24 last">
+			<div class="section_title">Дополнительно</div>
+			<div class="description">
+				{{ object.description }}
+			</div>
+		</div>
+	{% endif %}
 {% endblock %}
