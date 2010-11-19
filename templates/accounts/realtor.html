@@ -52,11 +52,13 @@
 		</ul>
 	</div>
 	
-	<div class="span-18 last">
-		<div class="section_title">Дополнительно</div>
-		<div class="description">
-			{{ realtor.description }}
+	{% if realtor.description %}
+		<div class="span-18 last">
+			<div class="section_title">Дополнительно</div>
+			<div class="description">
+				{{ realtor.description }}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 	
 {% endblock %}
