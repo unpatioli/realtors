@@ -16,8 +16,10 @@
 			<col/>
 			<col/>
 			<col/>
-			<col/>
-			<col/>
+			{% if user.get_profile.is_realtor %}
+				<col/>
+				<col/>
+			{% endif %}
 			
 			<tr>
 				<th>№</th>
@@ -29,10 +31,17 @@
 				<th>Этаж</th>
 				<th>{% sort_header sort total_area Площ. &darr; &uarr; %} м<sup>2</sup></th>
 				<th>Цена</th>
-				{# <th>Комисс. %</th> #}
-				<th>{% sort_header sort commission Комисс. &darr; &uarr; %} %</th>
+				
+				{% if user.get_profile.is_realtor %}
+					<th>{% sort_header sort commission Комисс. &darr; &uarr; %} %</th>
+				{% endif %}
+				
 				<th>Риэлтор</th>
-				<th>Телефон</th>
+				
+				{% if user.get_profile.is_realtor %}
+					<th>Телефон</th>
+				{% endif %}
+				
 				<th>Параметры</th>
 				<th>Фото</th>
 			</tr>
@@ -57,9 +66,17 @@
 					<td>{{ flat.floor }} / {{ flat.floors_count }}</td>
 					<td>{{ flat.total_area|default:"" }}</td>
 					<td>{{ flat.price }} {{ flat.currency }} в {{ flat.get_payment_period_display }}</td>
-					<td>{{ flat.agent_commission|default:"" }}</td>
+					
+					{% if user.get_profile.is_realtor %}
+						<td>{{ flat.agent_commission|default:"" }}</td>
+					{% endif %}
+					
 					<td><a href="{{ flat.owner.get_profile.get_absolute_url }}">{{ flat.owner.get_profile.get_name }}</a></td>
-					<td>{{ flat.owner.realtor.phone }}</td>
+					
+					{% if user.get_profile.is_realtor %}
+						<td>{{ flat.owner.realtor_set.get.phone }}</td>
+					{% endif %}
+					
 					<td>
 						{% if flat.furniture %}
 							Furniture

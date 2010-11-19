@@ -42,6 +42,8 @@ class UserProfile(models.Model):
     def can_show(self):
         return not self.is_closed
     
+    def is_realtor(self):
+        return self.user.realtor_set.exists()
 
 # Managers
 class ModeratedAgenciesManager(models.Manager):
