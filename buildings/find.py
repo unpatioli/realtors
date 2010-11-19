@@ -6,46 +6,6 @@ from django.db.models import Q, F
 from buildings.models import RentFlat, SellFlat
 
 
-# ========
-# = Util =
-# ========
-def q_gt_lt(form, form_field_name, **kwargs):
-    import operator
-    
-    model_field_name = kwargs.get('model_field_name', form_field_name)
-    
-    name_gt = '%s_gt' % form_field_name
-    q_arr = []
-    value_gt = form.cleaned_data.get(name_gt)
-    if value_gt:
-        q_arr.append( Q(**{'%s__gte' % model_field_name: value_gt}) )
-    
-    name_lt = '%s_lt' % form_field_name
-    value_lt = form.cleaned_data.get(name_lt)
-    if value_lt:
-        q_arr.append( Q(**{'%s__lte' % model_field_name: value_lt}) )
-    
-    if not len(q_arr):
-        return Q()
-    return reduce(operator.or_, q_arr)
-
-def q(form, form_field_name, **kwargs):
-    model_field_name = kwargs.get('model_field_name', form_field_name)
-    query_type = kwargs.get('query_type', 'exact')
-    negative = kwargs.get('negative', False)
-    
-    q = Q()
-    value = form.cleaned_data.get(form_field_name)
-    if value:
-        q = Q(**{'%s__%s' % (model_field_name, query_type): value})
-        if negative:
-            q = ~q
-    return q
-
-def reduce_and(arr):
-    return reduce(operator.and_, arr)
-
-
 # =========================
 # = Common find functions =
 # =========================
@@ -171,34 +131,76 @@ def __sell_flat_find(form):
 
 
 
+# ========
+# = Util =
+# ========
+def q_gt_lt(form, form_field_name, **kwargs):
+    import operator
+    
+    model_field_name = kwargs.get('model_field_name', form_field_name)
+    
+    name_gt = '%s_gt' % form_field_name
+    q_arr = []
+    value_gt = form.cleaned_data.get(name_gt)
+    if value_gt:
+        q_arr.append( Q(**{'%s__gte' % model_field_name: value_gt}) )
+        
+    name_lt = '%s_lt' % form_field_name
+    value_lt = form.cleaned_data.get(name_lt)
+    if value_lt:
+        q_arr.append( Q(**{'%s__lte' % model_field_name: value_lt}) )
+        
+    if not len(q_arr):
+        return Q()
+    return reduce(operator.or_, q_arr)
+
+def q(form, form_field_name, **kwargs):
+    model_field_name = kwargs.get('model_field_name', form_field_name)
+    query_type = kwargs.get('query_type', 'exact')
+    negative = kwargs.get('negative', False)
+    
+    q = Q()
+    value = form.cleaned_data.get(form_field_name)
+    if value:
+        q = Q(**{'%s__%s' % (model_field_name, query_type): value})
+        if negative:
+            q = ~q
+    return q
+
+def reduce_and(arr):
+    return reduce(operator.and_, arr)
+
+def post_process(req):
+    return req.distinct()
+
 
 # ========
 # = Rent =
 # ========
 def moscow_rentflat_find(form):
     q_arr = __moscow_flat_find(form) + __rent_flat_find(form)
-    return RentFlat.moscow_objects.filter(reduce_and(q_arr)).distinct()
+    return post_process(RentFlat.moscow_objects.filter(reduce_and(q_arr)))
 
 def moscow_region_rentflat_find(form):
     q_arr = __moscow_region_flat_find(form) + __rent_flat_find(form)
-    return RentFlat.moscow_region_objects.filter(reduce_and(q_arr)).distinct()
+    return post_process(RentFlat.moscow_region_objects.filter(reduce_and(q_arr)))
 
 def common_rentflat_find(form):
     q_arr = __common_flat_find(form) + __rent_flat_find(form)
-    return RentFlat.common_objects.filter(reduce_and(q_arr)).distinct()
+    return post_process(RentFlat.common_objects.filter(reduce_and(q_arr)))
 
 # ========
 # = Sell =
 # ========
 def moscow_sellflat_find(form):
     q_arr = __moscow_flat_find(form) + __sell_flat_find(form)
-    return SellFlat.moscow_objects.filter(reduce_and(q_arr)).distinct()
+    return post_process(SellFlat.moscow_objects.filter(reduce_and(q_arr)))
     
 def moscow_region_sellflat_find(form):
     q_arr = __moscow_region_flat_find(form) + __sell_flat_find(form)
-    return SellFlat.moscow_region_objects.filter(reduce_and(q_arr)).distinct()
+    return post_process(SellFlat.moscow_region_objects.filter(reduce_and(q_arr)))
 
 def common_sellflat_find(form):
     q_arr = __common_flat_find(form) + __sell_flat_find(form)
-    return SellFlat.common_objects.filter(reduce_and(q_arr)).distinct()
+    return post_process(SellFlat.common_objects.filter(reduce_and(q_arr)))
 
