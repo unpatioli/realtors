@@ -88,7 +88,10 @@ def profile(request, user_id):
     return direct_to_template(
         request,
         template = "accounts/userprofile.html",
-        extra_context = {'userprofile': userprofile}
+        extra_context = {
+            'user_id': user_id,
+            'userprofile': userprofile,
+        }
     )
 
 @login_required

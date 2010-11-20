@@ -7,23 +7,34 @@
 				<img src="{{ user.get_profile.avatar.url }}" />
 			</div>
 		{% endif %}
-		<div class="span-6 last">
-			<ul>
-				<li><a href="{% url accounts_my_profile %}">Личные данные</a></li>
-				<li>
-					{% if not user.realtor_set.exists %}
-						<a href="{% url accounts_my_profile_realtor_new %}">Обновиться до риэлтора</a>
-					{% else %}
-						<a href="{% url accounts_my_profile_realtor %}">Профиль риэлтора</a>
-					{% endif %}
-				</li>
-			</ul>
-		</div>
-		<div class="span-6 last">
-			<ul>
-				<li><a href="{% url accounts_password_change %}">Изменить пароль</a></li>
-			</ul>
-		</div>
+		
+		{% if user.is_authenticated %}
+			<div class="span-6 last">
+				<ul>
+					<li><a href="{% url accounts_my_profile %}">Личные данные</a></li>
+					<li>
+						{% if not user.realtor_set.exists %}
+							<a href="{% url accounts_my_profile_realtor_new %}">Обновиться до риэлтора</a>
+						{% else %}
+							<a href="{% url accounts_my_profile_realtor %}">Профиль риэлтора</a>
+						{% endif %}
+					</li>
+				</ul>
+			</div>
+			<div class="span-6 last">
+				<ul>
+					<li><a href="{% url accounts_password_change %}">Изменить пароль</a></li>
+				</ul>
+			</div>
+		{% endif %}
+		
+		{% if user_id %}
+			<div class="span-6 last">
+				<ul>
+					<li><a href="{% url buildings_user_object_list user_id %}">Объекты этого риэлтора</a></li>
+				</ul>
+			</div>
+		{% endif %}
 	</div>
 	
 	<div class="page span-18 last">
