@@ -3,7 +3,7 @@
     "pk": 1,
     "fields": {
       "title": "Рубль",
-      "char_id": "RUR",
+      "char_id": "RUB",
       "symbol": "руб." }
   },
   { "model": "currencies.Currency",

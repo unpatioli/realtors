@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericRelation
 
-from currencies.models import Currency
+from currencies.models import Currency, get_rate
 
 class Metro(models.Model):
     town = models.CharField(max_length = 100, db_index=True, verbose_name=u"Город")
@@ -34,7 +34,12 @@ class ExtraParameters(models.Model):
 # ============
 
 # Managers
-class LocationManager(models.Manager):
+class SearchableManager(models.Manager):
+    def get_query_set(self):
+        return super(SearchableManager, self).get_query_set().filter(price_EUR__isnull = False)
+    
+
+class LocationManager(SearchableManager):
     def __init__(self, location, *args, **kwargs):
         super(LocationManager, self).__init__(*args, **kwargs)
         self.location = location
@@ -42,6 +47,12 @@ class LocationManager(models.Manager):
     def get_query_set(self):
         return super(LocationManager, self).get_query_set().filter(location = self.location)
     
+
+class NotSearchableManager(models.Manager):
+    def get_query_set(self):
+        return super(NotSearchableManager, self).get_query_set().filter(price_EUR__isnull = True)
+    
+
 
 # Model
 class Building(models.Model):
@@ -63,8 +74,10 @@ class Building(models.Model):
     
     total_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True, verbose_name=u"Общая площадь", help_text=u"площадь в м\u00B2")
     
-    price = models.DecimalField(max_digits=12, decimal_places=2, db_index=True, verbose_name=u"Цена")
+    price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name=u"Цена")
     currency = models.ForeignKey(Currency, verbose_name=u"Валюта")
+    
+    price_EUR = models.PositiveIntegerField(null=True, blank=True, db_index=True, editable=False)
     
     metro_remoteness_by_legs = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро пешком", help_text=u"время в минутах")
     metro_remoteness_by_bus = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро транспортом", help_text=u"время в минутах")
@@ -87,6 +100,16 @@ class Building(models.Model):
     def __unicode__(self):
         return u"Объект"
     
+    def save(self, *args, **kwargs):
+        char_id = self.currency.char_id
+        try:
+            rate = get_rate(char_id)
+            self.price_EUR = int(self.price / rate)
+        except Exception as e:
+            raise e
+        super(Building, self).save(*args, **kwargs)
+    
+    
     # ============
     # = Managers =
     # ============
@@ -95,6 +118,7 @@ class Building(models.Model):
     moscow_region_objects = LocationManager(location='moscow_region')
     common_objects = LocationManager(location = 'common')
     
+    not_searchable = NotSearchableManager()
     
     class Meta:
         abstract = True
