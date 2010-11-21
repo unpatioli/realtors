@@ -1,1 +1,72 @@
 {% extends "buildings/sellflat_list_base.html" %}
+{% load request_operations %}
+
+{% block objects_table %}
+	<table>
+		<thead>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			<col/>
+			{% if user.get_profile.is_realtor %}
+				<col/>
+			{% endif %}
+			
+			<tr>
+				<th>№</th>
+				<th>{% sort_header sort rooms_count Комн. &darr; &uarr; %}</th>
+				<th>Город</th>
+				<th>Адрес</th>
+				<th>Тип дома</th>
+				<th>Этаж</th>
+				<th>{% sort_header sort total_area Площ. &darr; &uarr; %} м<sup>2</sup></th>
+				<th>Цена</th>
+				<th>Риэлтор</th>
+				
+				{% if user.get_profile.is_realtor %}
+					<th>Телефон</th>
+				{% endif %}
+				
+				<th>Параметры</th>
+				<th>Фото</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for flat in object_list %}
+				<tr>
+					<td><a href="{% url buildings_object_detail location object_type flat.pk %}">{{ forloop.counter }}</a></td>
+					<td>{{ flat.rooms_count }}</td>
+					<td>{{ flat.town }}</td>
+					<td>{{ flat.get_address }}</td>
+					<td>{{ flat.house_type }}</td>
+					<td>{{ flat.floor }} / {{ flat.floors_count }}</td>
+					<td>{{ flat.total_area|default:"" }}</td>
+					<td>{{ flat.price }} {{ flat.currency }}</td>
+					<td><a href="{{ flat.owner.get_profile.get_absolute_url }}">{{ flat.owner.get_profile.get_name }}</a></td>
+					
+					{% if user.get_profile.is_realtor %}
+						<td>{{ flat.owner.realtor_set.get.phone }}</td>
+					{% endif %}
+					
+					<td>
+						{% if flat.extra_parameters.exists %}
+							{{ flat.extra_parameters.all|join:", " }}
+						{% endif %}
+					</td>
+					<td>
+						{% if flat.images.all %}
+							<a href="{% url images_object_image_list 'rentflat' flat.pk %}">фото</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
