@@ -1,10 +1,10 @@
 TODO:
 1. Replace buildings.location_dispatcher with several views dispatched from URLconf
 3. Deal with empty blocks in buildings/detail/building_detail_base.html
-5. currency module
 6. messages between users and realtors
 7. show agency's objects
 
 DONE:
 2. Add _DELETE_ ability to models
 4. Object parameters (such as Furniture, Fridge, WashMachine etc.) must be M2M relation with ability to edit them in admin and adding pictures for each of them
+5. currency module
