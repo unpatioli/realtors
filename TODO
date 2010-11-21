@@ -3,6 +3,7 @@ TODO:
 3. Deal with empty blocks in buildings/detail/building_detail_base.html
 6. messages between users and realtors
 7. show agency's objects
+8. create caching table for currencies module for not to throw errors in get_rate method
 
 DONE:
 2. Add _DELETE_ ability to models
