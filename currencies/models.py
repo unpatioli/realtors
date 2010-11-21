@@ -9,4 +9,8 @@ class Currency(models.Model):
     def __unicode__(self):
         return self.symbol
     
+    class Meta:
+        verbose_name = u"Валюта"
+        verbose_name_plural = u"Валюты"
+    
 
