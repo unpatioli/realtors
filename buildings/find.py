@@ -24,10 +24,17 @@ def __building_find(form):
     with_photo_q = Q()
     if form.cleaned_data.get('with_photo'):
         with_photo_q = Q(images__isnull = False)
+    
+    extra_parameters_q = Q()
+    extra_parameters = form.cleaned_data.get('extra_parameters', [])
+    if len(extra_parameters):
+        extra_parameters_q_arr = [Q(extra_parameters = parameter) for parameter in extra_parameters]
+        extra_parameters_q = reduce(operator.and_, extra_parameters_q_arr)
     q_arr = [
         q_price_currency,
         with_photo_q,
         q_period,
+        extra_parameters_q
     ]
     return q_arr
 
@@ -54,11 +61,11 @@ def __flat_find(form):
         q_floor_no_last,
         q(form, 'house_type'),
         q(form, 'renovation_type'),
-        
-        q(form, 'furniture'),
         balcony_q,
-        q(form, 'fridge'),
-        q(form, 'wash_machine'),
+        
+        # q(form, 'furniture'),
+        # q(form, 'fridge'),
+        # q(form, 'wash_machine'),
     ]
     return q_arr
 
@@ -114,8 +121,8 @@ def __rent_flat_find(form):
     q_arr = [
         q(form, 'payment_period'),
         
-        q(form, 'pets'),
-        q(form, 'children'),
+        # q(form, 'pets'),
+        # q(form, 'children'),
         
         agency_q | q(form, 'private', model_field_name='owner__realtor__is_private'),
         zero_commission_q
@@ -195,7 +202,7 @@ def common_rentflat_find(form):
 def moscow_sellflat_find(form):
     q_arr = __moscow_flat_find(form) + __sell_flat_find(form)
     return post_process(SellFlat.moscow_objects.filter(reduce_and(q_arr)))
-    
+
 def moscow_region_sellflat_find(form):
     q_arr = __moscow_region_flat_find(form) + __sell_flat_find(form)
     return post_process(SellFlat.moscow_region_objects.filter(reduce_and(q_arr)))

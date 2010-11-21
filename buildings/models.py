@@ -2,6 +2,7 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericRelation
 
 class Currency(models.Model):
@@ -20,6 +21,15 @@ class Metro(models.Model):
         return self.title
     
 
+class ExtraParameters(models.Model):
+    title = models.CharField(max_length=100, verbose_name=u"Название параметра")
+    image = models.ImageField(upload_to='param_pictures', null=True, blank=True, verbose_name=u"Пиктограмма")
+    
+    content_types = models.ManyToManyField(ContentType, limit_choices_to = {'model__in': ['rentflat', 'sellflat']}, verbose_name=u"Модели")
+    
+    def __unicode__(self):
+        return self.title
+    
 
 # ============
 # = Building =
@@ -61,7 +71,7 @@ class Building(models.Model):
     metro_remoteness_by_legs = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро пешком", help_text=u"время в минутах")
     metro_remoteness_by_bus = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро транспортом", help_text=u"время в минутах")
     mkad_remoteness = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"от МКАД", help_text=u"расстояние в километрах")
-    nearest_metro_stations = models.ManyToManyField(Metro, verbose_name=u"ближайшие станции метро")
+    nearest_metro_stations = models.ManyToManyField(Metro, null=True, blank=True, verbose_name=u"Ближайшие станции метро")
     
     description = models.TextField(null=True, blank=True, verbose_name=u"Дополнительно")
     
@@ -129,11 +139,11 @@ class Flat(Building):
     renovation_type = models.ForeignKey(RenovationType, verbose_name=u"Тип ремонта")
     is_new = models.BooleanField(default=False, verbose_name=u"Новостройка")
     
-    furniture = models.BooleanField(default=False, verbose_name=u"Мебель")
-    fridge = models.BooleanField(default=False, verbose_name=u"Холодильник")
-    wash_machine = models.BooleanField(default=False, verbose_name=u"Стиральная машина")
-    separated_bathroom = models.BooleanField(default=False, verbose_name=u"Раздельный санузел")
-    parking = models.BooleanField(default=False, verbose_name=u"Парковка")
+    # furniture = models.BooleanField(default=False, verbose_name=u"Мебель")
+    # fridge = models.BooleanField(default=False, verbose_name=u"Холодильник")
+    # wash_machine = models.BooleanField(default=False, verbose_name=u"Стиральная машина")
+    # separated_bathroom = models.BooleanField(default=False, verbose_name=u"Раздельный санузел")
+    # parking = models.BooleanField(default=False, verbose_name=u"Парковка")
     
     floor = models.PositiveSmallIntegerField(verbose_name=u"Этаж")
     floors_count = models.PositiveSmallIntegerField(verbose_name=u"Всего этажей")
@@ -168,13 +178,19 @@ class RentFlat(Flat):
     payment_period = models.CharField(max_length=10, choices=PAYMENT_PERIOD_CHOICES, verbose_name=u"Период оплаты")
     agent_commission = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия агента", help_text=u"размер в %")
     
-    pets = models.BooleanField(default=False, verbose_name=u"Можно с животными")
-    children = models.BooleanField(default=False, verbose_name=u"Можно с детьми")
+    # pets = models.BooleanField(default=False, verbose_name=u"Можно с животными")
+    # children = models.BooleanField(default=False, verbose_name=u"Можно с детьми")
+    
+    extra_parameters = models.ManyToManyField(ExtraParameters, limit_choices_to = {'content_types__model': 'rentflat'}, null=True, blank=True,  verbose_name=u"Дополнительные параметры")
     
     Flat.FIELDS_ALLOWED_TO_SORT.update({
         'commission': 'agent_commission',
         '-commission': '-agent_commission',
     })
+    
+    class Meta(Flat.Meta):
+        verbose_name = u"Квартира в аренду"
+        verbose_name_plural = u"Квартиры в аренду"
     
     def get_absolute_url(self):
         return reverse('buildings_object_detail', args=[self.location, 'rentflat', self.pk])
@@ -183,7 +199,13 @@ class RentFlat(Flat):
 class SellFlat(Flat):
     mortgage = models.BooleanField(default=False, verbose_name=u"Ипотека")
     
+    extra_parameters = models.ManyToManyField(ExtraParameters, limit_choices_to = {'content_types__model': 'sellflat'}, null=True, blank=True, verbose_name=u"Дополнительные параметры")
+    
     part_in_flat = models.BooleanField(default=False, verbose_name=u"Доля в квартире")
+    
+    class Meta(Flat.Meta):
+        verbose_name = u"Квартира для продажи"
+        verbose_name_plural = u"Квартиры для продажи"
     
     def get_absolute_url(self):
         return reverse('buildings_object_detail', args=[self.location, 'sellflat', self.pk])

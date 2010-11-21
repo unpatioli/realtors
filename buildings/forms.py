@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django import forms
 from form_utils import widgets
-from buildings.models import Currency, HouseType, RenovationType, Metro, Flat, RentFlat
+from buildings.models import Currency, HouseType, RenovationType, Metro, ExtraParameters, Flat, RentFlat
 
 class SearchForm(forms.Form):
     PERIOD_CHOICES = (
@@ -47,10 +47,10 @@ class FlatSearchForm(SearchForm):
     renovation_type = forms.ModelChoiceField(queryset=RenovationType.objects.all(), empty_label=u"Не важно", required=False)
     
     # Other params
-    furniture = forms.BooleanField(required=False)
-    balcony = forms.BooleanField(required=False)
-    fridge = forms.BooleanField(required=False)
-    wash_machine = forms.BooleanField(required=False)
+    # furniture = forms.BooleanField(required=False)
+    # balcony = forms.BooleanField(required=False)
+    # fridge = forms.BooleanField(required=False)
+    # wash_machine = forms.BooleanField(required=False)
 
 # ===============
 # = Form mixins =
@@ -107,8 +107,14 @@ class RentFlatSearchForm(FlatSearchForm):
     payment_period = forms.ChoiceField(choices=RentFlat.PAYMENT_PERIOD_CHOICES, required=False)
     
     # Other params
-    pets = forms.BooleanField(required=False)
-    children = forms.BooleanField(required=False)
+    # pets = forms.BooleanField(required=False)
+    # children = forms.BooleanField(required=False)
+    extra_parameters = forms.ModelMultipleChoiceField(
+                                queryset = ExtraParameters.objects.filter(content_types__model = 'rentflat'),
+                                label = u"Дополнительные параметры",
+                                widget=widgets.DivCheckboxSelectMultiple(classes = ['scroll']),
+                                required = False
+                            )
     
     # Realtors
     agency = forms.BooleanField(required=False)
@@ -131,6 +137,13 @@ class SellFlatSearchForm(FlatSearchForm):
     # Price
     mortgage = forms.BooleanField(required=False)
     part_in_flat = forms.BooleanField(required=False)
+    
+    extra_parameters = forms.ModelMultipleChoiceField(
+                                queryset = ExtraParameters.objects.filter(content_types__model = 'sellflat'),
+                                label = u"Дополнительные параметры",
+                                widget=widgets.DivCheckboxSelectMultiple(classes = ['scroll']),
+                                required = False
+                            )
 
 class MoscowSellFlatSearchForm(SellFlatSearchForm, MoscowFlatSearchForm):
     pass

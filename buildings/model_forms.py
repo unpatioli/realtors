@@ -1,26 +1,34 @@
 # -*- coding:utf-8 -*-
 from django import forms
 
-from form_utils import widgets
-from buildings.models import Metro, RentFlat, SellFlat
+from form_utils.widgets import DivCheckboxSelectMultiple
+from buildings.models import Metro, ExtraParameters, RentFlat, SellFlat
 
 class Baseform(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(Baseform, self).__init__(*args, **kwargs)
+        # if 'nearest_metro_stations' in self.fields:
+        #     self.fields['nearest_metro_stations'] = forms.ModelMultipleChoiceField(
+        #                             queryset = Metro.objects.all(),
+        #                             label = u"Ближайшие станции метро",
+        #                             widget = DivCheckboxSelectMultiple(classes=['metro', 'scroll', 'reset']),
+        #                             required = False
+        #                     )
         if 'nearest_metro_stations' in self.fields:
-            self.fields['nearest_metro_stations'] = forms.ModelMultipleChoiceField(
-                                    queryset = Metro.objects.all(),
-                                    label = u"Ближайшие станции метро",
-                                    widget = widgets.DivCheckboxSelectMultiple(classes=['metro', 'scroll', 'reset']),
-                                    required = False
-                            )
-    
+            self.fields['nearest_metro_stations'].help_text = ""
+        if 'extra_parameters' in self.fields:
+            self.fields['extra_parameters'].help_text = ""
+    class Meta:
+        widgets = {
+            'nearest_metro_stations': DivCheckboxSelectMultiple(classes=['metro', 'scroll']),
+            'extra_parameters': DivCheckboxSelectMultiple(classes=['scroll']),
+        }
 
 # ==================
 # = RentFlat forms =
 # ==================
 class RentFlatForm(Baseform):
-    class Meta:
+    class Meta(Baseform.Meta):
         model = RentFlat
         fields = (
             'town', 'street', 'house_id', 'building_id',
@@ -35,7 +43,8 @@ class RentFlatForm(Baseform):
             'floor', 'floors_count',
             
             'bathrooms_count',
-            'furniture', 'fridge', 'wash_machine', 'separated_bathroom', 'parking', 'pets', 'children',
+            # 'furniture', 'fridge', 'wash_machine', 'separated_bathroom', 'parking', 'pets', 'children',
+            'extra_parameters',
             
             'price', 'currency', 'payment_period', 'agent_commission',
             
@@ -63,7 +72,7 @@ class CommonRentFlatForm(RentFlatForm):
 # = SellFlat forms =
 # ==================
 class SellFlatForm(Baseform):
-    class Meta:
+    class Meta(Baseform.Meta):
         model = SellFlat
         fields = (
             'town', 'street', 'house_id', 'building_id',
@@ -78,7 +87,8 @@ class SellFlatForm(Baseform):
             'floor', 'floors_count',
             
             'bathrooms_count',
-            'furniture', 'fridge', 'wash_machine', 'separated_bathroom', 'parking',
+            # 'furniture', 'fridge', 'wash_machine', 'separated_bathroom', 'parking',
+            'extra_parameters',
             
             'price', 'currency',
             

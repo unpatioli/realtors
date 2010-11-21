@@ -30,7 +30,7 @@
 			{% block remoteness %}{% endblock %}
 		</ul>
 		
-		{% if object.nearest_metro_stations %}
+		{% if object.nearest_metro_stations.exists %}
 			<div class="section_title">Ближайшие станции метро</div>
 			<ul class="nearest_metro_stations">
 				{% for station in object.nearest_metro_stations.all %}
@@ -60,10 +60,14 @@
 			{% block parameters %}{% endblock %}
 		</ul>
 		
-		<div class="section_title">Дополнительные параметры</div>
-		<ul class="additional_parameters">
-			{% block additional_parameters %}{% endblock %}
-		</ul>
+		{% if object.extra_parameters.exists %}
+			<div class="section_title">Дополнительные параметры</div>
+			<ul class="extra_parameters">
+				{% for parameter in object.extra_parameters.all %}
+					<li>{{ parameter.title }}</li>
+				{% endfor %}
+			</ul>
+		{% endif %}
 		
 		<div class="section_title">Сведения о продавце</div>
 		<ul class="realtor">

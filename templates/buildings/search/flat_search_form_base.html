@@ -70,14 +70,22 @@
 			</fieldset>
 			{% block after_price %}{% endblock %}
 
+			{# <fieldset> #}
+			{# 	<legend>Прочие параметры</legend> #}
+			{# 	{% formfield form.furniture "Мебель" %} #}
+			{# 	{% formfield form.balcony "Балкон" %} #}
+			{# 	{% formfield form.fridge "Холодильник" %} #}
+			{# 	{% formfield form.wash_machine "Стиральная машина" %} #}
+			{# 	{% block other_params %}{% endblock %} #}
+			{# </fieldset> #}
 			<fieldset>
 				<legend>Прочие параметры</legend>
-				{% formfield form.furniture "Мебель" %}
-				{% formfield form.balcony "Балкон" %}
-				{% formfield form.fridge "Холодильник" %}
-				{% formfield form.wash_machine "Стиральная машина" %}
-				{% block other_params %}{% endblock %}
+				<li>
+					{{ form.extra_parameters.errors }}
+					{{ form.extra_parameters }}
+				</li>
 			</fieldset>
+			
 			<fieldset>
 				<legend>Публикация</legend>
 				
