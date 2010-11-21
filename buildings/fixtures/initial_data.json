@@ -1,26 +1,4 @@
 [
-  { "model": "buildings.Currency",
-    "pk": 1,
-    "fields": {
-      "title": "Рубль",
-      "char_id": "RUR",
-      "symbol": "руб." }
-  },
-  { "model": "buildings.Currency",
-    "pk": 2,
-    "fields": {
-      "title": "Евро",
-      "char_id": "EUR",
-      "symbol": "€" }
-  },
-  { "model": "buildings.Currency",
-    "pk": 3,
-    "fields": {
-      "title": "Доллар США",
-      "char_id": "USD",
-      "symbol": "$" }
-  },
-  
   { "model": "buildings.HouseType",
     "pk": 1,
     "fields": {

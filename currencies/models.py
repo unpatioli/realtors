@@ -1,3 +1,12 @@
+# -*- coding:utf-8 -*-
 from django.db import models
 
-# Create your models here.
+class Currency(models.Model):
+    title = models.CharField(max_length = 50, verbose_name=u"Название")
+    char_id = models.CharField(max_length = 3, verbose_name=u"Буквенное обозначение")
+    symbol = models.CharField(max_length = 1, verbose_name=u"Символ")
+    
+    def __unicode__(self):
+        return self.symbol
+    
+

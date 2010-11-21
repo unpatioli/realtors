@@ -1,0 +1,23 @@
+[
+  { "model": "currencies.Currency",
+    "pk": 1,
+    "fields": {
+      "title": "Рубль",
+      "char_id": "RUR",
+      "symbol": "руб." }
+  },
+  { "model": "currencies.Currency",
+    "pk": 2,
+    "fields": {
+      "title": "Евро",
+      "char_id": "EUR",
+      "symbol": "€" }
+  },
+  { "model": "currencies.Currency",
+    "pk": 3,
+    "fields": {
+      "title": "Доллар США",
+      "char_id": "USD",
+      "symbol": "$" }
+  }
+]

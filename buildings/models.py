@@ -5,13 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericRelation
 
-class Currency(models.Model):
-    title = models.CharField(max_length = 50, verbose_name=u"Название")
-    char_id = models.CharField(max_length = 3, verbose_name=u"Буквенное обозначение")
-    symbol = models.CharField(max_length = 1, verbose_name=u"Символ")
-    
-    def __unicode__(self):
-        return self.symbol
+from currencies.models import Currency
 
 class Metro(models.Model):
     town = models.CharField(max_length = 100, db_index=True, verbose_name=u"Город")
