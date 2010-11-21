@@ -105,6 +105,8 @@ class Building(models.Model):
         try:
             rate = get_rate(char_id)
             self.price_EUR = int(self.price / rate)
+            if 'payment_period' in self._meta.get_all_field_names():
+                self.price_EUR /= self.payment_period
         except Exception as e:
             raise e
         super(Building, self).save(*args, **kwargs)
@@ -194,10 +196,11 @@ class Flat(Building):
 
 class RentFlat(Flat):
     PAYMENT_PERIOD_CHOICES = (
-        ('month', u'месяц'),
-        ('day', u'день'),
+        (31, u'месяц'),
+        (1, u'день'),
     )
-    payment_period = models.CharField(max_length=10, choices=PAYMENT_PERIOD_CHOICES, verbose_name=u"Период оплаты")
+    payment_period = models.PositiveSmallIntegerField(choices=PAYMENT_PERIOD_CHOICES, verbose_name=u"Период оплаты")
+    
     agent_commission = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия агента", help_text=u"размер в %")
     
     # pets = models.BooleanField(default=False, verbose_name=u"Можно с животными")
@@ -209,6 +212,10 @@ class RentFlat(Flat):
         'commission': 'agent_commission',
         '-commission': '-agent_commission',
     })
+    
+    # def save(self, *args, **kwargs):
+    #     self.price_EUR /= self.payment_period
+    #     super(RentFlat, self).save(*args, **kwargs)
     
     class Meta(Flat.Meta):
         verbose_name = u"Квартира в аренду"
