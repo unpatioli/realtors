@@ -19,7 +19,7 @@ class SearchForm(forms.Form):
     
     # Publication
     with_photo = forms.BooleanField(required=False)
-    period = forms.ChoiceField(choices=PERIOD_CHOICES, required=False)
+    period = forms.TypedChoiceField(choices=PERIOD_CHOICES, coerce=int, required=False)
 
 class FlatSearchForm(SearchForm):
     # Object type and metrages
@@ -104,7 +104,7 @@ class CommonFlatSearchForm(forms.Form):
 # =============
 class RentFlatSearchForm(FlatSearchForm):
     # Price
-    payment_period = forms.ChoiceField(choices=RentFlat.PAYMENT_PERIOD_CHOICES, required=False)
+    payment_period = forms.TypedChoiceField(choices=RentFlat.PAYMENT_PERIOD_CHOICES, coerce=int, required=False)
     
     # Other params
     # pets = forms.BooleanField(required=False)

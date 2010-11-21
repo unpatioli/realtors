@@ -1,25 +1,21 @@
-import datetime
-import operator
-
 from django.db.models import Q, F
 
 from buildings.models import RentFlat, SellFlat
+from currencies.models import get_rate
 
 
 # =========================
 # = Common find functions =
 # =========================
 def __building_find(form):
+    import datetime
+    
     q_period = Q()
-    period = int(form.cleaned_data.get('period'))
+    period = form.cleaned_data.get('period')
     if period:
         today = datetime.date.today()
         delta = datetime.timedelta(days=period)
         q_period = Q(created_at__gte = today - delta)
-    
-    q_price_currency = q_gt_lt(form, 'price')
-    if len(q_price_currency.children):
-        q_price_currency = q_price_currency & q(form, 'currency')
     
     with_photo_q = Q()
     if form.cleaned_data.get('with_photo'):
@@ -29,9 +25,8 @@ def __building_find(form):
     extra_parameters = form.cleaned_data.get('extra_parameters', [])
     if len(extra_parameters):
         extra_parameters_q_arr = [Q(extra_parameters = parameter) for parameter in extra_parameters]
-        extra_parameters_q = reduce(operator.and_, extra_parameters_q_arr)
+        extra_parameters_q = reduce_and(extra_parameters_q_arr)
     q_arr = [
-        q_price_currency,
         with_photo_q,
         q_period,
         extra_parameters_q
@@ -118,8 +113,24 @@ def __rent_flat_find(form):
     zero_commission_q = Q()
     if form.cleaned_data.get('zero_commission'):
         zero_commission_q = Q(owner__realtor__commission_from = 0) & Q(owner__realtor__commission_to = 0)
+    
+    q_price_arr = []
+    payment_period = form.cleaned_data.get('payment_period', 31)
+    price_gt = form.cleaned_data.get('price_gt')
+    price_lt = form.cleaned_data.get('price_lt')
+    if price_gt or price_lt:
+        rate = get_rate(form.cleaned_data.get('currency').char_id)
+        if price_gt:
+            price_gt = int(price_gt) / int(rate) / payment_period
+            q_price_arr.append(Q(price_EUR__gte = price_gt))
+        if price_lt:
+            price_lt = int(price_lt) / int(rate) / payment_period
+            q_price_arr.append(Q(price_EUR__lte = price_lt))
+    q_price = reduce_and(q_price_arr)
+    
     q_arr = [
-        q(form, 'payment_period'),
+        q_price,
+        # q(form, 'payment_period'),
         
         # q(form, 'pets'),
         # q(form, 'children'),
@@ -130,7 +141,23 @@ def __rent_flat_find(form):
     return q_arr
 
 def __sell_flat_find(form):
+    
+    q_price_arr = []
+    price_gt = form.cleaned_data.get('price_gt')
+    price_lt = form.cleaned_data.get('price_lt')
+    if price_gt or price_lt:
+        rate = get_rate(form.cleaned_data.get('currency').char_id)
+        if price_gt:
+            price_gt = int(price_gt) / int(rate)
+            q_price_arr.append(Q(price_EUR__gte = price_gt))
+        if price_lt:
+            price_lt = int(price_lt) / int(rate)
+            q_price_arr.append(Q(price_EUR__lte = price_lt))
+    q_price = reduce_and(q_price_arr)
+    
+    
     q_arr = [
+        q_price,
         q(form, 'mortgage'),
         q(form, 'part_in_flat'),
     ]
@@ -175,7 +202,8 @@ def q(form, form_field_name, **kwargs):
     return q
 
 def reduce_and(arr):
-    return reduce(operator.and_, arr)
+    import operator
+    return reduce(operator.and_, arr, Q())
 
 def post_process(req):
     return req.distinct()

@@ -5,13 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericRelation
 
-class Currency(models.Model):
-    title = models.CharField(max_length = 50, verbose_name=u"Название")
-    char_id = models.CharField(max_length = 3, verbose_name=u"Буквенное обозначение")
-    symbol = models.CharField(max_length = 1, verbose_name=u"Символ")
-    
-    def __unicode__(self):
-        return self.symbol
+from currencies.models import Currency, get_rate
 
 class Metro(models.Model):
     town = models.CharField(max_length = 100, db_index=True, verbose_name=u"Город")
@@ -30,13 +24,22 @@ class ExtraParameters(models.Model):
     def __unicode__(self):
         return self.title
     
+    class Meta:
+        verbose_name = u"Дополнительный параметр"
+        verbose_name_plural = u"Дополнительные параметры"
+    
 
 # ============
 # = Building =
 # ============
 
 # Managers
-class LocationManager(models.Manager):
+class SearchableManager(models.Manager):
+    def get_query_set(self):
+        return super(SearchableManager, self).get_query_set().filter(price_EUR__isnull = False)
+    
+
+class LocationManager(SearchableManager):
     def __init__(self, location, *args, **kwargs):
         super(LocationManager, self).__init__(*args, **kwargs)
         self.location = location
@@ -44,6 +47,12 @@ class LocationManager(models.Manager):
     def get_query_set(self):
         return super(LocationManager, self).get_query_set().filter(location = self.location)
     
+
+class NotSearchableManager(models.Manager):
+    def get_query_set(self):
+        return super(NotSearchableManager, self).get_query_set().filter(price_EUR__isnull = True)
+    
+
 
 # Model
 class Building(models.Model):
@@ -65,8 +74,10 @@ class Building(models.Model):
     
     total_area = models.DecimalField(max_digits=8, decimal_places=3, null=True, blank=True, verbose_name=u"Общая площадь", help_text=u"площадь в м\u00B2")
     
-    price = models.DecimalField(max_digits=12, decimal_places=2, db_index=True, verbose_name=u"Цена")
+    price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name=u"Цена")
     currency = models.ForeignKey(Currency, verbose_name=u"Валюта")
+    
+    price_EUR = models.PositiveIntegerField(null=True, blank=True, db_index=True, editable=False)
     
     metro_remoteness_by_legs = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро пешком", help_text=u"время в минутах")
     metro_remoteness_by_bus = models.PositiveSmallIntegerField(null=True, blank=True, verbose_name=u"до метро транспортом", help_text=u"время в минутах")
@@ -89,6 +100,18 @@ class Building(models.Model):
     def __unicode__(self):
         return u"Объект"
     
+    def save(self, *args, **kwargs):
+        char_id = self.currency.char_id
+        try:
+            rate = get_rate(char_id)
+            self.price_EUR = int(self.price / rate)
+            if 'payment_period' in self._meta.get_all_field_names():
+                self.price_EUR /= self.payment_period
+        except Exception as e:
+            raise e
+        super(Building, self).save(*args, **kwargs)
+    
+    
     # ============
     # = Managers =
     # ============
@@ -97,6 +120,7 @@ class Building(models.Model):
     moscow_region_objects = LocationManager(location='moscow_region')
     common_objects = LocationManager(location = 'common')
     
+    not_searchable = NotSearchableManager()
     
     class Meta:
         abstract = True
@@ -172,10 +196,11 @@ class Flat(Building):
 
 class RentFlat(Flat):
     PAYMENT_PERIOD_CHOICES = (
-        ('month', u'месяц'),
-        ('day', u'день'),
+        (31, u'месяц'),
+        (1, u'день'),
     )
-    payment_period = models.CharField(max_length=10, choices=PAYMENT_PERIOD_CHOICES, verbose_name=u"Период оплаты")
+    payment_period = models.PositiveSmallIntegerField(choices=PAYMENT_PERIOD_CHOICES, verbose_name=u"Период оплаты")
+    
     agent_commission = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, verbose_name=u"Комиссия агента", help_text=u"размер в %")
     
     # pets = models.BooleanField(default=False, verbose_name=u"Можно с животными")
@@ -187,6 +212,10 @@ class RentFlat(Flat):
         'commission': 'agent_commission',
         '-commission': '-agent_commission',
     })
+    
+    # def save(self, *args, **kwargs):
+    #     self.price_EUR /= self.payment_period
+    #     super(RentFlat, self).save(*args, **kwargs)
     
     class Meta(Flat.Meta):
         verbose_name = u"Квартира в аренду"
