@@ -22,7 +22,7 @@ def user_object_list(request, user_id, location='moscow', object_type='rentflat'
             'show_management_panel': request.user.id == int(user_id),
             'is_user_list': True,
             'user_id': user_id,
-            'user_is_realtor': request.user.realtor_set.exists(),
+            'user_is_realtor': request.user.is_authenticated() and request.user.realtor_set.exists(),
             
             'locations': LocationDispatcher.localized_titles('ru'),
             'location': location,
@@ -51,7 +51,7 @@ def agency_object_list(request, agency_id, location='moscow', object_type='rentf
             'object_types': LocationDispatcher.object_types(),
             'object_type': object_type,
             
-            'user_is_realtor': request.user.realtor_set.exists(),
+            'user_is_realtor': request.user.is_authenticated() and request.user.realtor_set.exists(),
         }
     )
 
@@ -186,7 +186,7 @@ def object_search(request, location='moscow', object_type='rentflat'):
                     'is_search_result': True,
                     'q_string': params.urlencode(),
                     
-                    'user_is_realtor': request.user.realtor_set.exists(),
+                    'user_is_realtor': request.user.is_authenticated() and request.user.realtor_set.exists(),
                 }
             )
     else:
