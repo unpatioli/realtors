@@ -194,6 +194,7 @@ def realtor_new(request):
             r = form.save(commit=False)
             r.user = request.user
             r.save()
+            form.save_m2m()
             messages.success(request, u"Профиль риэлтора создан")
             return redirect(r)
         else:
