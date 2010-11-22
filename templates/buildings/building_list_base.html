@@ -1,14 +1,18 @@
 {% extends "buildings/base.html" %}
 
 {% block top_panel %}
-	{% if object_types %}
+	{% if not is_search_result and object_types %}
 		<ul class="menu">
 			{% for k, v in object_types %}
 				<li>
 					{% if k == object_type %}
 						{{ v }}
 					{% else %}
-						<a href="{% url buildings_user_object_list user_id location k %}">{{ v }}</a>
+						{% if is_user_list %}
+							<a href="{% url buildings_user_object_list user_id location k %}">{{ v }}</a>
+						{% else %}{% if is_agency_list %}
+							<a href="{% url buildings_agency_object_list agency_id location k %}">{{ v }}</a>
+						{% endif %}{% endif %}
 					{% endif %}
 				</li>
 			{% endfor %}
@@ -23,7 +27,11 @@
 					{% if k == location %}
 						{{ v }}
 					{% else %}
-						<a href="{% url buildings_user_object_list user_id k object_type %}">{{ v }}</a>
+						{% if is_user_list %}
+							<a href="{% url buildings_user_object_list user_id k object_type %}">{{ v }}</a>
+						{% else %}{% if is_agency_list %}
+							<a href="{% url buildings_agency_object_list agency_id k object_type %}">{{ v }}</a>
+						{% endif %}{% endif %}
 					{% endif %}
 				</li>
 			{% endfor %}

@@ -20,6 +20,14 @@ object_patterns = patterns('buildings.views',
             'user_object_list',
             name = 'buildings_user_object_list'
     ),
+    url(    r'agency/(?P<agency_id>\d+)/objects/$',
+            'agency_object_list',
+            name = 'buildings_agency_object_list'
+    ),
+    url(    r'agency/(?P<agency_id>\d+)/(?P<location>%s)/(?P<object_type>%s)/$' % (location_regexp, object_type_regexp),
+            'agency_object_list',
+            name = 'buildings_agency_object_list'
+    ),
     url(    r'(?P<location>%s)/(?P<object_type>%s)/(?P<id>\d+)/$' % (location_regexp, object_type_regexp),
             'object_detail',
             name = 'buildings_object_detail'

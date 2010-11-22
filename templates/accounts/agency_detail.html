@@ -21,14 +21,21 @@
 		</div>
 	{% endif %}
 	
+	{# Left col #}
 	<div class="span-12">
-		<div class="section_title">Адрес</div>
-		<ul>
-			{% render_field object.town "Город" %}
-			{% render_field object.address "Адрес" %}
-		</ul>
+		<div class="span-12 last">
+			<div class="section_title">Адрес</div>
+			<ul>
+				{% render_field object.town "Город" %}
+				{% render_field object.address "Адрес" %}
+			</ul>
+		</div>
+		<div class="span-12 last">
+			<a href="{% url buildings_agency_object_list object.pk %}">Объекты</a>
+		</div>
 	</div>
 	
+	{# Right col #}
 	<div class="span-12 last">
 		<div class="section_title">Контакты</div>
 		<ul>

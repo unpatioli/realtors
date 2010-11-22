@@ -13,22 +13,45 @@ from buildings import model_forms, forms, find
 def user_object_list(request, user_id, location='moscow', object_type='rentflat'):
     model = ContentType.objects.get(model=object_type).model_class()
     queryset = model.objects.filter(owner__pk=user_id, location=location)
-    params = request.GET
-    if 'sort' in params and params['sort'] in model.FIELDS_ALLOWED_TO_SORT:
-        queryset = queryset.order_by(model.FIELDS_ALLOWED_TO_SORT[params['sort']])
+    queryset = _apply_sort(queryset, request.GET, model)
     return object_list(
         request,
         queryset = queryset,
         template_name = 'buildings/%s_%s_list.html' % (location, object_type),
         extra_context = {
             'show_management_panel': request.user.id == int(user_id),
+            'is_user_list': True,
             'user_id': user_id,
+            'user_is_realtor': request.user.realtor_set.exists(),
             
             'locations': LocationDispatcher.localized_titles('ru'),
             'location': location,
             
             'object_types': LocationDispatcher.object_types(),
             'object_type': object_type,
+        }
+    )
+
+def agency_object_list(request, agency_id, location='moscow', object_type='rentflat'):
+    model = ContentType.objects.get(model=object_type).model_class()
+    queryset = model.objects.filter(owner__realtor__agencies__id = agency_id, location = location).select_related()
+    queryset = _apply_sort(queryset, request.GET, model)
+    
+    return object_list(
+        request,
+        queryset = queryset,
+        template_name = 'buildings/%s_%s_list.html' % (location, object_type),
+        extra_context = {
+            'is_agency_list': True,
+            'agency_id': agency_id,
+            
+            'locations': LocationDispatcher.localized_titles('ru'),
+            'location': location,
+            
+            'object_types': LocationDispatcher.object_types(),
+            'object_type': object_type,
+            
+            'user_is_realtor': request.user.realtor_set.exists(),
         }
     )
 
@@ -150,8 +173,7 @@ def object_search(request, location='moscow', object_type='rentflat'):
         if form.is_valid():
             res = find.__dict__['%s_%s_find' % (location, object_type)](form)
             model = ContentType.objects.get(model=object_type).model_class()
-            if 'sort' in params and params['sort'] in model.FIELDS_ALLOWED_TO_SORT:
-                res = res.order_by(model.FIELDS_ALLOWED_TO_SORT[params['sort']])
+            res = _apply_sort(res, params, model)
             return direct_to_template(
                 request,
                 template = 'buildings/%s_%s_list.html' % (location, object_type),
@@ -162,7 +184,9 @@ def object_search(request, location='moscow', object_type='rentflat'):
                     'object_type': object_type,
                     
                     'is_search_result': True,
-                    'q_string': params.urlencode()
+                    'q_string': params.urlencode(),
+                    
+                    'user_is_realtor': request.user.realtor_set.exists(),
                 }
             )
     else:
@@ -182,4 +206,12 @@ def object_search(request, location='moscow', object_type='rentflat'):
             'q_string': params.urlencode()
         }
     )
+
+# =========
+# = Utils =
+# =========
+def _apply_sort(queryset, params, model):
+    if 'sort' in params and params['sort'] in model.FIELDS_ALLOWED_TO_SORT:
+        queryset = queryset.order_by(model.FIELDS_ALLOWED_TO_SORT[params['sort']])
+    return queryset
 
