@@ -15,7 +15,7 @@
 			<col/>
 			<col/>
 			<col/>
-			{% if user.get_profile.is_realtor %}
+			{% if user_is_realtor %}
 				<col/>
 				<col/>
 			{% endif %}
@@ -30,13 +30,13 @@
 				<th>{% sort_header sort total_area Площ. &darr; &uarr; %} м<sup>2</sup></th>
 				<th>Цена</th>
 				
-				{% if user.get_profile.is_realtor %}
+				{% if user_is_realtor %}
 					<th>{% sort_header sort commission Комисс. &darr; &uarr; %} %</th>
 				{% endif %}
 				
 				<th>Риэлтор</th>
 				
-				{% if user.get_profile.is_realtor %}
+				{% if user_is_realtor %}
 					<th>Телефон</th>
 				{% endif %}
 				
@@ -64,13 +64,13 @@
 					<td>{{ flat.total_area|default:"" }}</td>
 					<td>{{ flat.price }} {{ flat.currency }} в {{ flat.get_payment_period_display }}</td>
 					
-					{% if user.get_profile.is_realtor %}
+					{% if user_is_realtor %}
 						<td>{{ flat.agent_commission|default:"" }}</td>
 					{% endif %}
 					
 					<td><a href="{{ flat.owner.get_profile.get_absolute_url }}">{{ flat.owner.get_profile.get_name }}</a></td>
 					
-					{% if user.get_profile.is_realtor %}
+					{% if user_is_realtor %}
 						<td>{{ flat.owner.realtor_set.get.phone }}</td>
 					{% endif %}
 					
