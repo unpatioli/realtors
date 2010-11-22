@@ -4,6 +4,8 @@ TODO:
 6. messages between users and realtors
 7. show agency's objects
 8. create caching table for currencies module for not to throw errors in get_rate method
+9. add realtor properties to user's profile if user is realtor
+10. agency's object list template must have agency title in head
 
 DONE:
 2. Add _DELETE_ ability to models
