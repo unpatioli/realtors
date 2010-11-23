@@ -14,7 +14,9 @@
 			<col/>
 			<col/>
 			<col/>
-			<col/>
+			{% if not is_user_list %}
+				<col/>
+			{% endif %}
 			{% if user_is_realtor %}
 				<col/>
 				<col/>
@@ -34,7 +36,9 @@
 					<th>{% sort_header sort commission Комисс. &darr; &uarr; %} %</th>
 				{% endif %}
 				
-				<th>Риэлтор</th>
+				{% if not is_user_list %}
+					<th>Риэлтор</th>
+				{% endif %}
 				
 				{% if user_is_realtor %}
 					<th>Телефон</th>
@@ -68,7 +72,9 @@
 						<td>{{ flat.agent_commission|default:"" }}</td>
 					{% endif %}
 					
-					<td><a href="{{ flat.owner.get_profile.get_absolute_url }}">{{ flat.owner.get_profile.get_name }}</a></td>
+					{% if not is_user_list %}
+						<td><a href="{{ flat.owner.get_profile.get_absolute_url }}">{{ flat.owner.get_profile.get_name }}</a></td>
+					{% endif %}
 					
 					{% if user_is_realtor %}
 						<td>{{ flat.owner.realtor_set.get.phone }}</td>

@@ -14,7 +14,9 @@
 			<col/>
 			<col/>
 			<col/>
-			<col/>
+			{% if not is_user_list %}
+				<col/>
+			{% endif %}
 			{% if user_is_realtor %}
 				<col/>
 			{% endif %}
@@ -29,7 +31,9 @@
 				<th>{% sort_header sort total_area Площ. &darr; &uarr; %} м<sup>2</sup></th>
 				<th>Цена</th>
 				
-				<th>Риэлтор</th>
+				{% if not is_user_list %}
+					<th>Риэлтор</th>
+				{% endif %}
 				
 				{% if user_is_realtor %}
 					<th>Телефон</th>
@@ -59,7 +63,9 @@
 					<td>{{ flat.total_area|default:"" }}</td>
 					<td>{{ flat.price }} {{ flat.currency }}</td>
 					
-					<td><a href="{{ flat.owner.get_profile.get_absolute_url }}">{{ flat.owner.get_profile.get_name }}</a></td>
+					{% if not is_user_list %}
+						<td><a href="{{ flat.owner.get_profile.get_absolute_url }}">{{ flat.owner.get_profile.get_name }}</a></td>
+					{% endif %}
 					
 					{% if user_is_realtor %}
 						<td>{{ flat.owner.realtor_set.get.phone }}</td>
