@@ -9,6 +9,7 @@
 	
 	<div class="span-9">
 		<div class="span-9 last">
+			<div class="section_title">Личные данные</div>
 			<ul>
 				{% render_field userprofile.user.first_name "Имя" %}
 				{% render_field userprofile.user.last_name "Фамилия" %}
@@ -43,6 +44,55 @@
 			</div>
 		{% endif %}
 	</div>
+	
+	{# Begin realtor profile #}
+		{% if user.pk != userprofile.user.pk and userprofile.user.realtor_set.exists %}
+			{% with userprofile.user.realtor_set.get as realtor %}
+				<div class="span-9">
+					<div class="section_title">Риэлтор</div>
+					<ul>
+						{% flag_field realtor.is_private "Частный риэлтор" %}
+						{% if realtor.agencies.exists %}
+							<li>
+								Агентство:
+								<ul>
+									{% for agency in realtor.agencies.all %}
+										<li><a href="{{ agency.get_absolute_url }}">{{ agency }}</a></li>
+									{% endfor %}
+								</ul>
+							</li>
+						{% endif %}
+						{% render_field realtor.get_experience_display "Опыт работы" %}
+						{% render_field realtor.phone "Телефон" %}
+					</ul>
+					
+					<div class="section_title">Виды деятельности</div>
+					<ul>
+						{% flag_field realtor.in_sales "Продажа" %}
+						{% flag_field realtor.in_rents "Аренда" %}
+						{% flag_field realtor.in_camps "Загородная недвижимость" %}
+						{% flag_field realtor.in_commercials "Коммерческая недвижимость" %}
+					</ul>
+				</div>
+				
+				
+				<div class="span-9 last">
+					<div class="section_title">Регион</div>
+					<ul>
+						{% flag_field realtor.in_msk "Москва" %}
+						{% flag_field realtor.in_msk_region "Область" %}
+					</ul>
+					
+					<div class="section_title">Комиссия</div>
+					<ul>
+						{% render_field realtor.commission_from "Комиссия от" %}
+						{% render_field realtor.commission_to "Комиссия до" %}
+						{% flag_field realtor.deal_commission "Договорная комиссия" %}
+					</ul>
+				</div>
+			{% endwith %}
+		{% endif %}
+	{# End realtor profile #}
 	
 	<div class="span-18 last">
 		<div class="section_title">Дополнительно</div>

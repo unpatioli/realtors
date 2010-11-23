@@ -11,6 +11,9 @@ from buildings.location_dispatcher import LocationDispatcher
 from buildings import model_forms, forms, find
 
 def user_object_list(request, user_id, location='moscow', object_type='rentflat'):
+    from django.contrib.auth.models import User
+    
+    user = get_object_or_404(User, pk=user_id)
     model = ContentType.objects.get(model=object_type).model_class()
     queryset = model.objects.filter(owner__pk=user_id, location=location)
     queryset = _apply_sort(queryset, request.GET, model)
@@ -21,7 +24,7 @@ def user_object_list(request, user_id, location='moscow', object_type='rentflat'
         extra_context = {
             'show_management_panel': request.user.id == int(user_id),
             'is_user_list': True,
-            'user_id': user_id,
+            'user': user,
             'user_is_realtor': request.user.is_authenticated() and request.user.realtor_set.exists(),
             
             'locations': LocationDispatcher.localized_titles('ru'),
@@ -33,6 +36,9 @@ def user_object_list(request, user_id, location='moscow', object_type='rentflat'
     )
 
 def agency_object_list(request, agency_id, location='moscow', object_type='rentflat'):
+    from accounts.models import Agency
+    
+    agency = get_object_or_404(Agency, pk=agency_id)
     model = ContentType.objects.get(model=object_type).model_class()
     queryset = model.objects.filter(owner__realtor__agencies__id = agency_id, location = location).select_related()
     queryset = _apply_sort(queryset, request.GET, model)
@@ -43,7 +49,7 @@ def agency_object_list(request, agency_id, location='moscow', object_type='rentf
         template_name = 'buildings/%s_%s_list.html' % (location, object_type),
         extra_context = {
             'is_agency_list': True,
-            'agency_id': agency_id,
+            'agency': agency,
             
             'locations': LocationDispatcher.localized_titles('ru'),
             'location': location,
