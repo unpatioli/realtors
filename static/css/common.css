@@ -11,6 +11,13 @@ ul.menu li{
     text-align: right;
 }
 
+.not_read{
+    font-weight: bold;
+}
+tr.not_read td{
+    font-weight: bold;
+}
+
 div.images.gallery{
     height:460px;
 }

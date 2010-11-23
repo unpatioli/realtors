@@ -2,24 +2,34 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('usermessages.views',
     url(    r'inbox/$',
-            'message_list',
-            {'box_type': 'inbox'},
-            name = 'usermessages_message_list'
+            'inbox',
+            name = 'usermessages_inbox'
     ),
     url(    r'outbox/$',
-            'message_list',
-            {'box_type': 'outbox'},
-            name = 'usermessages_message_list'
+            'outbox',
+            name = 'usermessages_outbox'
+    ),
+    url(    r'drafts/$',
+            'drafts',
+            name = 'usermessages_drafts'
     ),
     url(    r'trash/$',
-            'message_list',
-            {'box_type': 'trash'},
-            name = 'usermessages_message_list'
+            'trash',
+            name = 'usermessages_trash'
     ),
     
-    url(    r'new/$',
+    url(    r'new/to/(?P<user_id>\d+)/$',
             'message_new',
             name = 'usermessages_message_new'
+    ),
+    url(    r'(?P<object_id>\d+)/send/$',
+            'message_send',
+            name = 'usermessages_message_send'
+    ),
+    
+    url(    r'(?P<object_id>\d+)/$',
+            'message_show',
+            name = 'usermessages_message_show'
     ),
     url(    r'(?P<object_id>\d+)/edit$',
             'message_edit',

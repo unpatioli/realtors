@@ -1,0 +1,38 @@
+{% extends "usermessages/base.html" %}
+
+{% block page %}
+	<h3>
+		Сообщение для
+		<a href="{{ recipient.get_profile.get_absolute_url }}">
+			{{ recipient.get_profile.get_name }}
+		</a>
+	</h3>
+	<form action="" method="post">
+		{% csrf_token %}
+		{% for hidden in form.hidden_fields %}
+			{{ hidden }}
+		{% endfor %}
+		<div class="form span-19 last">
+			<div class="non_field_errors span-19 last">
+				{{ form.non_field_errors }}
+			</div>
+			{% for field in form.visible_fields %}
+				<div class="field span-19 last">
+					<div class="input_errors_top align-left prepend-4 span-15 last">
+						{{ field.errors }}
+					</div>
+					<div class="label align-right span-4">
+						{{ field.label_tag }}
+					</div>
+					<div class="input align-left span-15 last">
+						{{ field }}
+					</div>
+				</div>
+			{% endfor %}
+			<div class="field submit span-19 last">
+				<input type="submit" class="submit" name="save_to_drafts" value="Сохранить в черновиках" />
+				<input type="submit" class="submit" name="send_to_recipient" value="Отправить" />
+			</div>
+		</div>
+	</form>
+{% endblock %}

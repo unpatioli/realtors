@@ -1,0 +1,67 @@
+{% extends "usermessages/base.html" %}
+
+{% block page %}
+	<div class="span-19 last">
+		<div class="span-3 align-right">
+			От кого: 
+		</div>
+		<div class="span-16 last">
+			<a href="{{ usermessage.sender.get_profile.get_absolute_url }}">
+				{{ usermessage.sender.get_profile.get_name }}
+			</a>
+		</div>
+	</div>
+	
+	<div class="span-19 last">
+		<div class="span-3 align-right">
+			Тема:
+		</div>
+		<div class="span-16 last">
+			{{ usermessage }}
+		</div>
+	</div>
+	
+	<div class="span-19 last">
+		<div class="span-3 align-right">
+			Дата:
+		</div>
+		<div class="span-16 last">
+			{{ usermessage.updated_at }}
+		</div>
+	</div>
+	
+	<div class="span-19 last">
+		<div class="span-3 align-right">
+			Кому:
+		</div>
+		<div class="span-16 last">
+			<a href="{{ usermessage.recipient.get_profile.get_absolute_url }}">
+				{{ usermessage.recipient.get_profile.get_name }}
+			</a>
+		</div>
+	</div>
+	
+	<div class="span-19 last">
+		<div>
+			{{ usermessage.text }}
+		</div>
+	</div>
+	
+	<div class="span-19 last">
+		<ul class="menu">
+			{% if show_edit_send %}
+				<li>
+					<a href="{% url usermessages_message_edit usermessage.id %}">Редактировать</a>
+				</li>
+				<li>
+					<a href="{% url usermessages_message_send usermessage.id %}">Отправить</a>
+				</li>
+			{% endif %}
+			
+			{% if usermessage.recipient == user %}
+				<li><a href="{% url usermessages_message_new usermessage.sender.id %}">Ответить</a></li>
+			{% endif %}
+			<li><a href="{% url usermessages_message_delete usermessage.id %}">Удалить</a></li>
+		</ul>
+	</div>
+{% endblock %}

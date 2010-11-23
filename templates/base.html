@@ -59,7 +59,7 @@
 						</div>
 					</div>
 					
-					<div id="top_submenu" class="span-24 last">
+					<div id="top_submenu" class="span-16">
 						<div id="top_submenu_content">
 							<ul class="menu">
 								<li>
@@ -74,6 +74,18 @@
 									<a href="{% url accounts_agency_list %}">Агентства</a>
 								</li>
 							</ul>
+						</div>
+					</div>
+					<div id="top_submenu_auth" class="span-8 last">
+						<div id="top_submenu_auth_content">
+							{% if user.is_authenticated %}
+								<span class="{% if inbox_not_read_count %}not_read{% endif %}">
+									<a href="{% url usermessages_inbox %}">Сообщения</a>
+									{% if inbox_not_read_count %}
+										({{ inbox_not_read_count }})
+									{% endif %}
+								</span>
+							{% endif %}
 						</div>
 					</div>
 					

@@ -1,0 +1,18 @@
+{% extends "usermessages/base.html" %}
+
+{% block page %}
+	<div class="span-19 last">
+		<h3>
+			{% if is_permanent %}
+				Вы действительно хотите удалить сообщение?
+			{% else %}
+				Вы действительно хотите отправить сообщение в корзину?
+			{% endif %}
+		</h3>
+		<form action="" method="post">
+			{% csrf_token %}
+			<input type="submit" value="Да"/>
+			<a href="{{ usermessage.get_absolute_url }}">Нет</a>
+		</form>
+	</div>
+{% endblock %}

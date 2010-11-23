@@ -1,0 +1,62 @@
+{% extends "usermessages/base.html" %}
+
+{% block page %}
+	{% if object_list %}
+		<table>
+			<thead>
+				<col/>
+				<col/>
+				<col/>
+				<col/>
+				{% if box_type == 'trash' %}
+					<col/>
+				{% endif %}
+				
+				<tr>
+					<th>№</th>
+					{% if box_type == 'trash' %}
+						<th>От кого</th>
+					{% endif %}
+					<th>
+						{% if box_type == 'inbox' %}
+							От кого
+						{% else %}
+							Кому
+						{% endif %}
+					</th>
+					<th>Тема</th>
+					<th>Дата</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for object in object_list %}
+					<tr class="{% if object.recipient = user and not object.is_read %}not_read{% endif %}">
+						<td>{{ forloop.counter }}</td>
+						{% if box_type == 'trash' %}
+							<td>
+								<a href="{{ object.sender.get_profile.get_absolute_url }}">
+									{{ object.sender.get_profile.get_name }}
+								</a>
+							</td>
+						{% endif %}
+						<td>
+							{% if box_type == 'inbox' %}
+								<a href="{{ object.sender.get_profile.get_absolute_url }}">
+									{{ object.sender.get_profile.get_name }}
+								</a>
+							{% else %}
+								<a href="{{ object.recipient.get_profile.get_absolute_url }}">
+									{{ object.recipient.get_profile.get_name }}
+								</a>
+							{% endif %}
+						</td>
+						<td><a href="{{ object.get_absolute_url }}">{{ object }}</a></td>
+						<td>{{ object.updated_at }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<h3>Сообщений нет</h3>
+	{% endif %}
+{% endblock %}

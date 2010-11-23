@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+	<div class="sidebar span-5">
+		<div class="sidebar_content">
+			<ul>
+				<li>
+					<span class="{% if inbox_not_read_count %}not_read{% endif %}">
+						{% if box_type == 'inbox' %}
+							Входящие
+						{% else %}
+							<a href="{% url usermessages_inbox %}">Входящие</a>
+						{% endif %}
+						{% if inbox_not_read_count %}
+							({{ inbox_not_read_count }})
+						{% endif %}
+					</span>
+				</li>
+				<li>
+					{% if box_type == 'outbox' %}
+						Исходящие
+					{% else %}
+						<a href="{% url usermessages_outbox %}">Исходящие</a>
+					{% endif %}
+				</li>
+				<li>
+					{% if box_type == 'drafts' %}
+						Черновики
+					{% else %}
+						<a href="{% url usermessages_drafts %}">Черновики</a>
+					{% endif %}
+				</li>
+				<li>
+					{% if box_type == 'trash' %}
+						Корзина
+					{% else %}
+						<a href="{% url usermessages_trash %}">Корзина</a>
+					{% endif %}
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<div class="page span-19 last">
+		<div class="page_content">
+			{% block page %}{% endblock %}
+		</div>
+	</div>
+{% endblock %}
