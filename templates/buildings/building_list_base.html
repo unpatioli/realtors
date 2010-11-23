@@ -1,5 +1,17 @@
 {% extends "buildings/base.html" %}
 
+{% block sub_header %}
+	{% if is_user_list %}
+		<h4>
+			Риэлтор <a href="{{ user.get_profile.get_absolute_url }}">{{ user }}</a>
+		</h4>
+	{% else %}{% if is_agency_list %}
+		<h4>
+			Агентство "<a href="{{ agency.get_absolute_url }}">{{ agency.title }}</a>"
+		</h4>
+	{% endif %}{% endif %}
+{% endblock %}
+
 {% block top_panel %}
 	{% if not is_search_result and object_types %}
 		<ul class="menu">
@@ -9,9 +21,9 @@
 						{{ v }}
 					{% else %}
 						{% if is_user_list %}
-							<a href="{% url buildings_user_object_list user_id location k %}">{{ v }}</a>
+							<a href="{% url buildings_user_object_list user.id location k %}">{{ v }}</a>
 						{% else %}{% if is_agency_list %}
-							<a href="{% url buildings_agency_object_list agency_id location k %}">{{ v }}</a>
+							<a href="{% url buildings_agency_object_list agency.id location k %}">{{ v }}</a>
 						{% endif %}{% endif %}
 					{% endif %}
 				</li>
@@ -28,9 +40,9 @@
 						{{ v }}
 					{% else %}
 						{% if is_user_list %}
-							<a href="{% url buildings_user_object_list user_id k object_type %}">{{ v }}</a>
+							<a href="{% url buildings_user_object_list user.id k object_type %}">{{ v }}</a>
 						{% else %}{% if is_agency_list %}
-							<a href="{% url buildings_agency_object_list agency_id k object_type %}">{{ v }}</a>
+							<a href="{% url buildings_agency_object_list agency.id k object_type %}">{{ v }}</a>
 						{% endif %}{% endif %}
 					{% endif %}
 				</li>
