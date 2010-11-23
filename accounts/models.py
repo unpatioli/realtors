@@ -34,7 +34,10 @@ class UserProfile(models.Model):
         return self.get_name
     
     def get_name(self):
-        return " ".join([self.user.first_name, self.user.last_name])
+        name = " ".join([self.user.first_name, self.user.last_name])
+        if name == " ":
+            name = str(self.user)
+        return name
     
     def get_absolute_url(self):
         return reverse('accounts_profile', args=[self.user.pk])
