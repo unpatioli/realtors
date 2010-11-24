@@ -14,6 +14,11 @@ class Metro(models.Model):
     def __unicode__(self):
         return self.title
     
+    class Meta:
+        ordering = ['id']
+        verbose_name = u"Метро"
+        verbose_name_plural = u"Станции метро"
+    
 
 class ExtraParameters(models.Model):
     title = models.CharField(max_length=100, verbose_name=u"Название параметра")
