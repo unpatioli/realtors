@@ -47,7 +47,15 @@
 		<div class="section_title">Цена</div>
 		<ul class="price">
 			{% render_field object.price "Цена" object.currency %}
-		
+			{% if other_prices %}
+				<ul>
+					{% for currency, price in other_prices %}
+						<li>
+							или {{ price|floatformat:2 }} {{ currency }}
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
 			{% block price %}{% endblock %}
 		</ul>
 	</div>

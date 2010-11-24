@@ -62,8 +62,15 @@ def agency_object_list(request, agency_id, location='moscow', object_type='rentf
     )
 
 def object_detail(request, location, object_type, id):
+    from currencies.models import Currency
+    
     model = ContentType.objects.get(model=object_type).model_class()
     obj = get_object_or_404(model, pk=id)
+    
+    obj_currency = obj.currency
+    obj_price_eur = float(obj.price) / float(obj_currency.rate)
+    currencies = Currency.active_objects.all()
+    other_prices = [(currency.symbol, obj_price_eur * float(currency.rate)) for currency in currencies if currency != obj_currency]
     
     return direct_to_template(
         request,
@@ -74,6 +81,8 @@ def object_detail(request, location, object_type, id):
             
             'location': location,
             'object_type': object_type,
+            
+            'other_prices': other_prices,
         }
     )
 
