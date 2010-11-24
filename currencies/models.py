@@ -39,6 +39,13 @@ def get_rate(curr):
     return rate
     
 
+# Managers
+class ActiveManager(models.Manager):
+    def get_query_set(self):
+        return super(ActiveManager, self).get_query_set()
+    
+
+# Model
 class Currency(models.Model):
     title = models.CharField(max_length = 50, verbose_name=u"Название")
     char_id = models.CharField(max_length = 3, verbose_name=u"Буквенное обозначение")
@@ -46,6 +53,16 @@ class Currency(models.Model):
     
     def __unicode__(self):
         return self.symbol
+    
+    @property
+    def rate(self):
+        return get_rate(self.char_id)
+    
+    # ============
+    # = Managers =
+    # ============
+    objects = models.Manager()
+    active_objects = ActiveManager()
     
     class Meta:
         verbose_name = u"Валюта"
