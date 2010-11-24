@@ -46,16 +46,19 @@
 		
 		<div class="section_title">Цена</div>
 		<ul class="price">
-			{% render_field object.price "Цена" object.currency %}
-			{% if other_prices %}
-				<ul>
-					{% for currency, price in other_prices %}
-						<li>
-							или {{ price|floatformat:2 }} {{ currency }}
-						</li>
-					{% endfor %}
-				</ul>
-			{% endif %}
+			{# {% render_field object.price "Цена" object.currency %} #}
+			<li>
+				Цена: {{ object.price|floatformat:2 }} {{ object.currency }}
+				{% if other_prices %}
+					<ul>
+						{% for currency, price in other_prices %}
+							<li>
+								или {{ price|floatformat:2 }} {{ currency }}
+							</li>
+						{% endfor %}
+					</ul>
+				{% endif %}
+			</li>
 			{% block price %}{% endblock %}
 		</ul>
 	</div>
