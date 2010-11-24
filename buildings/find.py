@@ -1,7 +1,6 @@
 from django.db.models import Q, F
 
 from buildings.models import RentFlat, SellFlat
-from currencies.models import get_rate
 
 
 # =========================
@@ -119,7 +118,7 @@ def __rent_flat_find(form):
     price_gt = form.cleaned_data.get('price_gt')
     price_lt = form.cleaned_data.get('price_lt')
     if price_gt or price_lt:
-        rate = get_rate(form.cleaned_data.get('currency').char_id)
+        rate = form.cleaned_data.get('currency').rate
         if price_gt:
             price_gt = int(price_gt) / int(rate) / payment_period
             q_price_arr.append(Q(price_EUR__gte = price_gt))
@@ -146,7 +145,7 @@ def __sell_flat_find(form):
     price_gt = form.cleaned_data.get('price_gt')
     price_lt = form.cleaned_data.get('price_lt')
     if price_gt or price_lt:
-        rate = get_rate(form.cleaned_data.get('currency').char_id)
+        rate = form.cleaned_data.get('currency').rate
         if price_gt:
             price_gt = int(price_gt) / int(rate)
             q_price_arr.append(Q(price_EUR__gte = price_gt))

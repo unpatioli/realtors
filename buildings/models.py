@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.generic import GenericRelation
 
-from currencies.models import Currency, get_rate
+from currencies.models import Currency
 
 class Metro(models.Model):
     town = models.CharField(max_length = 100, db_index=True, verbose_name=u"Город")
@@ -108,8 +108,7 @@ class Building(models.Model):
     def save(self, *args, **kwargs):
         char_id = self.currency.char_id
         try:
-            rate = get_rate(char_id)
-            self.price_EUR = int(self.price / rate)
+            self.price_EUR = int(self.price / self.currency.rate)
             if 'payment_period' in self._meta.get_all_field_names():
                 self.price_EUR /= self.payment_period
         except Exception as e:
