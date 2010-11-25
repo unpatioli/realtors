@@ -9,7 +9,7 @@
 	
 	<div class="span-9">
 		<div class="span-9 last">
-			<div class="section_title">Личные данные</div>
+			<div class="section_title">ФИО</div>
 			<ul>
 				{% render_field userprofile.user.first_name "Имя" %}
 				{% render_field userprofile.user.last_name "Фамилия" %}
@@ -29,6 +29,7 @@
 	
 	<div class="span-9 last">
 		<div class="span-9 last">
+			<div class="section_title">Личные данные</div>
 			<ul>
 				{% render_field userprofile.birthday "День рождения" %}
 				{% render_field userprofile.get_gender_display "Пол" %}
