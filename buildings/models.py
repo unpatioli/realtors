@@ -111,7 +111,7 @@ class Building(models.Model):
             self.price_EUR = int(self.price / self.currency.rate)
             if 'payment_period' in self._meta.get_all_field_names():
                 self.price_EUR /= self.payment_period
-        except Exception as e:
+        except Exception, e:
             raise e
         super(Building, self).save(*args, **kwargs)
     
