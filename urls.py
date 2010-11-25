@@ -29,7 +29,7 @@ urlpatterns = patterns('',
 # ¡¡¡ Only in dev mode !!!
 if settings.SERVE_STATIC:
     urlpatterns += patterns('',
-        (r'^{staticfiles_url}(?P<path>.*)$' % {'staticfiles_url': settings.STATICFILES_URL[1:]},
+        (r'^%(staticfiles_url)s(?P<path>.*)$' % {'staticfiles_url': settings.STATICFILES_URL[1:]},
             'django.views.static.serve',
             {'document_root': settings.STATICFILES_DOC_ROOT}),
     )
@@ -38,7 +38,7 @@ if settings.SERVE_STATIC:
     if media_url[0] == '/':
         media_url = media_url[1:]
     urlpatterns += patterns('',
-        (r'^{media_url}(?P<path>.*)$' % {'media_url': media_url},
+        (r'^%(media_url)s(?P<path>.*)$' % {'media_url': media_url},
             'django.views.static.serve',
             {'document_root': settings.MEDIA_ROOT}),
     )
