@@ -27,7 +27,7 @@ urlpatterns = patterns('',
 )
 
 # ¡¡¡ Only in dev mode !!!
-if settings.DEBUG:
+if settings.SERVE_STATIC:
     urlpatterns += patterns('',
         (r'^{staticfiles_url}(?P<path>.*)$' % {'staticfiles_url': settings.STATICFILES_URL[1:]},
             'django.views.static.serve',
