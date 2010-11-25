@@ -1,6 +1,11 @@
 {% extends "accounts/user_settings_base.html" %}
 
 {% block page %}
+	
+	<div class="span-18 last">
+		<h3>Профиль {% if form.instance.pk %}{{ form.instance.get_profile.get_name }}{% endif %}</h3>
+	</div>
+	
 	<form action="" method="post">
 		{% csrf_token %}
 		<div class="form span-18 last">
