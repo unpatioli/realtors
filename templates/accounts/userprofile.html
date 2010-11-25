@@ -94,11 +94,13 @@
 		{% endif %}
 	{# End realtor profile #}
 	
-	<div class="span-18 last">
-		<div class="section_title">Дополнительно</div>
-		<div class="description">
-			{{ userprofile.description }}
+	{% if userprofile.description %}
+		<div class="span-18 last">
+			<div class="section_title">Дополнительно</div>
+			<div class="description">
+				{{ userprofile.description }}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 	
 {% endblock %}
