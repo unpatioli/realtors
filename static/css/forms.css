@@ -88,3 +88,8 @@ div.checkbox-select-multiple.scroll{
 div.checkbox-select-multiple.rooms ul li{
     padding-right: 20px;
 }
+
+
+form ul {
+    list-style-type: none;
+}

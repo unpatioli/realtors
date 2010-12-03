@@ -1,6 +1,10 @@
 {% extends "accounts/agency_base.html" %}
 {% load fields_render %}
 
+{% block sub_header %}
+	<h4>{{ object.title }}</h4>
+{% endblock %}
+
 {% block top_panel %}
 	{% if show_object_controls %}
 		<ul class="menu">
@@ -12,9 +16,6 @@
 {% endblock %}
 
 {% block content %}
-	<div class="span-24 last">
-		<h3>{{ object.title }}</h3>
-	</div>
 	{% if object.label %}
 		<div class="span-24 last">
 			<img src="{{ object.label.url }}" />

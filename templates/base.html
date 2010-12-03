@@ -16,6 +16,9 @@
 		
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
 		
+		<script type="text/javascript" src="http://use.typekit.com/blf8jft.js"></script>
+		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+		
 		<link href="{{ STATICFILES_URL }}css/blueprint/screen.css" rel="stylesheet" type="text/css" media="screen, projection" />
 		<link href="{{ STATICFILES_URL }}css/blueprint/print.css" rel="stylesheet" type="text/css" media="print" />
 		<!--[if lt IE 8]><link href="{{ STATICFILES_URL }}css/blueprint/ie.css" rel="stylesheet" type="text/css" media="screen, projection" /><![endif]-->
@@ -30,7 +33,7 @@
 	</head>
 	
 	<body>
-		
+		<div id="shadows">
 		<div id="container" class="container">
 			
 			<div id="main_container" class="span-24 last">
@@ -39,7 +42,7 @@
 					<div id="header" class="span-16">
 						<div id="header_content">
 							{% block header %}
-								<a href="/">Риэлторы москвы</a>
+								<a href="/">Риэлторы Москвы</a>
 							{% endblock %}
 						</div>
 					</div>
@@ -60,7 +63,9 @@
 							{% endif %}
 						</div>
 					</div>
-					
+				</div>
+				
+				<div id="top_submenu_container" class="span-24 last">
 					<div id="top_submenu" class="span-16">
 						<div id="top_submenu_content">
 							<ul class="menu">
@@ -90,7 +95,9 @@
 							{% endif %}
 						</div>
 					</div>
-					
+				</div>
+				
+				<div id="sub_header_container" class="span-24 last">
 					<div id="sub_header" class="span-24 last">
 						<div id="sub_header_content">
 							{% block sub_header %}{% endblock %}
@@ -102,20 +109,19 @@
 							{% block top_panel %}{% endblock %}
 						</div>
 					</div>
-					
-					{% if messages %}
-						<div id="messages_container" class="prepend-1 span-22 append-1 last">
-							<div class="messages" class="span-22 last">
-								<ul class="messages_list">
-									{% for message in messages %}
-										<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|safe }}</li>
-									{% endfor %}
-								</ul>
-							</div>
-						</div>
-					{% endif %}
-					
 				</div>
+				
+				{% if messages %}
+					<div id="messages_container" class="prepend-1 span-22 append-1 last">
+						<div class="messages" class="span-22 last">
+							<ul class="messages_list">
+								{% for message in messages %}
+									<li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message|safe }}</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+				{% endif %}
 			
 				<div id="content_container" class="span-24 last">
 					<div id="content">
@@ -137,6 +143,6 @@
 			</div>
 		
 		</div>
-		
+		</div>
 	</body>
 </http>

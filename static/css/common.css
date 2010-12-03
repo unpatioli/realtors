@@ -7,8 +7,15 @@ ul.menu li{
 .align-left{
     text-align: left;
 }
+.align-center{
+    text-align: center;
+}
 .align-right{
     text-align: right;
+}
+
+.huge{
+    font-size: 1.8em;
 }
 
 .not_read{

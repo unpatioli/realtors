@@ -1,19 +1,20 @@
 {% extends "buildings/base.html" %}
 {% load building_fields_render %}
 
-{% block content %}
-	<div class="span-24 last">
-		<h3>Квартира</h3>
-	</div>
+{% block sub_header %}
+	<h4>Квартира</h4>
+{% endblock %}
+
+{% block top_panel %}
 	{% if show_object_controls %}
-		<div id="object_controls" class="span-24 last">
-			<ul class="menu">
-				<li><a href="{% url buildings_object_edit location object_type object.id %}">Редактировать</a></li>
-				<li><a href="{% url buildings_object_delete location object_type object.id %}">Удалить</a></li>
-			</ul>
-		</div>
+		<ul class="menu">
+			<li><a href="{% url buildings_object_edit location object_type object.id %}">Редактировать</a></li>
+			<li><a href="{% url buildings_object_delete location object_type object.id %}">Удалить</a></li>
+		</ul>
 	{% endif %}
-	
+{% endblock %}
+
+{% block content %}
 	<div class="span-8">
 		<div class="section_title">Адрес</div>
 		<ul class="address">

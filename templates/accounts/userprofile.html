@@ -1,12 +1,11 @@
 {% extends "accounts/userprofile_settings_base.html" %}
 {% load fields_render %}
 
-{% block page %}
+{% block sub_header %}
+	<h4>Профиль {{ userprofile.get_name }}</h4>
+{% endblock %}
 
-	<div class="span-18 last">
-		<h3>Профиль {{ userprofile.get_name }}</h3>
-	</div>
-	
+{% block page %}
 	<div class="span-9">
 		<div class="span-9 last">
 			<div class="section_title">ФИО</div>

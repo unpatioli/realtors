@@ -1,5 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<h1>База данных риэлторов Москвы</h1>
+	<div class="span-12">
+		{# <h1>База данных риэлторов Москвы</h1> #}
+		
+		<div class="huge align-left">
+			<a href="{% url buildings_object_search 'moscow' 'rentflat' %}">Снять/купить квартиру в Москве</a>
+		</div>
+		
+		<div class="huge align-right">
+			<a href="{% url buildings_object_search 'moscow_region' 'rentflat' %}">Снять/купить квартиру в области</a>
+		</div>
+		
+	</div>
+	<div class="span-12 last">
+	  &nbsp;
+    {# <a href="" id="beaver_href"><img src="{{ STATICFILES_URL }}img/beaver_can.jpg" /></a> #}
+	</div>
+  {# <div class="prepend-12 span-12 last"> #}
+  {#  <div id="beaver" class="align-center huge" style="background:#F6F3B3;"> #}
+  {#    Это бобёр. Он тут живёт. #}
+  {#  </div> #}
+  {#  <script type="text/javascript"> #}
+  {#    $(function(){ #}
+  {#      $('#beaver').hide(); #}
+  {#       #}
+  {#      $('#beaver_href').click(function(){ #}
+  {#        if($('#beaver').is(':visible')) { #}
+  {#          $('#beaver').slideUp('normal'); #}
+  {#        } else { #}
+  {#          $('#beaver').slideDown('normal'); #}
+  {#        } #}
+  {#        return false; #}
+  {#      }); #}
+  {#    }); #}
+  {#  </script> #}
+  {# </div> #}
 {% endblock %}

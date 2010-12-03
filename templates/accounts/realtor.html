@@ -1,22 +1,21 @@
 {% extends "accounts/realtor_settings_base.html" %}
 {% load fields_render %}
 
-{% block page %}
-	
-	<div class="span-18 last">
-		<h3>Профиль риэлтора {{ realtor.user.get_profile.get_name }}</h3>
-	</div>
-	
+{% block sub_header %}
+	<h4>Профиль риэлтора {{ realtor.user.get_profile.get_name }}</h4>
+{% endblock %}
+
+{% block top_panel %}
 	{% if user.pk == realtor.user.pk %}
-		<div class="span-18 last">
-			<ul class="menu">
-				<li>
-					<a href="{% url accounts_my_profile_realtor_edit %}">Редактировать</a>
-				</li>
-			</ul>
-		</div>
+		<ul class="menu">
+			<li>
+				<a href="{% url accounts_my_profile_realtor_edit %}">Редактировать</a>
+			</li>
+		</ul>
 	{% endif %}
-	
+{% endblock %}
+
+{% block page %}
 	<div class="span-9">
 		<div class="section_title">Риэлтор</div>
 		<ul>
