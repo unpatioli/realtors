@@ -1,6 +1,8 @@
 #header_content{
     font-size: 1.5em;
     height: 50px;
+    
+    margin-left: 100px;
 }
 #header_content a{
     color: black;
@@ -38,7 +40,8 @@ div.section_title {
 
 
 div#header_container {
-    background: #F1E9D2;
+/*    background: #F1E9D2;*/
+  background: url("/static_media/img/realtors-banner.png");
 }
 div#header_container div#header div#header_content{
     padding: 10px 0 0 17px;
