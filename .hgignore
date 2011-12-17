@@ -45,3 +45,9 @@ db
 
 # Media files
 media
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
