@@ -1,0 +1,15 @@
+#object_list table{
+    font-size: 0.9em;
+    
+    border-right: solid 1px;
+    border-bottom: solid 1px;
+}
+
+td, th {
+  border-left: solid 1px;
+  border-top: solid 1px;
+}
+
+th{
+    text-align: center;
+}

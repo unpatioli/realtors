@@ -1,0 +1,106 @@
+#header_content{
+    font-size: 1.5em;
+    height: 50px;
+    
+    margin-left: 100px;
+}
+#header_content a{
+    color: black;
+    text-decoration: none;
+}
+#header_content a:hover{
+    color: #383838;
+}
+
+ul.messages_list{
+    list-style-type: none;
+}
+
+ul {
+    list-style-type: circle;
+}
+
+
+* {
+    font-family: "myriad-pro-1","myriad-pro-2",sans-serif;
+}
+h1, h2, h3 {
+    font-family: "liberation-serif-1","liberation-serif-2";
+}
+h1 {
+    font-weight: bold;
+}
+h4 {
+    font-size: 1.3em;
+}
+div.section_title {
+/*    font-style: italic;*/
+    font-weight: bold;
+}
+
+
+div#header_container {
+/*    background: #F1E9D2;*/
+/*  background: url("/static_media/img/realtors-banner.png");*/
+  background: url("/static/img/realtors-banner.png");
+}
+div#header_container div#header div#header_content{
+    padding: 10px 0 0 17px;
+    font-family: "liberation-serif-1","liberation-serif-2",Helvetica,serif;
+}
+
+div#top_submenu_container {
+    padding: 10px 0 0 0;
+    background: #E5DCC9;
+    
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-left-radius: 10px;
+    
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+div#sub_header_container {
+    margin-top: 5px;
+}
+div#sub_header_container div#sub_header div#sub_header_content {
+    padding-left: 10px;
+}
+div#sub_header_container div#top_panel div#top_panel_content ul li a{
+/*    background: #95C1F3;*/
+}
+
+div#content_container {
+    margin-top: 15px;
+}
+div#content_container div#content {
+    padding-top: 10px;
+/*    border-top: solid 1px #F0F0F0;*/
+}
+
+body{
+    background: #FAFAFA;
+}
+div#main_container{
+    background: white;
+    padding-bottom: 60px;
+}
+div#footer_container {
+    height: 100px;
+    background: white;
+    
+    border-top: solid 1px #F1F1F1;
+    
+    -moz-border-radius-bottomleft: 10px;
+    border-bottom-left-radius: 10px;
+    
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-right-radius: 10px;
+}
+div#footer_container div#footer div#footer_content {
+    padding: 10px;
+}
+
+div#shadows{
+/*    background:yellow;*/
+}

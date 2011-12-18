@@ -107,8 +107,8 @@
 	
 	{% if object.images %}
 		{% block head %}
-			<script type="text/javascript" src="{{ STATICFILES_URL }}galleria/src/galleria.js"></script>
-			<script type="text/javascript" src="{{ STATICFILES_URL }}galleria/src/themes/classic/galleria.classic.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}galleria/src/galleria.js"></script>
+			<script type="text/javascript" src="{{ STATIC_URL }}galleria/src/themes/classic/galleria.classic.js"></script>
 		{% endblock %}
 		
 		{% with object.images.all as images %}
